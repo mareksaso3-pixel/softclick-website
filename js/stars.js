@@ -57,30 +57,30 @@
     // Large nebula clouds radiating from center
     var clouds = [
       // Left purple-magenta cloud mass
-      { x: 0.25, y: 0.38, rx: 0.35, ry: 0.30, c: [100, 20, 160], a: 0.40 },
-      { x: 0.18, y: 0.30, rx: 0.25, ry: 0.22, c: [180, 40, 200], a: 0.32 },
-      { x: 0.12, y: 0.50, rx: 0.22, ry: 0.28, c: [140, 30, 180], a: 0.28 },
+      { x: 0.25, y: 0.38, rx: 0.35, ry: 0.30, c: [60, 10, 100], a: 0.22 },
+      { x: 0.18, y: 0.30, rx: 0.25, ry: 0.22, c: [120, 25, 140], a: 0.16 },
+      { x: 0.12, y: 0.50, rx: 0.22, ry: 0.28, c: [90, 18, 120], a: 0.14 },
 
       // Right blue-cyan cloud mass
-      { x: 0.78, y: 0.35, rx: 0.30, ry: 0.28, c: [30, 80, 200], a: 0.35 },
-      { x: 0.85, y: 0.45, rx: 0.25, ry: 0.25, c: [20, 140, 210], a: 0.28 },
-      { x: 0.72, y: 0.25, rx: 0.20, ry: 0.18, c: [60, 120, 255], a: 0.25 },
+      { x: 0.78, y: 0.35, rx: 0.30, ry: 0.28, c: [18, 45, 140], a: 0.18 },
+      { x: 0.85, y: 0.45, rx: 0.25, ry: 0.25, c: [12, 90, 150], a: 0.14 },
+      { x: 0.72, y: 0.25, rx: 0.20, ry: 0.18, c: [35, 75, 180], a: 0.12 },
 
       // Top pink-purple wisps
-      { x: 0.40, y: 0.15, rx: 0.30, ry: 0.18, c: [180, 50, 180], a: 0.25 },
-      { x: 0.60, y: 0.12, rx: 0.25, ry: 0.15, c: [200, 60, 160], a: 0.22 },
+      { x: 0.40, y: 0.15, rx: 0.30, ry: 0.18, c: [120, 30, 120], a: 0.13 },
+      { x: 0.60, y: 0.12, rx: 0.25, ry: 0.15, c: [140, 35, 110], a: 0.11 },
 
       // Bottom blue-purple
-      { x: 0.35, y: 0.72, rx: 0.28, ry: 0.22, c: [60, 30, 150], a: 0.28 },
-      { x: 0.65, y: 0.68, rx: 0.25, ry: 0.20, c: [40, 70, 180], a: 0.22 },
+      { x: 0.35, y: 0.72, rx: 0.28, ry: 0.22, c: [35, 18, 100], a: 0.15 },
+      { x: 0.65, y: 0.68, rx: 0.25, ry: 0.20, c: [25, 40, 120], a: 0.12 },
 
-      // Bright accent cores (vivid hot spots)
-      { x: 0.30, y: 0.35, rx: 0.10, ry: 0.08, c: [200, 80, 255], a: 0.50 },
-      { x: 0.70, y: 0.38, rx: 0.08, ry: 0.07, c: [40, 180, 240], a: 0.45 },
-      { x: 0.22, y: 0.45, rx: 0.07, ry: 0.06, c: [220, 60, 200], a: 0.40 },
-      { x: 0.80, y: 0.30, rx: 0.06, ry: 0.05, c: [80, 160, 255], a: 0.38 },
-      { x: 0.45, y: 0.20, rx: 0.06, ry: 0.05, c: [255, 120, 180], a: 0.35 },
-      { x: 0.55, y: 0.65, rx: 0.07, ry: 0.06, c: [100, 60, 220], a: 0.32 },
+      // Subtle accent cores
+      { x: 0.30, y: 0.35, rx: 0.10, ry: 0.08, c: [140, 50, 200], a: 0.28 },
+      { x: 0.70, y: 0.38, rx: 0.08, ry: 0.07, c: [25, 120, 180], a: 0.24 },
+      { x: 0.22, y: 0.45, rx: 0.07, ry: 0.06, c: [160, 35, 150], a: 0.22 },
+      { x: 0.80, y: 0.30, rx: 0.06, ry: 0.05, c: [50, 100, 200], a: 0.20 },
+      { x: 0.45, y: 0.20, rx: 0.06, ry: 0.05, c: [200, 80, 130], a: 0.18 },
+      { x: 0.55, y: 0.65, rx: 0.07, ry: 0.06, c: [65, 35, 160], a: 0.16 },
     ];
 
     for (var i = 0; i < clouds.length; i++) {
@@ -132,7 +132,7 @@
       var angle = (i / numRays) * Math.PI * 2 + (Math.random() - 0.5) * 0.08;
       var length = maxLen * (0.4 + Math.random() * 0.6);
       var width = 0.8 + Math.random() * 2.5;
-      var opacity = 0.02 + Math.random() * 0.06;
+      var opacity = 0.01 + Math.random() * 0.035;
 
       // Alternate colors: purple, magenta, blue, cyan, pink
       var rayColors = [
@@ -372,39 +372,6 @@
   }
 
   // ───────────────────────────────────────────
-  //  DRAW VORTEX CENTER
-  // ───────────────────────────────────────────
-
-  function drawVortexCenter(time) {
-    // Pulsing dark void in center
-    var pulse = 0.85 + 0.15 * Math.sin(time * 0.0003);
-    var voidRadius = Math.min(W, H) * 0.08 * pulse;
-
-    // Dark center
-    var voidGrad = ctx.createRadialGradient(CX, CY, 0, CX, CY, voidRadius * 3);
-    voidGrad.addColorStop(0, 'rgba(3, 8, 16, 0.9)');
-    voidGrad.addColorStop(0.3, 'rgba(3, 8, 16, 0.6)');
-    voidGrad.addColorStop(0.6, 'rgba(3, 8, 16, 0.2)');
-    voidGrad.addColorStop(1, 'rgba(3, 8, 16, 0)');
-    ctx.fillStyle = voidGrad;
-    ctx.fillRect(CX - voidRadius * 3, CY - voidRadius * 3, voidRadius * 6, voidRadius * 6);
-
-    // Bright ring around void
-    var ringPulse = 0.7 + 0.3 * Math.sin(time * 0.0004 + 1);
-    var ringGrad = ctx.createRadialGradient(CX, CY, voidRadius * 0.8, CX, CY, voidRadius * 2.5);
-    ringGrad.addColorStop(0, 'rgba(155, 108, 255, 0)');
-    ringGrad.addColorStop(0.3, 'rgba(155, 108, 255,' + (0.08 * ringPulse) + ')');
-    ringGrad.addColorStop(0.5, 'rgba(217, 70, 239,' + (0.06 * ringPulse) + ')');
-    ringGrad.addColorStop(0.7, 'rgba(60, 140, 255,' + (0.04 * ringPulse) + ')');
-    ringGrad.addColorStop(1, 'rgba(60, 140, 255, 0)');
-
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = ringGrad;
-    ctx.fillRect(CX - voidRadius * 3, CY - voidRadius * 3, voidRadius * 6, voidRadius * 6);
-    ctx.globalCompositeOperation = 'source-over';
-  }
-
-  // ───────────────────────────────────────────
   //  MAIN DRAW LOOP
   // ───────────────────────────────────────────
 
@@ -412,7 +379,7 @@
     ctx.clearRect(0, 0, W, H);
 
     // 1. Nebula base layer (breathing)
-    var baseBreath = reduced ? 0.85 : 0.75 + 0.25 * Math.sin(time * 0.00012);
+    var baseBreath = reduced ? 0.6 : 0.5 + 0.15 * Math.sin(time * 0.00012);
     ctx.globalAlpha = baseBreath;
     ctx.globalCompositeOperation = 'screen';
     ctx.drawImage(nebulaCanvas, 0, 0);
@@ -424,7 +391,7 @@
       var rayRotation = time * 0.000008;
       var rayPulse = 0.5 + 0.5 * Math.sin(time * 0.0002);
       ctx.save();
-      ctx.globalAlpha = 0.4 + rayPulse * 0.35;
+      ctx.globalAlpha = 0.2 + rayPulse * 0.2;
       ctx.globalCompositeOperation = 'screen';
       ctx.translate(CX, CY);
       ctx.rotate(rayRotation);
@@ -437,7 +404,7 @@
       // Second ray layer, counter-rotating
       var rayPulse2 = 0.4 + 0.4 * Math.sin(time * 0.00025 + 2);
       ctx.save();
-      ctx.globalAlpha = 0.25 + rayPulse2 * 0.25;
+      ctx.globalAlpha = 0.12 + rayPulse2 * 0.15;
       ctx.globalCompositeOperation = 'screen';
       ctx.translate(CX, CY);
       ctx.rotate(-rayRotation * 1.3);
@@ -448,10 +415,7 @@
       ctx.globalCompositeOperation = 'source-over';
     }
 
-    // 3. Central vortex void
-    drawVortexCenter(time);
-
-    // 4. Depth particles (3D outward flow)
+    // 3. Depth particles (3D outward flow)
     if (!reduced) {
       drawDepthParticles();
     }

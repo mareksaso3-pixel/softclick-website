@@ -1,8 +1,8 @@
 :root {
   /* Colors - Cosmic Nebula Palette */
-  --deep-navy: #030810;
-  --cosmic-indigo: #080d1e;
-  --deep-purple: #0d0520;
+  --deep-navy: #020408;
+  --cosmic-indigo: #050a14;
+  --deep-purple: #080318;
   --accent-violet: #9B6CFF;
   --accent-blue: #3DB8FF;
   --accent-magenta: #D946EF;
@@ -11,11 +11,11 @@
   --accent-teal: #06B6D4;
   --cta-gradient: linear-gradient(135deg, #9B6CFF 0%, #D946EF 50%, #3DB8FF 100%);
   --cta-gradient-hover: linear-gradient(135deg, #A87CFF 0%, #E065F5 50%, #5CC8FF 100%);
-  --card-bg: rgba(8, 12, 30, 0.55);
-  --card-border: rgba(155, 108, 255, 0.12);
-  --card-border-hover: rgba(217, 70, 239, 0.35);
-  --glass-bg: rgba(5, 8, 20, 0.88);
-  --glass-border: rgba(155, 108, 255, 0.1);
+  --card-bg: rgba(4, 6, 16, 0.65);
+  --card-border: rgba(155, 108, 255, 0.10);
+  --card-border-hover: rgba(217, 70, 239, 0.30);
+  --glass-bg: rgba(2, 4, 12, 0.92);
+  --glass-border: rgba(155, 108, 255, 0.08);
 
   /* Text */
   --text-light: #E8F0FE;
