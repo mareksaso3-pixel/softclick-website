@@ -25,7 +25,7 @@ body {
   min-height: 100vh;
 }
 
-/* Cosmic Background */
+/* Deep Space Aurora Background */
 body::before {
   content: '';
   position: fixed;
@@ -34,14 +34,92 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(44, 11, 74, 0.4) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(36, 16, 63, 0.5) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(44, 11, 74, 0.3) 0%, transparent 60%);
+    radial-gradient(ellipse 120% 60% at 15% 20%, rgba(52, 211, 153, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 80% at 80% 10%, rgba(124, 92, 255, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse 140% 50% at 60% 60%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 100% at 5% 80%, rgba(17, 10, 46, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 70% at 90% 70%, rgba(52, 211, 153, 0.03) 0%, transparent 40%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Stars canvas sits behind everything */
+/* Aurora glow layers - animated CSS */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora-layer {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter: blur(100px);
+  will-change: transform, opacity;
+}
+
+.aurora-layer--1 {
+  background: radial-gradient(ellipse at 30% 20%, rgba(52, 211, 153, 0.12) 0%, transparent 50%);
+  animation: auroraFlow1 12s ease-in-out infinite;
+}
+
+.aurora-layer--2 {
+  background: radial-gradient(ellipse at 70% 30%, rgba(124, 92, 255, 0.10) 0%, transparent 45%);
+  animation: auroraFlow2 15s ease-in-out infinite;
+}
+
+.aurora-layer--3 {
+  background: radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+  animation: auroraFlow3 18s ease-in-out infinite;
+}
+
+.aurora-layer--4 {
+  background: radial-gradient(ellipse at 20% 70%, rgba(52, 211, 153, 0.06) 0%, transparent 40%);
+  animation: auroraFlow4 20s ease-in-out infinite;
+}
+
+@keyframes auroraFlow1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.6; }
+  25% { transform: translate(5%, -3%) rotate(2deg) scale(1.05); opacity: 0.9; }
+  50% { transform: translate(-3%, 5%) rotate(-1deg) scale(1.1); opacity: 0.7; }
+  75% { transform: translate(2%, 2%) rotate(1deg) scale(1.02); opacity: 1; }
+}
+
+@keyframes auroraFlow2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1.05); opacity: 0.5; }
+  33% { transform: translate(-4%, 3%) rotate(-2deg) scale(1); opacity: 0.85; }
+  66% { transform: translate(3%, -2%) rotate(1.5deg) scale(1.08); opacity: 0.6; }
+}
+
+@keyframes auroraFlow3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  50% { transform: translate(4%, 4%) scale(1.12); opacity: 0.8; }
+}
+
+@keyframes auroraFlow4 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+  40% { transform: translate(-3%, -2%) rotate(-1deg); opacity: 0.7; }
+  80% { transform: translate(2%, 3%) rotate(2deg); opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-layer {
+    animation: none !important;
+    opacity: 0.5 !important;
+    filter: blur(120px);
+  }
+}
+
+/* Stars + nebula canvas */
 #stars-canvas {
   position: fixed;
   top: 0;
