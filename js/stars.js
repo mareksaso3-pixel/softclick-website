@@ -1,18 +1,15 @@
 /**
- * Deep Space Nebula — Ultra HD
+ * Deep Space Nebula — Textured HD
  *
- * Key quality features:
- *   - devicePixelRatio scaling (crisp on retina/HiDPI)
- *   - 3 depth layers of nebula (far → mid → near) with different blur
- *   - Procedural noise texture for dusty nebula grain
- *   - 35+ nebula cloud patches across all layers
- *   - Stars with glow halos, twinkle, slow drift
- *   - Shooting stars
+ * Generates realistic nebula clouds from clusters of hundreds of
+ * overlapping semi-transparent particles (not simple gradients).
+ * This creates the "painted/watercolor" texture seen in real nebula photos.
  *
  * Architecture:
- *   - 3 offscreen canvases (far, mid, near nebula) rendered once on resize
- *   - 1 noise texture canvas (static grain)
- *   - Main canvas composites everything each frame with breathing animation
+ *   - Seeded PRNG for consistent nebula across reloads
+ *   - Offscreen canvas: textured nebula (rendered once on resize)
+ *   - devicePixelRatio scaling for HiDPI
+ *   - Main canvas: nebula composite + stars + shooting stars
  */
 (function () {
   var canvas = document.getElementById('stars-canvas');
@@ -22,195 +19,257 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  // Offscreen canvases for 3 depth layers
-  var farCanvas = document.createElement('canvas');
-  var farCtx = farCanvas.getContext('2d');
-  var midCanvas = document.createElement('canvas');
-  var midCtx = midCanvas.getContext('2d');
-  var nearCanvas = document.createElement('canvas');
-  var nearCtx = nearCanvas.getContext('2d');
-  var noiseCanvas = document.createElement('canvas');
-  var noiseCtx = noiseCanvas.getContext('2d');
+  // Seeded PRNG (mulberry32) for consistent nebula
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var rng = mulberry32(42);
+
+  // Offscreen canvases
+  var nebulaCanvas = document.createElement('canvas');
+  var nebulaCtx = nebulaCanvas.getContext('2d');
+  var detailCanvas = document.createElement('canvas');
+  var detailCtx = detailCanvas.getContext('2d');
 
   var stars = [];
   var shootingStars = [];
-  var W, H, cW, cH; // logical vs canvas (pixel) dimensions
+  var W, H, cW, cH;
 
   var starColors = [
-    [220, 232, 255], [200, 218, 255], [185, 200, 255],
-    [170, 188, 255], [150, 205, 248], [140, 232, 228],
-    [255, 255, 255], [245, 240, 255], [210, 190, 255],
-    [165, 225, 255], [185, 255, 245], [255, 252, 252],
+    [225, 235, 255], [205, 220, 255], [190, 205, 255],
+    [175, 190, 255], [155, 210, 250], [145, 235, 230],
+    [255, 255, 255], [248, 245, 255], [215, 195, 255],
+    [170, 228, 255], [190, 255, 248], [255, 254, 254],
   ];
 
   // ───────────────────────────────────────────
-  //  NEBULA CLOUD RENDERER
+  //  TEXTURED CLOUD GENERATOR
   // ───────────────────────────────────────────
 
-  function drawCloud(c, cx, cy, rx, ry, col, alpha, stops) {
-    var r = Math.max(rx, ry);
-    c.save();
-    c.translate(cx, cy);
-    c.scale(rx / r, ry / r);
-    c.translate(-cx, -cy);
+  /**
+   * Generates a textured cloud zone from many overlapping particles.
+   * @param {CanvasRenderingContext2D} c - target context
+   * @param {number} cx - center x (canvas px)
+   * @param {number} cy - center y (canvas px)
+   * @param {number} spreadX - horizontal spread radius
+   * @param {number} spreadY - vertical spread radius
+   * @param {Array} color - [r, g, b]
+   * @param {number} alpha - base alpha for particles
+   * @param {number} count - number of particles
+   * @param {number} minR - min particle radius
+   * @param {number} maxR - max particle radius
+   */
+  function generateCloudZone(c, cx, cy, spreadX, spreadY, color, alpha, count, minR, maxR) {
+    for (var i = 0; i < count; i++) {
+      // Gaussian-ish distribution (box-muller lite using seeded rng)
+      var u1 = rng(), u2 = rng();
+      var g1 = Math.sqrt(-2 * Math.log(u1 + 0.001)) * Math.cos(2 * Math.PI * u2);
+      var g2 = Math.sqrt(-2 * Math.log(u1 + 0.001)) * Math.sin(2 * Math.PI * u2);
 
-    var grad = c.createRadialGradient(cx, cy, 0, cx, cy, r);
-    if (stops) {
-      for (var i = 0; i < stops.length; i++) {
-        var s = stops[i];
-        grad.addColorStop(s[0], 'rgba(' + s[1] + ',' + s[2] + ',' + s[3] + ',' + (alpha * s[4]) + ')');
-      }
-    } else {
-      grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')');
-      grad.addColorStop(0.15, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (alpha * 0.85) + ')');
-      grad.addColorStop(0.35, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (alpha * 0.5) + ')');
-      grad.addColorStop(0.6, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (alpha * 0.18) + ')');
-      grad.addColorStop(0.85, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (alpha * 0.04) + ')');
-      grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-    }
-    c.fillStyle = grad;
-    c.fillRect(cx - r * 1.3, cy - r * 1.3, r * 2.6, r * 2.6);
-    c.restore();
-  }
+      var px = cx + g1 * spreadX * 0.45;
+      var py = cy + g2 * spreadY * 0.45;
+      var r = minR + rng() * (maxR - minR);
+      var a = alpha * (0.3 + rng() * 0.7);
 
-  // ───────────────────────────────────────────
-  //  FAR LAYER (deepest, most blurred feel - large washes)
-  // ───────────────────────────────────────────
+      // Slight color variation
+      var cr = Math.min(255, Math.max(0, color[0] + (rng() - 0.5) * 30));
+      var cg = Math.min(255, Math.max(0, color[1] + (rng() - 0.5) * 20));
+      var cb = Math.min(255, Math.max(0, color[2] + (rng() - 0.5) * 25));
 
-  function renderFarLayer() {
-    farCanvas.width = cW;
-    farCanvas.height = cH;
-    var c = farCtx;
-    c.clearRect(0, 0, cW, cH);
-    c.globalCompositeOperation = 'screen';
+      var grad = c.createRadialGradient(px, py, 0, px, py, r);
+      grad.addColorStop(0, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + a + ')');
+      grad.addColorStop(0.3, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + (a * 0.6) + ')');
+      grad.addColorStop(0.7, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + (a * 0.15) + ')');
+      grad.addColorStop(1, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',0)');
 
-    var clouds = [
-      // Massive deep indigo wash
-      { x: 0.20, y: 0.25, rx: 0.55, ry: 0.45, col: [18, 8, 70], a: 0.55 },
-      // Large purple haze
-      { x: 0.75, y: 0.20, rx: 0.45, ry: 0.40, col: [80, 15, 110], a: 0.45 },
-      // Deep blue center band
-      { x: 0.50, y: 0.48, rx: 0.60, ry: 0.35, col: [10, 40, 120], a: 0.40 },
-      // Violet bottom-left
-      { x: 0.12, y: 0.68, rx: 0.42, ry: 0.38, col: [50, 10, 110], a: 0.38 },
-      // Dark blue bottom-right
-      { x: 0.82, y: 0.65, rx: 0.38, ry: 0.35, col: [8, 55, 120], a: 0.32 },
-      // Purple top band
-      { x: 0.48, y: 0.05, rx: 0.50, ry: 0.28, col: [60, 12, 120], a: 0.35 },
-      // Bottom center dark
-      { x: 0.50, y: 0.90, rx: 0.55, ry: 0.30, col: [12, 8, 60], a: 0.30 },
-    ];
-
-    for (var i = 0; i < clouds.length; i++) {
-      var cl = clouds[i];
-      drawCloud(c, cW * cl.x, cH * cl.y, cW * cl.rx, cH * cl.ry, cl.col, cl.a);
+      c.fillStyle = grad;
+      c.beginPath();
+      c.arc(px, py, r, 0, Math.PI * 2);
+      c.fill();
     }
   }
 
   // ───────────────────────────────────────────
-  //  MID LAYER (medium depth, vivid colors)
+  //  RENDER NEBULA (offscreen, once per resize)
   // ───────────────────────────────────────────
 
-  function renderMidLayer() {
-    midCanvas.width = cW;
-    midCanvas.height = cH;
-    var c = midCtx;
-    c.clearRect(0, 0, cW, cH);
-    c.globalCompositeOperation = 'screen';
+  function renderNebula() {
+    rng = mulberry32(42); // reset seed for consistency
 
-    var clouds = [
-      // Bright magenta bloom upper-right
-      { x: 0.70, y: 0.18, rx: 0.25, ry: 0.22, col: [160, 35, 190], a: 0.50 },
-      // Vivid purple cluster left
-      { x: 0.22, y: 0.32, rx: 0.22, ry: 0.20, col: [120, 40, 210], a: 0.45 },
-      // Cyan accent center-left
-      { x: 0.32, y: 0.52, rx: 0.25, ry: 0.18, col: [15, 130, 200], a: 0.40 },
-      // Blue glow lower-center
-      { x: 0.55, y: 0.72, rx: 0.28, ry: 0.20, col: [25, 70, 190], a: 0.38 },
-      // Magenta wisp far-right
-      { x: 0.90, y: 0.38, rx: 0.18, ry: 0.22, col: [150, 25, 170], a: 0.35 },
-      // Blue upper-left
-      { x: 0.08, y: 0.15, rx: 0.22, ry: 0.18, col: [15, 35, 170], a: 0.38 },
-      // Purple-pink center
-      { x: 0.48, y: 0.35, rx: 0.20, ry: 0.16, col: [100, 30, 180], a: 0.35 },
-      // Teal lower-left
-      { x: 0.18, y: 0.78, rx: 0.20, ry: 0.15, col: [10, 120, 160], a: 0.30 },
-      // Violet upper-center
-      { x: 0.55, y: 0.10, rx: 0.18, ry: 0.14, col: [130, 30, 180], a: 0.32 },
-      // Blue-indigo right
-      { x: 0.85, y: 0.58, rx: 0.18, ry: 0.16, col: [20, 50, 160], a: 0.30 },
-    ];
+    nebulaCanvas.width = cW;
+    nebulaCanvas.height = cH;
+    detailCanvas.width = cW;
+    detailCanvas.height = cH;
 
-    for (var i = 0; i < clouds.length; i++) {
-      var cl = clouds[i];
-      drawCloud(c, cW * cl.x, cH * cl.y, cW * cl.rx, cH * cl.ry, cl.col, cl.a);
-    }
-  }
+    var nc = nebulaCtx;
+    var dc = detailCtx;
+    nc.clearRect(0, 0, cW, cH);
+    dc.clearRect(0, 0, cW, cH);
 
-  // ───────────────────────────────────────────
-  //  NEAR LAYER (foreground, sharpest, brightest cores)
-  // ───────────────────────────────────────────
+    var baseR = Math.max(cW, cH);
 
-  function renderNearLayer() {
-    nearCanvas.width = cW;
-    nearCanvas.height = cH;
-    var c = nearCtx;
-    c.clearRect(0, 0, cW, cH);
-    c.globalCompositeOperation = 'screen';
+    // === PASS 1: Deep base washes (nebulaCanvas, screen mode) ===
+    nc.globalCompositeOperation = 'screen';
 
-    var cores = [
-      // Bright violet-white core
-      { x: 0.28, y: 0.28, rx: 0.10, ry: 0.08, col: [150, 100, 255], a: 0.60 },
-      // Hot magenta core
-      { x: 0.68, y: 0.22, rx: 0.09, ry: 0.07, col: [200, 70, 230], a: 0.55 },
-      // Cyan-blue core
-      { x: 0.42, y: 0.50, rx: 0.10, ry: 0.08, col: [40, 140, 240], a: 0.50 },
-      // Blue-white core
-      { x: 0.80, y: 0.55, rx: 0.07, ry: 0.06, col: [80, 150, 255], a: 0.45 },
-      // Purple core left
-      { x: 0.15, y: 0.50, rx: 0.08, ry: 0.07, col: [120, 50, 220], a: 0.48 },
-      // Magenta spot top-center
-      { x: 0.52, y: 0.12, rx: 0.07, ry: 0.06, col: [180, 60, 210], a: 0.42 },
-      // Teal spot bottom
-      { x: 0.38, y: 0.75, rx: 0.08, ry: 0.06, col: [30, 180, 210], a: 0.40 },
-      // Violet spot bottom-right
-      { x: 0.72, y: 0.70, rx: 0.07, ry: 0.06, col: [110, 40, 200], a: 0.38 },
+    // Large deep indigo-purple wash (covers most of canvas)
+    generateCloudZone(nc,
+      cW * 0.35, cH * 0.40,
+      cW * 0.6, cH * 0.5,
+      [20, 8, 80], 0.25, 80,
+      baseR * 0.08, baseR * 0.25
+    );
 
-      // Extra bright tiny cores (nebula "hearts")
-      { x: 0.30, y: 0.30, rx: 0.04, ry: 0.03, col: [200, 170, 255], a: 0.70 },
-      { x: 0.66, y: 0.24, rx: 0.035, ry: 0.025, col: [230, 140, 255], a: 0.65 },
-      { x: 0.44, y: 0.48, rx: 0.04, ry: 0.03, col: [120, 200, 255], a: 0.55 },
-      { x: 0.16, y: 0.48, rx: 0.03, ry: 0.025, col: [170, 120, 255], a: 0.50 },
-    ];
+    // Dark blue wash (full canvas ambient)
+    generateCloudZone(nc,
+      cW * 0.50, cH * 0.50,
+      cW * 0.7, cH * 0.6,
+      [8, 15, 60], 0.18, 60,
+      baseR * 0.1, baseR * 0.3
+    );
 
-    for (var i = 0; i < cores.length; i++) {
-      var cl = cores[i];
-      drawCloud(c, cW * cl.x, cH * cl.y, cW * cl.rx, cH * cl.ry, cl.col, cl.a);
-    }
-  }
+    // === PASS 2: Main cloud masses (matching reference image) ===
+    nc.globalCompositeOperation = 'screen';
 
-  // ───────────────────────────────────────────
-  //  NOISE TEXTURE (dusty grain)
-  // ───────────────────────────────────────────
+    // PURPLE/VIOLET MASS — upper-center to right (dominant cloud)
+    // Base layer
+    generateCloudZone(nc,
+      cW * 0.58, cH * 0.32,
+      cW * 0.28, cH * 0.22,
+      [90, 20, 160], 0.35, 120,
+      baseR * 0.03, baseR * 0.14
+    );
+    // Brighter inner purple
+    generateCloudZone(nc,
+      cW * 0.62, cH * 0.28,
+      cW * 0.18, cH * 0.15,
+      [140, 50, 200], 0.40, 90,
+      baseR * 0.02, baseR * 0.10
+    );
+    // Hot magenta highlights within purple cloud
+    generateCloudZone(nc,
+      cW * 0.65, cH * 0.25,
+      cW * 0.12, cH * 0.10,
+      [190, 80, 230], 0.45, 60,
+      baseR * 0.015, baseR * 0.07
+    );
+    // Bright magenta-white core
+    generateCloudZone(nc,
+      cW * 0.63, cH * 0.27,
+      cW * 0.06, cH * 0.05,
+      [220, 160, 255], 0.55, 40,
+      baseR * 0.01, baseR * 0.04
+    );
 
-  function renderNoise() {
-    // Use lower res for noise (perf) then scale up
-    var nw = Math.floor(W / 2);
-    var nh = Math.floor(H / 2);
-    noiseCanvas.width = nw;
-    noiseCanvas.height = nh;
-    var c = noiseCtx;
-    var imgData = c.createImageData(nw, nh);
-    var d = imgData.data;
-    for (var i = 0; i < d.length; i += 4) {
-      var v = Math.random() * 255;
-      d[i] = v;
-      d[i + 1] = v;
-      d[i + 2] = v;
-      // Very subtle alpha - just enough for grain texture
-      d[i + 3] = Math.random() < 0.4 ? Math.floor(Math.random() * 12) : 0;
-    }
-    c.putImageData(imgData, 0, 0);
+    // BLUE MASS — lower-left (second dominant cloud)
+    // Base blue
+    generateCloudZone(nc,
+      cW * 0.20, cH * 0.68,
+      cW * 0.22, cH * 0.20,
+      [20, 60, 180], 0.35, 110,
+      baseR * 0.03, baseR * 0.13
+    );
+    // Brighter cyan-blue inner
+    generateCloudZone(nc,
+      cW * 0.18, cH * 0.72,
+      cW * 0.15, cH * 0.13,
+      [40, 110, 220], 0.40, 80,
+      baseR * 0.02, baseR * 0.09
+    );
+    // Bright blue core
+    generateCloudZone(nc,
+      cW * 0.17, cH * 0.73,
+      cW * 0.08, cH * 0.06,
+      [80, 170, 255], 0.50, 50,
+      baseR * 0.01, baseR * 0.05
+    );
+
+    // DEEP BLUE band across center
+    generateCloudZone(nc,
+      cW * 0.40, cH * 0.50,
+      cW * 0.35, cH * 0.15,
+      [15, 30, 130], 0.28, 90,
+      baseR * 0.04, baseR * 0.15
+    );
+
+    // PURPLE wisps — upper-left area
+    generateCloudZone(nc,
+      cW * 0.15, cH * 0.25,
+      cW * 0.18, cH * 0.18,
+      [70, 20, 140], 0.28, 70,
+      baseR * 0.03, baseR * 0.10
+    );
+
+    // VIOLET accent — right edge
+    generateCloudZone(nc,
+      cW * 0.88, cH * 0.45,
+      cW * 0.14, cH * 0.25,
+      [80, 15, 130], 0.22, 60,
+      baseR * 0.03, baseR * 0.10
+    );
+
+    // BLUE-PURPLE lower-right
+    generateCloudZone(nc,
+      cW * 0.78, cH * 0.75,
+      cW * 0.16, cH * 0.16,
+      [30, 25, 120], 0.22, 50,
+      baseR * 0.03, baseR * 0.10
+    );
+
+    // === PASS 3: Detail texture layer (detailCanvas) ===
+    dc.globalCompositeOperation = 'screen';
+
+    // Small bright specks within the purple mass (texture)
+    generateCloudZone(dc,
+      cW * 0.60, cH * 0.30,
+      cW * 0.22, cH * 0.18,
+      [160, 100, 240], 0.30, 150,
+      baseR * 0.005, baseR * 0.025
+    );
+
+    // Small bright specks within the blue mass
+    generateCloudZone(dc,
+      cW * 0.19, cH * 0.70,
+      cW * 0.16, cH * 0.14,
+      [60, 140, 255], 0.28, 120,
+      baseR * 0.005, baseR * 0.02
+    );
+
+    // Scattered dim particles everywhere (dust)
+    generateCloudZone(dc,
+      cW * 0.50, cH * 0.50,
+      cW * 0.55, cH * 0.50,
+      [50, 30, 100], 0.08, 200,
+      baseR * 0.003, baseR * 0.015
+    );
+
+    // Edge wisps - purple haze top
+    generateCloudZone(dc,
+      cW * 0.45, cH * 0.08,
+      cW * 0.35, cH * 0.10,
+      [100, 40, 160], 0.18, 60,
+      baseR * 0.015, baseR * 0.06
+    );
+
+    // Edge wisps - blue haze bottom
+    generateCloudZone(dc,
+      cW * 0.50, cH * 0.92,
+      cW * 0.35, cH * 0.10,
+      [15, 30, 100], 0.15, 50,
+      baseR * 0.015, baseR * 0.06
+    );
+
+    // Additional nebula wisps connecting the two main clouds
+    generateCloudZone(dc,
+      cW * 0.38, cH * 0.50,
+      cW * 0.20, cH * 0.15,
+      [60, 30, 140], 0.18, 80,
+      baseR * 0.01, baseR * 0.05
+    );
   }
 
   // ───────────────────────────────────────────
@@ -218,31 +277,31 @@
   // ───────────────────────────────────────────
 
   function createStars() {
-    var count = Math.min(Math.floor(W * H / 1200), 1100);
+    var count = Math.min(Math.floor(W * H / 1100), 1200);
     stars = [];
     for (var i = 0; i < count; i++) {
       var depth = Math.random();
-      var layer = depth < 0.45 ? 0 : depth < 0.75 ? 1 : depth < 0.92 ? 2 : 3;
-      var sizes = [0.4, 0.8, 1.4, 2.4];
-      var opacities = [0.2, 0.45, 0.7, 0.95];
+      var layer = depth < 0.45 ? 0 : depth < 0.75 ? 1 : depth < 0.93 ? 2 : 3;
+      var sizes = [0.35, 0.7, 1.3, 2.2];
+      var opacities = [0.18, 0.42, 0.72, 0.95];
       var color = starColors[Math.floor(Math.random() * starColors.length)];
 
       var y = Math.random() * H;
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.25) {
         y = H * (0.3 + Math.random() * 0.4) + (Math.random() - 0.5) * H * 0.2;
       }
 
       var angle = Math.random() * Math.PI * 2;
-      var spd = 0.012 + Math.random() * 0.05;
+      var spd = 0.01 + Math.random() * 0.04;
 
       stars.push({
         x: Math.random() * W, y: y,
         baseX: 0, baseY: 0,
-        size: (sizes[layer] + Math.random() * 0.4) * dpr,
+        size: (sizes[layer] + Math.random() * 0.3) * dpr,
         baseOpacity: opacities[layer],
-        twinkleSpeed: 0.0008 + Math.random() * 0.004,
+        twinkleSpeed: 0.0006 + Math.random() * 0.004,
         twinklePhase: Math.random() * Math.PI * 2,
-        twinkleAmt: layer < 2 ? 0.08 : 0.2 + Math.random() * 0.25,
+        twinkleAmt: layer < 2 ? 0.06 : 0.18 + Math.random() * 0.25,
         color: color,
         glow: layer >= 2,
         dx: Math.cos(angle) * spd,
@@ -290,7 +349,6 @@
         continue;
       }
 
-      // Convert to canvas coords
       var sx = s.x * dpr, sy = s.y * dpr;
       var tx = (s.x - Math.cos(s.angle) * s.length) * dpr;
       var ty = (s.y - Math.sin(s.angle) * s.length) * dpr;
@@ -308,13 +366,11 @@
       ctx.lineCap = 'round';
       ctx.stroke();
 
-      // Bright head
       ctx.beginPath();
       ctx.arc(sx, sy, 3 * dpr, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,' + op + ')';
       ctx.fill();
 
-      // Head glow
       var glowR = 14 * dpr;
       var hg = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
       hg.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.5) + ')');
@@ -331,34 +387,22 @@
   function draw(time) {
     ctx.clearRect(0, 0, cW, cH);
 
-    // === FAR NEBULA (deepest, slow breathe) ===
-    var farBreath = reduced ? 0.85 : 0.75 + 0.25 * Math.sin(time * 0.00012);
-    var farDx = reduced ? 0 : Math.sin(time * 0.00003) * 6 * dpr;
-    var farDy = reduced ? 0 : Math.cos(time * 0.000025) * 4 * dpr;
-    ctx.globalAlpha = farBreath;
+    // === NEBULA BASE (textured clouds) ===
+    var baseBreath = reduced ? 0.9 : 0.82 + 0.18 * Math.sin(time * 0.00012);
+    var baseDx = reduced ? 0 : Math.sin(time * 0.000025) * 5 * dpr;
+    var baseDy = reduced ? 0 : Math.cos(time * 0.00002) * 3 * dpr;
+    ctx.globalAlpha = baseBreath;
     ctx.globalCompositeOperation = 'screen';
-    ctx.drawImage(farCanvas, farDx, farDy);
+    ctx.drawImage(nebulaCanvas, baseDx, baseDy);
 
-    // === MID NEBULA (medium depth, medium breathe) ===
-    var midBreath = reduced ? 0.8 : 0.6 + 0.4 * Math.sin(time * 0.00018 + 1.2);
-    var midDx = reduced ? 0 : Math.sin(time * 0.00005 + 1) * 10 * dpr;
-    var midDy = reduced ? 0 : Math.cos(time * 0.00004 + 0.8) * 8 * dpr;
-    ctx.globalAlpha = midBreath;
-    ctx.drawImage(midCanvas, midDx, midDy);
+    // === DETAIL LAYER (texture, wisps, dust) ===
+    var detBreath = reduced ? 0.85 : 0.6 + 0.4 * Math.sin(time * 0.0002 + 1.5);
+    var detDx = reduced ? 0 : Math.sin(time * 0.00006 + 1) * 10 * dpr;
+    var detDy = reduced ? 0 : Math.cos(time * 0.00005 + 0.8) * 7 * dpr;
+    ctx.globalAlpha = detBreath;
+    ctx.drawImage(detailCanvas, detDx, detDy);
 
-    // === NEAR NEBULA (foreground, bright cores, faster breathe) ===
-    var nearBreath = reduced ? 0.75 : 0.5 + 0.5 * Math.sin(time * 0.00025 + 2.5);
-    var nearDx = reduced ? 0 : Math.sin(time * 0.00007 + 2) * 14 * dpr;
-    var nearDy = reduced ? 0 : Math.cos(time * 0.00006 + 1.5) * 10 * dpr;
-    ctx.globalAlpha = nearBreath;
-    ctx.drawImage(nearCanvas, nearDx, nearDy);
-
-    // === NOISE TEXTURE (subtle grain overlay) ===
-    ctx.globalAlpha = reduced ? 0.15 : 0.12 + 0.08 * Math.sin(time * 0.0003);
-    ctx.globalCompositeOperation = 'screen';
-    ctx.drawImage(noiseCanvas, 0, 0, cW, cH);
-
-    // Reset composite
+    // Reset
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
 
@@ -366,14 +410,13 @@
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
 
-      // Slow drift
       if (!reduced) {
         s.x = s.baseX
               + Math.sin(time * 0.00004 + s.twinklePhase) * (2 + s.layer * 1.5)
-              + (time * s.dx * 0.0008);
+              + (time * s.dx * 0.0007);
         s.y = s.baseY
               + Math.cos(time * 0.00003 + s.twinklePhase) * (1.5 + s.layer)
-              + (time * s.dy * 0.0008);
+              + (time * s.dy * 0.0007);
 
         if (s.x > W + 4) { s.x -= W + 8; s.baseX -= W + 8; }
         if (s.x < -4) { s.x += W + 8; s.baseX += W + 8; }
@@ -381,7 +424,6 @@
         if (s.y < -4) { s.y += H + 8; s.baseY += H + 8; }
       }
 
-      // Twinkle
       var op;
       if (reduced) {
         op = s.baseOpacity;
@@ -394,7 +436,6 @@
       var r = s.color[0], g = s.color[1], b = s.color[2];
       var px = s.x * dpr, py = s.y * dpr;
 
-      // Glow halo for brighter stars
       if (s.glow) {
         var gr = s.size * (s.layer === 3 ? 8 : 5);
         var glow = ctx.createRadialGradient(px, py, 0, px, py, gr);
@@ -433,17 +474,14 @@
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
 
-    renderFarLayer();
-    renderMidLayer();
-    renderNearLayer();
-    renderNoise();
+    renderNebula();
     createStars();
   }
 
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 250);
+    resizeTimer = setTimeout(resize, 300);
   });
 
   resize();
