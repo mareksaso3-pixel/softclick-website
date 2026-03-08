@@ -43,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.15), rgba(47, 177, 255, 0.1));
+  background: linear-gradient(135deg, rgba(155, 108, 255, 0.18), rgba(217, 70, 239, 0.10));
   border-radius: var(--radius-md);
   margin-bottom: var(--space-lg);
   color: var(--accent-violet);
@@ -131,7 +131,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, var(--accent-violet), var(--accent-blue), transparent);
+  background: linear-gradient(to bottom, var(--accent-violet), var(--accent-magenta), transparent);
 }
 
 .process-step {
@@ -214,7 +214,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.15), rgba(47, 177, 255, 0.1));
+  background: linear-gradient(135deg, rgba(155, 108, 255, 0.18), rgba(217, 70, 239, 0.10));
   border-radius: var(--radius-md);
   margin: 0 auto var(--space-lg);
   color: var(--accent-violet);
@@ -380,7 +380,7 @@
   height: 120px;
   border-radius: 50%;
   margin: 0 auto var(--space-xl);
-  background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+  background: linear-gradient(135deg, var(--accent-violet), var(--accent-magenta));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -388,7 +388,7 @@
   font-weight: 700;
   color: #FFFFFF;
   overflow: hidden;
-  border: 3px solid rgba(124, 92, 255, 0.3);
+  border: 3px solid rgba(155, 108, 255, 0.3);
 }
 
 .team-photo img {

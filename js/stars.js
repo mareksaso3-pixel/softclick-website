@@ -1,15 +1,9 @@
 /**
- * Deep Space Nebula — Textured HD
+ * Cosmic Vortex Background — 3D Depth Effect
+ * Central dark vortex with radiating light rays, nebula clouds,
+ * depth particles moving outward, and twinkling stars.
  *
- * Generates realistic nebula clouds from clusters of hundreds of
- * overlapping semi-transparent particles (not simple gradients).
- * This creates the "painted/watercolor" texture seen in real nebula photos.
- *
- * Architecture:
- *   - Seeded PRNG for consistent nebula across reloads
- *   - Offscreen canvas: textured nebula (rendered once on resize)
- *   - devicePixelRatio scaling for HiDPI
- *   - Main canvas: nebula composite + stars + shooting stars
+ * Respects prefers-reduced-motion.
  */
 (function () {
   var canvas = document.getElementById('stars-canvas');
@@ -17,301 +11,300 @@
 
   var ctx = canvas.getContext('2d');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  // Seeded PRNG (mulberry32) for consistent nebula
-  function mulberry32(a) {
-    return function () {
-      a |= 0; a = a + 0x6D2B79F5 | 0;
-      var t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-  var rng = mulberry32(42);
 
   // Offscreen canvases
   var nebulaCanvas = document.createElement('canvas');
   var nebulaCtx = nebulaCanvas.getContext('2d');
-  var detailCanvas = document.createElement('canvas');
-  var detailCtx = detailCanvas.getContext('2d');
+  var raysCanvas = document.createElement('canvas');
+  var raysCtx = raysCanvas.getContext('2d');
 
   var stars = [];
+  var depthParticles = [];
   var shootingStars = [];
-  var W, H, cW, cH;
+  var W, H, CX, CY;
+
+  // Color palette matching the cosmic nebula reference
+  var nebulaColors = {
+    deepPurple: [80, 20, 160],
+    magenta: [200, 50, 180],
+    hotPink: [244, 114, 182],
+    cyan: [34, 211, 238],
+    blue: [60, 140, 255],
+    violet: [155, 108, 255],
+    warmPink: [255, 120, 160],
+    orange: [255, 160, 80],
+  };
 
   var starColors = [
-    [225, 235, 255], [205, 220, 255], [190, 205, 255],
-    [175, 190, 255], [155, 210, 250], [145, 235, 230],
-    [255, 255, 255], [248, 245, 255], [215, 195, 255],
-    [170, 228, 255], [190, 255, 248], [255, 254, 254],
+    [220, 230, 255], [200, 215, 255], [180, 200, 255],
+    [170, 185, 255], [150, 200, 245], [200, 180, 255],
+    [255, 255, 255], [240, 235, 255], [255, 220, 255],
+    [160, 220, 255], [255, 200, 240], [230, 200, 255],
   ];
 
   // ───────────────────────────────────────────
-  //  TEXTURED CLOUD GENERATOR
+  //  STATIC NEBULA (offscreen, rendered once)
   // ───────────────────────────────────────────
 
-  /**
-   * Generates a textured cloud zone from many overlapping particles.
-   * @param {CanvasRenderingContext2D} c - target context
-   * @param {number} cx - center x (canvas px)
-   * @param {number} cy - center y (canvas px)
-   * @param {number} spreadX - horizontal spread radius
-   * @param {number} spreadY - vertical spread radius
-   * @param {Array} color - [r, g, b]
-   * @param {number} alpha - base alpha for particles
-   * @param {number} count - number of particles
-   * @param {number} minR - min particle radius
-   * @param {number} maxR - max particle radius
-   */
-  function generateCloudZone(c, cx, cy, spreadX, spreadY, color, alpha, count, minR, maxR) {
-    for (var i = 0; i < count; i++) {
-      // Gaussian-ish distribution (box-muller lite using seeded rng)
-      var u1 = rng(), u2 = rng();
-      var g1 = Math.sqrt(-2 * Math.log(u1 + 0.001)) * Math.cos(2 * Math.PI * u2);
-      var g2 = Math.sqrt(-2 * Math.log(u1 + 0.001)) * Math.sin(2 * Math.PI * u2);
+  function renderStaticNebula() {
+    nebulaCanvas.width = W;
+    nebulaCanvas.height = H;
 
-      var px = cx + g1 * spreadX * 0.45;
-      var py = cy + g2 * spreadY * 0.45;
-      var r = minR + rng() * (maxR - minR);
-      var a = alpha * (0.3 + rng() * 0.7);
+    var c = nebulaCtx;
+    c.clearRect(0, 0, W, H);
+    c.globalCompositeOperation = 'screen';
 
-      // Slight color variation
-      var cr = Math.min(255, Math.max(0, color[0] + (rng() - 0.5) * 30));
-      var cg = Math.min(255, Math.max(0, color[1] + (rng() - 0.5) * 20));
-      var cb = Math.min(255, Math.max(0, color[2] + (rng() - 0.5) * 25));
+    // Large nebula clouds radiating from center
+    var clouds = [
+      // Left purple-magenta cloud mass
+      { x: 0.25, y: 0.38, rx: 0.35, ry: 0.30, c: [100, 20, 160], a: 0.40 },
+      { x: 0.18, y: 0.30, rx: 0.25, ry: 0.22, c: [180, 40, 200], a: 0.32 },
+      { x: 0.12, y: 0.50, rx: 0.22, ry: 0.28, c: [140, 30, 180], a: 0.28 },
 
-      var grad = c.createRadialGradient(px, py, 0, px, py, r);
-      grad.addColorStop(0, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + a + ')');
-      grad.addColorStop(0.3, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + (a * 0.6) + ')');
-      grad.addColorStop(0.7, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + (a * 0.15) + ')');
-      grad.addColorStop(1, 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',0)');
+      // Right blue-cyan cloud mass
+      { x: 0.78, y: 0.35, rx: 0.30, ry: 0.28, c: [30, 80, 200], a: 0.35 },
+      { x: 0.85, y: 0.45, rx: 0.25, ry: 0.25, c: [20, 140, 210], a: 0.28 },
+      { x: 0.72, y: 0.25, rx: 0.20, ry: 0.18, c: [60, 120, 255], a: 0.25 },
 
-      c.fillStyle = grad;
+      // Top pink-purple wisps
+      { x: 0.40, y: 0.15, rx: 0.30, ry: 0.18, c: [180, 50, 180], a: 0.25 },
+      { x: 0.60, y: 0.12, rx: 0.25, ry: 0.15, c: [200, 60, 160], a: 0.22 },
+
+      // Bottom blue-purple
+      { x: 0.35, y: 0.72, rx: 0.28, ry: 0.22, c: [60, 30, 150], a: 0.28 },
+      { x: 0.65, y: 0.68, rx: 0.25, ry: 0.20, c: [40, 70, 180], a: 0.22 },
+
+      // Bright accent cores (vivid hot spots)
+      { x: 0.30, y: 0.35, rx: 0.10, ry: 0.08, c: [200, 80, 255], a: 0.50 },
+      { x: 0.70, y: 0.38, rx: 0.08, ry: 0.07, c: [40, 180, 240], a: 0.45 },
+      { x: 0.22, y: 0.45, rx: 0.07, ry: 0.06, c: [220, 60, 200], a: 0.40 },
+      { x: 0.80, y: 0.30, rx: 0.06, ry: 0.05, c: [80, 160, 255], a: 0.38 },
+      { x: 0.45, y: 0.20, rx: 0.06, ry: 0.05, c: [255, 120, 180], a: 0.35 },
+      { x: 0.55, y: 0.65, rx: 0.07, ry: 0.06, c: [100, 60, 220], a: 0.32 },
+    ];
+
+    for (var i = 0; i < clouds.length; i++) {
+      drawCloud(c, clouds[i]);
+    }
+  }
+
+  function drawCloud(c, cloud) {
+    var cx = W * cloud.x;
+    var cy = H * cloud.y;
+    var rx = W * cloud.rx;
+    var ry = H * cloud.ry;
+    var r = Math.max(rx, ry);
+
+    c.save();
+    c.translate(cx, cy);
+    c.scale(rx / r, ry / r);
+    c.translate(-cx, -cy);
+
+    var grad = c.createRadialGradient(cx, cy, 0, cx, cy, r);
+    var col = cloud.c;
+    var a = cloud.a;
+    grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + a + ')');
+    grad.addColorStop(0.15, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.85) + ')');
+    grad.addColorStop(0.4, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.45) + ')');
+    grad.addColorStop(0.7, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.12) + ')');
+    grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+
+    c.fillStyle = grad;
+    c.fillRect(cx - r * 1.3, cy - r * 1.3, r * 2.6, r * 2.6);
+    c.restore();
+  }
+
+  // ───────────────────────────────────────────
+  //  LIGHT RAYS (offscreen, static base)
+  // ───────────────────────────────────────────
+
+  function renderStaticRays() {
+    raysCanvas.width = W;
+    raysCanvas.height = H;
+
+    var c = raysCtx;
+    c.clearRect(0, 0, W, H);
+
+    var numRays = 48;
+    var maxLen = Math.max(W, H) * 0.85;
+
+    for (var i = 0; i < numRays; i++) {
+      var angle = (i / numRays) * Math.PI * 2 + (Math.random() - 0.5) * 0.08;
+      var length = maxLen * (0.4 + Math.random() * 0.6);
+      var width = 0.8 + Math.random() * 2.5;
+      var opacity = 0.02 + Math.random() * 0.06;
+
+      // Alternate colors: purple, magenta, blue, cyan, pink
+      var rayColors = [
+        nebulaColors.violet, nebulaColors.magenta, nebulaColors.blue,
+        nebulaColors.cyan, nebulaColors.hotPink, nebulaColors.deepPurple,
+        nebulaColors.warmPink, nebulaColors.orange,
+      ];
+      var col = rayColors[i % rayColors.length];
+
+      var ex = CX + Math.cos(angle) * length;
+      var ey = CY + Math.sin(angle) * length;
+
+      var grad = c.createLinearGradient(CX, CY, ex, ey);
+      grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+      grad.addColorStop(0.1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.5) + ')');
+      grad.addColorStop(0.3, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + opacity + ')');
+      grad.addColorStop(0.7, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.6) + ')');
+      grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+
+      c.save();
       c.beginPath();
-      c.arc(px, py, r, 0, Math.PI * 2);
-      c.fill();
+      c.moveTo(CX, CY);
+      c.lineTo(ex, ey);
+      c.strokeStyle = grad;
+      c.lineWidth = width;
+      c.lineCap = 'round';
+      c.globalCompositeOperation = 'screen';
+      c.stroke();
+      c.restore();
     }
   }
 
   // ───────────────────────────────────────────
-  //  RENDER NEBULA (offscreen, once per resize)
-  // ───────────────────────────────────────────
-
-  function renderNebula() {
-    rng = mulberry32(42); // reset seed for consistency
-
-    nebulaCanvas.width = cW;
-    nebulaCanvas.height = cH;
-    detailCanvas.width = cW;
-    detailCanvas.height = cH;
-
-    var nc = nebulaCtx;
-    var dc = detailCtx;
-    nc.clearRect(0, 0, cW, cH);
-    dc.clearRect(0, 0, cW, cH);
-
-    var baseR = Math.max(cW, cH);
-
-    // === PASS 1: Deep base washes (nebulaCanvas, screen mode) ===
-    nc.globalCompositeOperation = 'screen';
-
-    // Large deep indigo-purple wash (covers most of canvas)
-    generateCloudZone(nc,
-      cW * 0.35, cH * 0.40,
-      cW * 0.6, cH * 0.5,
-      [20, 8, 80], 0.25, 80,
-      baseR * 0.08, baseR * 0.25
-    );
-
-    // Dark blue wash (full canvas ambient)
-    generateCloudZone(nc,
-      cW * 0.50, cH * 0.50,
-      cW * 0.7, cH * 0.6,
-      [8, 15, 60], 0.18, 60,
-      baseR * 0.1, baseR * 0.3
-    );
-
-    // === PASS 2: Main cloud masses (matching reference image) ===
-    nc.globalCompositeOperation = 'screen';
-
-    // PURPLE/VIOLET MASS — upper-center to right (dominant cloud)
-    // Base layer
-    generateCloudZone(nc,
-      cW * 0.58, cH * 0.32,
-      cW * 0.28, cH * 0.22,
-      [90, 20, 160], 0.35, 120,
-      baseR * 0.03, baseR * 0.14
-    );
-    // Brighter inner purple
-    generateCloudZone(nc,
-      cW * 0.62, cH * 0.28,
-      cW * 0.18, cH * 0.15,
-      [140, 50, 200], 0.40, 90,
-      baseR * 0.02, baseR * 0.10
-    );
-    // Hot magenta highlights within purple cloud
-    generateCloudZone(nc,
-      cW * 0.65, cH * 0.25,
-      cW * 0.12, cH * 0.10,
-      [190, 80, 230], 0.45, 60,
-      baseR * 0.015, baseR * 0.07
-    );
-    // Bright magenta-white core
-    generateCloudZone(nc,
-      cW * 0.63, cH * 0.27,
-      cW * 0.06, cH * 0.05,
-      [220, 160, 255], 0.55, 40,
-      baseR * 0.01, baseR * 0.04
-    );
-
-    // BLUE MASS — lower-left (second dominant cloud)
-    // Base blue
-    generateCloudZone(nc,
-      cW * 0.20, cH * 0.68,
-      cW * 0.22, cH * 0.20,
-      [20, 60, 180], 0.35, 110,
-      baseR * 0.03, baseR * 0.13
-    );
-    // Brighter cyan-blue inner
-    generateCloudZone(nc,
-      cW * 0.18, cH * 0.72,
-      cW * 0.15, cH * 0.13,
-      [40, 110, 220], 0.40, 80,
-      baseR * 0.02, baseR * 0.09
-    );
-    // Bright blue core
-    generateCloudZone(nc,
-      cW * 0.17, cH * 0.73,
-      cW * 0.08, cH * 0.06,
-      [80, 170, 255], 0.50, 50,
-      baseR * 0.01, baseR * 0.05
-    );
-
-    // DEEP BLUE band across center
-    generateCloudZone(nc,
-      cW * 0.40, cH * 0.50,
-      cW * 0.35, cH * 0.15,
-      [15, 30, 130], 0.28, 90,
-      baseR * 0.04, baseR * 0.15
-    );
-
-    // PURPLE wisps — upper-left area
-    generateCloudZone(nc,
-      cW * 0.15, cH * 0.25,
-      cW * 0.18, cH * 0.18,
-      [70, 20, 140], 0.28, 70,
-      baseR * 0.03, baseR * 0.10
-    );
-
-    // VIOLET accent — right edge
-    generateCloudZone(nc,
-      cW * 0.88, cH * 0.45,
-      cW * 0.14, cH * 0.25,
-      [80, 15, 130], 0.22, 60,
-      baseR * 0.03, baseR * 0.10
-    );
-
-    // BLUE-PURPLE lower-right
-    generateCloudZone(nc,
-      cW * 0.78, cH * 0.75,
-      cW * 0.16, cH * 0.16,
-      [30, 25, 120], 0.22, 50,
-      baseR * 0.03, baseR * 0.10
-    );
-
-    // === PASS 3: Detail texture layer (detailCanvas) ===
-    dc.globalCompositeOperation = 'screen';
-
-    // Small bright specks within the purple mass (texture)
-    generateCloudZone(dc,
-      cW * 0.60, cH * 0.30,
-      cW * 0.22, cH * 0.18,
-      [160, 100, 240], 0.30, 150,
-      baseR * 0.005, baseR * 0.025
-    );
-
-    // Small bright specks within the blue mass
-    generateCloudZone(dc,
-      cW * 0.19, cH * 0.70,
-      cW * 0.16, cH * 0.14,
-      [60, 140, 255], 0.28, 120,
-      baseR * 0.005, baseR * 0.02
-    );
-
-    // Scattered dim particles everywhere (dust)
-    generateCloudZone(dc,
-      cW * 0.50, cH * 0.50,
-      cW * 0.55, cH * 0.50,
-      [50, 30, 100], 0.08, 200,
-      baseR * 0.003, baseR * 0.015
-    );
-
-    // Edge wisps - purple haze top
-    generateCloudZone(dc,
-      cW * 0.45, cH * 0.08,
-      cW * 0.35, cH * 0.10,
-      [100, 40, 160], 0.18, 60,
-      baseR * 0.015, baseR * 0.06
-    );
-
-    // Edge wisps - blue haze bottom
-    generateCloudZone(dc,
-      cW * 0.50, cH * 0.92,
-      cW * 0.35, cH * 0.10,
-      [15, 30, 100], 0.15, 50,
-      baseR * 0.015, baseR * 0.06
-    );
-
-    // Additional nebula wisps connecting the two main clouds
-    generateCloudZone(dc,
-      cW * 0.38, cH * 0.50,
-      cW * 0.20, cH * 0.15,
-      [60, 30, 140], 0.18, 80,
-      baseR * 0.01, baseR * 0.05
-    );
-  }
-
-  // ───────────────────────────────────────────
-  //  STARFIELD
+  //  STARFIELD (with depth layers)
   // ───────────────────────────────────────────
 
   function createStars() {
-    var count = Math.min(Math.floor(W * H / 1100), 1200);
+    var count = Math.min(Math.floor(W * H / 1600), 800);
     stars = [];
+
     for (var i = 0; i < count; i++) {
       var depth = Math.random();
-      var layer = depth < 0.45 ? 0 : depth < 0.75 ? 1 : depth < 0.93 ? 2 : 3;
-      var sizes = [0.35, 0.7, 1.3, 2.2];
-      var opacities = [0.18, 0.42, 0.72, 0.95];
+      var layer = depth < 0.5 ? 0 : depth < 0.8 ? 1 : depth < 0.95 ? 2 : 3;
+      var sizes = [0.3, 0.7, 1.4, 2.4];
+      var opacities = [0.15, 0.35, 0.6, 0.85];
       var color = starColors[Math.floor(Math.random() * starColors.length)];
 
       var y = Math.random() * H;
-      if (Math.random() < 0.25) {
-        y = H * (0.3 + Math.random() * 0.4) + (Math.random() - 0.5) * H * 0.2;
-      }
-
       var angle = Math.random() * Math.PI * 2;
       var spd = 0.01 + Math.random() * 0.04;
 
       stars.push({
-        x: Math.random() * W, y: y,
+        x: Math.random() * W,
+        y: y,
         baseX: 0, baseY: 0,
-        size: (sizes[layer] + Math.random() * 0.3) * dpr,
+        size: sizes[layer] + Math.random() * 0.4,
         baseOpacity: opacities[layer],
-        twinkleSpeed: 0.0006 + Math.random() * 0.004,
+        twinkleSpeed: 0.001 + Math.random() * 0.005,
         twinklePhase: Math.random() * Math.PI * 2,
-        twinkleAmt: layer < 2 ? 0.06 : 0.18 + Math.random() * 0.25,
+        twinkleAmt: layer < 2 ? 0.1 : 0.25 + Math.random() * 0.3,
         color: color,
         glow: layer >= 2,
         dx: Math.cos(angle) * spd,
         dy: Math.sin(angle) * spd,
-        layer: layer
+        layer: layer,
       });
     }
     for (var k = 0; k < stars.length; k++) {
       stars[k].baseX = stars[k].x;
       stars[k].baseY = stars[k].y;
+    }
+  }
+
+  // ───────────────────────────────────────────
+  //  DEPTH PARTICLES (3D outward flow)
+  // ───────────────────────────────────────────
+
+  function createDepthParticles() {
+    var count = Math.min(Math.floor(W * H / 8000), 150);
+    depthParticles = [];
+
+    for (var i = 0; i < count; i++) {
+      depthParticles.push(newDepthParticle());
+    }
+  }
+
+  function newDepthParticle() {
+    var angle = Math.random() * Math.PI * 2;
+    var dist = Math.random() * 0.15; // start near center
+    var speed = 0.0002 + Math.random() * 0.0006;
+    var palettes = [
+      nebulaColors.violet, nebulaColors.magenta, nebulaColors.cyan,
+      nebulaColors.blue, nebulaColors.hotPink, [255, 255, 255],
+    ];
+    var col = palettes[Math.floor(Math.random() * palettes.length)];
+
+    return {
+      angle: angle,
+      dist: dist,
+      speed: speed,
+      maxDist: 0.6 + Math.random() * 0.5,
+      size: 0.5 + Math.random() * 1.5,
+      color: col,
+      baseOpacity: 0.15 + Math.random() * 0.4,
+      trail: 3 + Math.random() * 8,
+    };
+  }
+
+  function drawDepthParticles() {
+    for (var i = 0; i < depthParticles.length; i++) {
+      var p = depthParticles[i];
+
+      // Move outward from center
+      p.dist += p.speed;
+
+      // Reset when too far
+      if (p.dist > p.maxDist) {
+        depthParticles[i] = newDepthParticle();
+        continue;
+      }
+
+      // Progress 0..1 through life
+      var life = p.dist / p.maxDist;
+      // Fade in then out
+      var opacity = life < 0.15 ? life / 0.15 : 1 - Math.pow((life - 0.15) / 0.85, 2);
+      opacity *= p.baseOpacity;
+      if (opacity < 0.01) continue;
+
+      // Size grows with distance (3D perspective)
+      var size = p.size * (0.5 + life * 2);
+
+      var px = CX + Math.cos(p.angle) * p.dist * Math.max(W, H);
+      var py = CY + Math.sin(p.angle) * p.dist * Math.max(W, H);
+
+      // Skip if offscreen
+      if (px < -20 || px > W + 20 || py < -20 || py > H + 20) continue;
+
+      // Trail line toward center
+      var trailLen = p.trail * life;
+      var tx = px - Math.cos(p.angle) * trailLen;
+      var ty = py - Math.sin(p.angle) * trailLen;
+
+      var col = p.color;
+
+      if (trailLen > 1) {
+        var grad = ctx.createLinearGradient(tx, ty, px, py);
+        grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+        grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.6) + ')');
+        ctx.beginPath();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = size * 0.6;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      }
+
+      // Particle head
+      ctx.beginPath();
+      ctx.arc(px, py, size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + opacity + ')';
+      ctx.fill();
+
+      // Glow on larger particles
+      if (size > 1.2) {
+        var glowR = size * 3;
+        var glow = ctx.createRadialGradient(px, py, 0, px, py, glowR);
+        glow.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.3) + ')');
+        glow.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(px - glowR, py - glowR, glowR * 2, glowR * 2);
+      }
     }
   }
 
@@ -325,11 +318,11 @@
       x: Math.random() * W * 0.7 + W * 0.1,
       y: Math.random() * H * 0.35,
       angle: Math.PI / 5 + Math.random() * Math.PI / 5,
-      speed: 5 + Math.random() * 6,
-      length: 90 + Math.random() * 140,
+      speed: 5 + Math.random() * 7,
+      length: 100 + Math.random() * 150,
       life: 0,
-      maxLife: 30 + Math.random() * 30,
-      color: Math.random() > 0.5 ? [160, 240, 220] : [200, 180, 255],
+      maxLife: 28 + Math.random() * 30,
+      color: Math.random() > 0.5 ? [200, 180, 255] : [255, 180, 240],
     });
   }
 
@@ -349,35 +342,66 @@
         continue;
       }
 
-      var sx = s.x * dpr, sy = s.y * dpr;
-      var tx = (s.x - Math.cos(s.angle) * s.length) * dpr;
-      var ty = (s.y - Math.sin(s.angle) * s.length) * dpr;
+      var tx = s.x - Math.cos(s.angle) * s.length;
+      var ty = s.y - Math.sin(s.angle) * s.length;
 
-      var grad = ctx.createLinearGradient(tx, ty, sx, sy);
+      var grad = ctx.createLinearGradient(tx, ty, s.x, s.y);
       grad.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',0)');
       grad.addColorStop(0.5, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.3) + ')');
       grad.addColorStop(1, 'rgba(255,255,255,' + (op * 0.9) + ')');
 
       ctx.beginPath();
       ctx.moveTo(tx, ty);
-      ctx.lineTo(sx, sy);
+      ctx.lineTo(s.x, s.y);
       ctx.strokeStyle = grad;
-      ctx.lineWidth = 2 * dpr;
+      ctx.lineWidth = 1.8;
       ctx.lineCap = 'round';
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(sx, sy, 3 * dpr, 0, Math.PI * 2);
+      ctx.arc(s.x, s.y, 2.5, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,' + op + ')';
       ctx.fill();
 
-      var glowR = 14 * dpr;
-      var hg = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowR);
-      hg.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.5) + ')');
+      var hg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 14);
+      hg.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.45) + ')');
       hg.addColorStop(1, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',0)');
       ctx.fillStyle = hg;
-      ctx.fillRect(sx - glowR, sy - glowR, glowR * 2, glowR * 2);
+      ctx.fillRect(s.x - 14, s.y - 14, 28, 28);
     }
+  }
+
+  // ───────────────────────────────────────────
+  //  DRAW VORTEX CENTER
+  // ───────────────────────────────────────────
+
+  function drawVortexCenter(time) {
+    // Pulsing dark void in center
+    var pulse = 0.85 + 0.15 * Math.sin(time * 0.0003);
+    var voidRadius = Math.min(W, H) * 0.08 * pulse;
+
+    // Dark center
+    var voidGrad = ctx.createRadialGradient(CX, CY, 0, CX, CY, voidRadius * 3);
+    voidGrad.addColorStop(0, 'rgba(3, 8, 16, 0.9)');
+    voidGrad.addColorStop(0.3, 'rgba(3, 8, 16, 0.6)');
+    voidGrad.addColorStop(0.6, 'rgba(3, 8, 16, 0.2)');
+    voidGrad.addColorStop(1, 'rgba(3, 8, 16, 0)');
+    ctx.fillStyle = voidGrad;
+    ctx.fillRect(CX - voidRadius * 3, CY - voidRadius * 3, voidRadius * 6, voidRadius * 6);
+
+    // Bright ring around void
+    var ringPulse = 0.7 + 0.3 * Math.sin(time * 0.0004 + 1);
+    var ringGrad = ctx.createRadialGradient(CX, CY, voidRadius * 0.8, CX, CY, voidRadius * 2.5);
+    ringGrad.addColorStop(0, 'rgba(155, 108, 255, 0)');
+    ringGrad.addColorStop(0.3, 'rgba(155, 108, 255,' + (0.08 * ringPulse) + ')');
+    ringGrad.addColorStop(0.5, 'rgba(217, 70, 239,' + (0.06 * ringPulse) + ')');
+    ringGrad.addColorStop(0.7, 'rgba(60, 140, 255,' + (0.04 * ringPulse) + ')');
+    ringGrad.addColorStop(1, 'rgba(60, 140, 255, 0)');
+
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = ringGrad;
+    ctx.fillRect(CX - voidRadius * 3, CY - voidRadius * 3, voidRadius * 6, voidRadius * 6);
+    ctx.globalCompositeOperation = 'source-over';
   }
 
   // ───────────────────────────────────────────
@@ -385,38 +409,64 @@
   // ───────────────────────────────────────────
 
   function draw(time) {
-    ctx.clearRect(0, 0, cW, cH);
+    ctx.clearRect(0, 0, W, H);
 
-    // === NEBULA BASE (textured clouds) ===
-    var baseBreath = reduced ? 0.9 : 0.82 + 0.18 * Math.sin(time * 0.00012);
-    var baseDx = reduced ? 0 : Math.sin(time * 0.000025) * 5 * dpr;
-    var baseDy = reduced ? 0 : Math.cos(time * 0.00002) * 3 * dpr;
+    // 1. Nebula base layer (breathing)
+    var baseBreath = reduced ? 0.85 : 0.75 + 0.25 * Math.sin(time * 0.00012);
     ctx.globalAlpha = baseBreath;
     ctx.globalCompositeOperation = 'screen';
-    ctx.drawImage(nebulaCanvas, baseDx, baseDy);
-
-    // === DETAIL LAYER (texture, wisps, dust) ===
-    var detBreath = reduced ? 0.85 : 0.6 + 0.4 * Math.sin(time * 0.0002 + 1.5);
-    var detDx = reduced ? 0 : Math.sin(time * 0.00006 + 1) * 10 * dpr;
-    var detDy = reduced ? 0 : Math.cos(time * 0.00005 + 0.8) * 7 * dpr;
-    ctx.globalAlpha = detBreath;
-    ctx.drawImage(detailCanvas, detDx, detDy);
-
-    // Reset
+    ctx.drawImage(nebulaCanvas, 0, 0);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
 
-    // === STARS ===
+    // 2. Light rays (rotating slowly, pulsing)
+    if (!reduced) {
+      var rayRotation = time * 0.000008;
+      var rayPulse = 0.5 + 0.5 * Math.sin(time * 0.0002);
+      ctx.save();
+      ctx.globalAlpha = 0.4 + rayPulse * 0.35;
+      ctx.globalCompositeOperation = 'screen';
+      ctx.translate(CX, CY);
+      ctx.rotate(rayRotation);
+      ctx.translate(-CX, -CY);
+      ctx.drawImage(raysCanvas, 0, 0);
+      ctx.restore();
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+
+      // Second ray layer, counter-rotating
+      var rayPulse2 = 0.4 + 0.4 * Math.sin(time * 0.00025 + 2);
+      ctx.save();
+      ctx.globalAlpha = 0.25 + rayPulse2 * 0.25;
+      ctx.globalCompositeOperation = 'screen';
+      ctx.translate(CX, CY);
+      ctx.rotate(-rayRotation * 1.3);
+      ctx.translate(-CX, -CY);
+      ctx.drawImage(raysCanvas, 0, 0);
+      ctx.restore();
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    // 3. Central vortex void
+    drawVortexCenter(time);
+
+    // 4. Depth particles (3D outward flow)
+    if (!reduced) {
+      drawDepthParticles();
+    }
+
+    // 5. Stars
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
 
       if (!reduced) {
         s.x = s.baseX
               + Math.sin(time * 0.00004 + s.twinklePhase) * (2 + s.layer * 1.5)
-              + (time * s.dx * 0.0007);
+              + (time * s.dx * 0.0006);
         s.y = s.baseY
               + Math.cos(time * 0.00003 + s.twinklePhase) * (1.5 + s.layer)
-              + (time * s.dy * 0.0007);
+              + (time * s.dy * 0.0006);
 
         if (s.x > W + 4) { s.x -= W + 8; s.baseX -= W + 8; }
         if (s.x < -4) { s.x += W + 8; s.baseX += W + 8; }
@@ -434,28 +484,27 @@
       }
 
       var r = s.color[0], g = s.color[1], b = s.color[2];
-      var px = s.x * dpr, py = s.y * dpr;
 
       if (s.glow) {
         var gr = s.size * (s.layer === 3 ? 8 : 5);
-        var glow = ctx.createRadialGradient(px, py, 0, px, py, gr);
+        var glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, gr);
         glow.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + (op * 0.3) + ')');
-        glow.addColorStop(0.4, 'rgba(' + r + ',' + g + ',' + b + ',' + (op * 0.08) + ')');
+        glow.addColorStop(0.5, 'rgba(' + r + ',' + g + ',' + b + ',' + (op * 0.08) + ')');
         glow.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
         ctx.fillStyle = glow;
-        ctx.fillRect(px - gr, py - gr, gr * 2, gr * 2);
+        ctx.fillRect(s.x - gr, s.y - gr, gr * 2, gr * 2);
       }
 
       ctx.beginPath();
-      ctx.arc(px, py, s.size, 0, Math.PI * 2);
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + op + ')';
       ctx.fill();
     }
 
-    // === SHOOTING STARS ===
+    // 6. Shooting stars
     if (!reduced) {
       drawShootingStars();
-      if (Math.random() < 0.006) spawnShootingStar();
+      if (Math.random() < 0.005) spawnShootingStar();
       requestAnimationFrame(draw);
     }
   }
@@ -465,23 +514,21 @@
   // ───────────────────────────────────────────
 
   function resize() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    cW = Math.floor(W * dpr);
-    cH = Math.floor(H * dpr);
-    canvas.width = cW;
-    canvas.height = cH;
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    CX = W * 0.5;
+    CY = H * 0.42; // slightly above center for visual balance
 
-    renderNebula();
+    renderStaticNebula();
+    renderStaticRays();
     createStars();
+    createDepthParticles();
   }
 
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 300);
+    resizeTimer = setTimeout(resize, 250);
   });
 
   resize();

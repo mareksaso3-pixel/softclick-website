@@ -1,19 +1,21 @@
 :root {
-  /* Colors - Aurora Deep Space Palette */
-  --deep-navy: #050d1a;
-  --cosmic-indigo: #0a1628;
-  --deep-purple: #110a2e;
-  --accent-violet: #7C5CFF;
-  --accent-blue: #2FB1FF;
-  --accent-emerald: #34D399;
+  /* Colors - Cosmic Nebula Palette */
+  --deep-navy: #030810;
+  --cosmic-indigo: #080d1e;
+  --deep-purple: #0d0520;
+  --accent-violet: #9B6CFF;
+  --accent-blue: #3DB8FF;
+  --accent-magenta: #D946EF;
+  --accent-pink: #F472B6;
+  --accent-cyan: #22D3EE;
   --accent-teal: #06B6D4;
-  --cta-gradient: linear-gradient(135deg, #6B5CF6 0%, #06B6D4 50%, #34D399 100%);
-  --cta-gradient-hover: linear-gradient(135deg, #7D6FF7 0%, #22D3EE 50%, #4ADE80 100%);
-  --card-bg: rgba(10, 22, 40, 0.5);
-  --card-border: rgba(52, 211, 153, 0.1);
-  --card-border-hover: rgba(124, 92, 255, 0.35);
-  --glass-bg: rgba(5, 13, 26, 0.85);
-  --glass-border: rgba(52, 211, 153, 0.08);
+  --cta-gradient: linear-gradient(135deg, #9B6CFF 0%, #D946EF 50%, #3DB8FF 100%);
+  --cta-gradient-hover: linear-gradient(135deg, #A87CFF 0%, #E065F5 50%, #5CC8FF 100%);
+  --card-bg: rgba(8, 12, 30, 0.55);
+  --card-border: rgba(155, 108, 255, 0.12);
+  --card-border-hover: rgba(217, 70, 239, 0.35);
+  --glass-bg: rgba(5, 8, 20, 0.88);
+  --glass-border: rgba(155, 108, 255, 0.1);
 
   /* Text */
   --text-light: #E8F0FE;
@@ -62,7 +64,7 @@
   --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Shadows */
-  --shadow-glow: 0 0 20px rgba(52, 211, 153, 0.2), 0 0 40px rgba(124, 92, 255, 0.15);
-  --shadow-glow-strong: 0 0 30px rgba(52, 211, 153, 0.3), 0 0 60px rgba(124, 92, 255, 0.2), 0 0 100px rgba(6, 182, 212, 0.1);
+  --shadow-glow: 0 0 20px rgba(155, 108, 255, 0.25), 0 0 40px rgba(217, 70, 239, 0.15);
+  --shadow-glow-strong: 0 0 30px rgba(155, 108, 255, 0.3), 0 0 60px rgba(217, 70, 239, 0.2), 0 0 100px rgba(61, 184, 255, 0.1);
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
 }

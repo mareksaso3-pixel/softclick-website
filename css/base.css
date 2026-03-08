@@ -25,7 +25,7 @@ body {
   min-height: 100vh;
 }
 
-/* Deep Space Background - vivid base gradient under canvas */
+/* Cosmic Vortex Background - radial burst from center */
 body::before {
   content: '';
   position: fixed;
@@ -34,16 +34,17 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse 90% 65% at 22% 22%, rgba(30, 10, 90, 0.35) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 55% at 72% 18%, rgba(110, 20, 140, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse 100% 50% at 50% 45%, rgba(12, 50, 140, 0.20) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 55% at 82% 62%, rgba(20, 80, 160, 0.15) 0%, transparent 48%),
-    radial-gradient(ellipse 65% 75% at 8% 72%, rgba(8, 5, 35, 0.45) 0%, transparent 50%);
+    radial-gradient(ellipse 50% 50% at 50% 45%, rgba(3, 8, 16, 0.0) 0%, rgba(3, 8, 16, 0.6) 40%, rgba(3, 8, 16, 0.95) 70%),
+    radial-gradient(ellipse 80% 60% at 30% 35%, rgba(80, 20, 160, 0.30) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 75% 30%, rgba(180, 40, 200, 0.22) 0%, transparent 45%),
+    radial-gradient(ellipse 90% 40% at 50% 50%, rgba(20, 60, 180, 0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 20% 65%, rgba(120, 30, 180, 0.18) 0%, transparent 45%),
+    radial-gradient(ellipse 55% 55% at 80% 60%, rgba(30, 100, 200, 0.20) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* CSS Aurora glow - large soft color washes */
+/* Cosmic Vortex Aurora - radial energy bursts */
 .aurora-bg {
   position: fixed;
   top: 0;
@@ -63,67 +64,76 @@ body::before {
   left: -25%;
   opacity: 0;
   mix-blend-mode: screen;
-  filter: blur(90px);
+  filter: blur(60px);
   will-change: transform, opacity;
 }
 
+/* Purple-magenta nebula cloud (left side) */
 .aurora-layer--1 {
   background:
-    radial-gradient(ellipse 75% 45% at 18% 22%, rgba(50, 15, 140, 0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 35% at 40% 18%, rgba(140, 40, 180, 0.22) 0%, transparent 55%);
-  animation: auroraFlow1 16s ease-in-out infinite;
+    radial-gradient(ellipse 55% 50% at 25% 40%, rgba(150, 30, 200, 0.40) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 35% 25%, rgba(200, 50, 180, 0.30) 0%, transparent 50%),
+    radial-gradient(ellipse 30% 25% at 15% 55%, rgba(100, 20, 160, 0.25) 0%, transparent 50%);
+  animation: vortexPulse1 12s ease-in-out infinite;
 }
 
+/* Blue-cyan energy stream (right side) */
 .aurora-layer--2 {
   background:
-    radial-gradient(ellipse 60% 45% at 78% 22%, rgba(160, 35, 190, 0.28) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 30% at 62% 32%, rgba(25, 90, 210, 0.22) 0%, transparent 50%);
-  animation: auroraFlow2 20s ease-in-out infinite;
+    radial-gradient(ellipse 50% 45% at 75% 35%, rgba(30, 100, 220, 0.35) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 30% at 65% 50%, rgba(34, 211, 238, 0.28) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 35% at 85% 25%, rgba(60, 140, 255, 0.25) 0%, transparent 55%);
+  animation: vortexPulse2 15s ease-in-out infinite;
 }
 
+/* Pink-orange energy wisps (radial) */
 .aurora-layer--3 {
   background:
-    radial-gradient(ellipse 85% 35% at 48% 38%, rgba(15, 100, 200, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 40% at 55% 22%, rgba(80, 25, 180, 0.20) 0%, transparent 55%);
-  animation: auroraFlow3 24s ease-in-out infinite;
+    radial-gradient(ellipse 60% 30% at 50% 45%, rgba(220, 60, 180, 0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 40% at 40% 60%, rgba(244, 114, 182, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 60% 30%, rgba(255, 140, 100, 0.15) 0%, transparent 50%);
+  animation: vortexPulse3 18s ease-in-out infinite;
 }
 
+/* Central vortex glow - bright core */
 .aurora-layer--4 {
   background:
-    radial-gradient(ellipse 55% 50% at 28% 42%, rgba(25, 150, 170, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 35% at 72% 52%, rgba(100, 35, 190, 0.20) 0%, transparent 55%);
-  animation: auroraFlow4 18s ease-in-out infinite;
+    radial-gradient(ellipse 35% 35% at 50% 42%, rgba(155, 108, 255, 0.35) 0%, transparent 45%),
+    radial-gradient(ellipse 25% 25% at 50% 42%, rgba(217, 70, 239, 0.30) 0%, transparent 40%),
+    radial-gradient(ellipse 15% 15% at 50% 42%, rgba(255, 255, 255, 0.08) 0%, transparent 35%);
+  filter: blur(40px);
+  animation: vortexCore 8s ease-in-out infinite;
 }
 
-@keyframes auroraFlow1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.75; }
-  30% { transform: translate(4%, -3%) scale(1.1); opacity: 1; }
-  60% { transform: translate(-3%, 4%) scale(1.04); opacity: 0.85; }
+@keyframes vortexPulse1 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+  25% { transform: translate(3%, -2%) scale(1.08) rotate(2deg); opacity: 1; }
+  50% { transform: translate(-2%, 3%) scale(1.02) rotate(-1deg); opacity: 0.8; }
+  75% { transform: translate(1%, 1%) scale(1.12) rotate(1deg); opacity: 0.9; }
 }
 
-@keyframes auroraFlow2 {
-  0%, 100% { transform: translate(0, 0) scale(1.05); opacity: 0.6; }
-  40% { transform: translate(-4%, 3%) scale(1); opacity: 1; }
-  70% { transform: translate(3%, -2%) scale(1.12); opacity: 0.75; }
+@keyframes vortexPulse2 {
+  0%, 100% { transform: translate(0, 0) scale(1.05) rotate(0deg); opacity: 0.6; }
+  30% { transform: translate(-3%, 2%) scale(1) rotate(-2deg); opacity: 1; }
+  60% { transform: translate(2%, -1%) scale(1.15) rotate(1deg); opacity: 0.75; }
 }
 
-@keyframes auroraFlow3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  35% { transform: translate(4%, 3%) scale(1.15); opacity: 0.95; }
-  70% { transform: translate(-2%, -1%) scale(1.05); opacity: 0.65; }
+@keyframes vortexPulse3 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
+  35% { transform: translate(2%, 2%) scale(1.1) rotate(3deg); opacity: 0.9; }
+  70% { transform: translate(-1%, -2%) scale(1.05) rotate(-2deg); opacity: 0.65; }
 }
 
-@keyframes auroraFlow4 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.45; }
-  35% { transform: translate(-3%, -3%); opacity: 0.9; }
-  75% { transform: translate(3%, 2%); opacity: 0.6; }
+@keyframes vortexCore {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .aurora-layer {
     animation: none !important;
-    opacity: 0.6 !important;
-    filter: blur(100px);
+    opacity: 0.7 !important;
+    filter: blur(80px);
   }
 }
 
