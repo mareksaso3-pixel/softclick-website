@@ -1,0 +1,197 @@
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Tablet: 768px - 1023px */
+@media (max-width: 1023px) {
+  :root {
+    --container-padding: 1.25rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .header-cta .btn {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Center the 5th benefit card on its own row */
+  .benefits-grid .benefit-card:nth-child(5) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  .references-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .process-timeline {
+    max-width: 100%;
+  }
+}
+
+/* Mobile: up to 767px */
+@media (max-width: 767px) {
+  :root {
+    --space-5xl: 5rem;
+    --space-4xl: 3.5rem;
+    --container-padding: 1rem;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + var(--space-2xl));
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-headline {
+    letter-spacing: -0.02em;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-orb {
+    width: 300px;
+    height: 300px;
+    right: -20%;
+    top: 5%;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .stat-item {
+    padding: var(--space-md);
+  }
+
+  .process-step {
+    gap: var(--space-lg);
+  }
+
+  .process-step-number {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-base);
+  }
+
+  .process-timeline::before {
+    left: 19px;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefits-grid .benefit-card:nth-child(5) {
+    max-width: 100%;
+  }
+
+  .references-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .team-card {
+    padding: var(--space-2xl);
+  }
+
+  .faq-question {
+    font-size: var(--font-size-base);
+    padding: var(--space-lg) 0;
+  }
+
+  .contact-grid {
+    gap: var(--space-2xl);
+  }
+
+  .contact-form {
+    padding: var(--space-lg);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .mobile-menu-inner a {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Small mobile: up to 400px */
+@media (max-width: 400px) {
+  :root {
+    --container-padding: 0.875rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+/* Wide screens: 1440px+ */
+@media (min-width: 1440px) {
+  :root {
+    --container-max: 1360px;
+  }
+}

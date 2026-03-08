@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoftClick.ai – AI automatizácia pre Váš biznis</title>
+  <meta name="description" content="Vytvárame AI asistentov na mieru, ktorí pracujú 24/7. Automatizujeme emaily, CRM, kalendár a interné procesy. Ušetrite hodiny manuálnej práce denne.">
+  <meta name="theme-color" content="#071133">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SoftClick.ai – AI automatizácia pre Váš biznis">
+  <meta property="og:description" content="Vytvárame AI asistentov na mieru, ktorí pracujú 24/7. Ušetrite hodiny manuálnej práce denne.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://softclick.ai">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/marquee.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Calendly CSS -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Skip to content -->
+  <a href="#main" class="skip-to-content">Preskočiť na obsah</a>
+
+  <!-- Stars Background -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+  <div class="page-wrapper">
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a href="#" class="logo" aria-label="SoftClick.ai – Domov">
+          <span class="logo-soft">Soft</span><span class="logo-click">Click</span><span class="logo-ai">.ai</span>
+          <svg class="logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6 L26 16 L8 26 Z" fill="url(#logoGrad)" />
+            <defs>
+              <linearGradient id="logoGrad" x1="8" y1="6" x2="26" y2="16" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#6B5CF6" />
+                <stop offset="100%" stop-color="#2FB1FF" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </a>
+
+        <nav aria-label="Hlavná navigácia">
+          <ul class="nav-links">
+            <li><a href="#sluzby">Služby</a></li>
+            <li><a href="#proces">Ako to funguje</a></li>
+            <li><a href="#preco">Prečo my</a></li>
+            <li><a href="#onas">O nás</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-cta">
+          <a href="#" class="btn btn-primary btn-sm" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+            Bezplatná konzultácia
+          </a>
+        </div>
+
+        <button class="hamburger" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobilné menu">
+      <div class="mobile-menu-inner">
+        <a href="#sluzby">Služby</a>
+        <a href="#proces">Ako to funguje</a>
+        <a href="#preco">Prečo my</a>
+        <a href="#onas">O nás</a>
+        <a href="#faq">FAQ</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#" class="btn btn-primary" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+          Bezplatná konzultácia
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+
+      <!-- ===== HERO ===== -->
+      <section class="hero" id="hero">
+        <div class="hero-orb" aria-hidden="true"></div>
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="hero-headline">
+              AI automatizácia<br>pre Váš biznis
+            </h1>
+            <p class="hero-subheadline">
+              Vytvárame AI zamestnancov, ktorí pracujú pre Vás 24 hodín denne, 7 dní v týždni. Bez prestávok, bez chýb, bez dovolenky.
+            </p>
+            <div class="hero-cta-group">
+              <a href="#" class="btn btn-primary btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+                Dohodnite si bezplatnú konzultáciu
+                <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a href="#sluzby" class="btn btn-secondary btn-lg">
+                Pozrite si naše služby
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PARTNER MARQUEE ===== -->
+      <section class="marquee-section" aria-label="Technológie s ktorými pracujeme">
+        <p class="marquee-label">Technológie s ktorými pracujeme</p>
+        <div class="marquee-wrapper">
+          <div class="marquee-track">
+            <!-- Set 1 -->
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 14h8M14 10v8" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>OpenAI</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 4L4 24h20L14 4z" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>
+              <span>Anthropic</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><circle cx="14" cy="14" r="4" stroke="#F5F7FF" stroke-width="1.5" fill="none"/></svg>
+              <span>Google AI</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="8" width="20" height="12" rx="3" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 12v4M14 10v8M18 12v4" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>n8n</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6 22L14 6l8 16" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 16h10" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Canva</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="20" height="20" rx="4" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 14l3 3 5-6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Make</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 8h20v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8z" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M4 8l10 7 10-7" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Gmail</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 7L12 21l-6-6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Slack</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 14l8 8L24 6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Zapier</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M20 8L8 20M8 8l12 12" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/></svg>
+              <span>Gamma</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6 6l16 16M6 22L22 6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+              <span>Telegram</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M14 8v6l4 2" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Antigravity</span>
+            </div>
+            <!-- Set 2 (duplicate for seamless loop) -->
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 14h8M14 10v8" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>OpenAI</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 4L4 24h20L14 4z" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>
+              <span>Anthropic</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><circle cx="14" cy="14" r="4" stroke="#F5F7FF" stroke-width="1.5" fill="none"/></svg>
+              <span>Google AI</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="8" width="20" height="12" rx="3" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 12v4M14 10v8M18 12v4" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>n8n</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6 22L14 6l8 16" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 16h10" stroke="#F5F7FF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Canva</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="20" height="20" rx="4" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M10 14l3 3 5-6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Make</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 8h20v12a2 2 0 01-2 2H6a2 2 0 01-2-2V8z" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M4 8l10 7 10-7" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Gmail</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M22 7L12 21l-6-6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Slack</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M4 14l8 8L24 6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Zapier</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M20 8L8 20M8 8l12 12" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/></svg>
+              <span>Gamma</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M6 6l16 16M6 22L22 6" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+              <span>Telegram</span>
+            </div>
+            <div class="marquee-item">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#F5F7FF" stroke-width="1.5" fill="none"/><path d="M14 8v6l4 2" stroke="#F5F7FF" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Antigravity</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SERVICES ===== -->
+      <section class="section" id="sluzby">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Naše služby</span>
+            <h2 class="section-title">Naši AI asistenti</h2>
+            <p class="section-subtitle">Vytvárame AI asistentov na mieru podľa potrieb klienta. Každý asistent je personalizovaný a prispôsobený konkrétnemu workflow-u zákazníka.</p>
+          </div>
+          <div class="services-grid stagger-children">
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 5 10-5"/></svg>
+              </div>
+              <h3>AI Email Asistent</h3>
+              <p>Automaticky číta prichádzajúce emaily, rozumie ich obsahu, triedi ich podľa priority a odpovedá na ne vo Vašom mene. Odpovede sú personalizované podľa Vášho štýlu komunikácie. Funguje 24/7.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <h3>CRM Integrácia a automatický zápis</h3>
+              <p>Automaticky zapisuje nových klientov, kontakty a informácie z emailov priamo do Vášho CRM systému. Žiadne ručné prepisovanie – všetko sa deje automaticky v reálnom čase.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+              </div>
+              <h3>Kalendár Agent</h3>
+              <p>Dohaduje stretnutia s klientmi, vidí Vašu dostupnosť a automaticky zapisuje potvrdené stretnutia do kalendára – Vám aj klientovi. Nikto nezabudne na stretnutie.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3>Follow-up Systém</h3>
+              <p>Automatické personalizované pripomienky klientom, ktorí nereagovali. Systém sám rozpozná, kedy je vhodný čas na follow-up a pošle správu šitú na mieru.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </div>
+              <h3>AI Outreach Agent</h3>
+              <p>Automatické oslovovanie Vašej cieľovej skupiny personalizovanými emailmi. Agent vytvorí správu na mieru pre každého potenciálneho zákazníka na základe dostupných informácií.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+              </div>
+              <h3>Agent na správu sociálnych sietí</h3>
+              <p>Automatický posting na sociálne siete – agent vytvorí obsah, naplánuje príspevky a publikuje ich podľa harmonogramu.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+              </div>
+              <h3>Zápisy z porád a stretnutí</h3>
+              <p>Automaticky zaznamenáva priebeh stretnutí, vytvorí štruktúrovaný zápis s kľúčovými bodmi, úlohami a termínmi a pošle ho všetkým účastníkom.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><path d="M12 19v4M8 23h8"/></svg>
+              </div>
+              <h3>Hlasový asistent</h3>
+              <p>AI asistent, ktorý komunikuje hlasovo – dokáže prijímať hovory, odpovedať na otázky klientov a presmerovať ich na správnu osobu.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+              </div>
+              <h3>Vnútropodnikové automatizácie</h3>
+              <p>Automatizácia interných firemných procesov – onboarding nových klientov, reporting, prepojenie systémov medzi sebou, automatické generovanie dokumentov.</p>
+            </div>
+
+            <div class="service-card animate-on-scroll">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <h3>Custom AI riešenia</h3>
+              <p>Ak máte špecifický proces, ktorý chcete automatizovať, navrhneme a vytvoríme riešenie na mieru presne podľa Vašich potrieb. Dokážeme automatizovať prakticky akýkoľvek opakujúci sa proces.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== STATS ===== -->
+      <section class="stats-section" aria-label="Štatistiky">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" data-count="10" data-suffix="+">0</div>
+              <div class="stat-label">typov automatizácií</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" data-count="24/7">24/7</div>
+              <div class="stat-label">non-stop fungovanie</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" data-count="~0">~0</div>
+              <div class="stat-label">chybovosť</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" data-count="50" data-suffix="+">0</div>
+              <div class="stat-label">spokojných klientov</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PROCESS ===== -->
+      <section class="section" id="proces">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Proces</span>
+            <h2 class="section-title">Ako to funguje</h2>
+            <p class="section-subtitle">Od prvej konzultácie po plnú automatizáciu v 6 jednoduchých krokoch.</p>
+          </div>
+          <div class="process-timeline">
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">1</div>
+              <div class="process-step-content">
+                <h3>Bezplatná konzultácia</h3>
+                <p>Zistíme, ktoré procesy Vám zaberajú najviac času a kde vidíme najväčší potenciál na automatizáciu.</p>
+              </div>
+            </div>
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">2</div>
+              <div class="process-step-content">
+                <h3>Návrh riešenia</h3>
+                <p>Navrhneme AI asistentov presne podľa Vášho workflow-u. Vysvetlíme, čo bude automatizované a ako.</p>
+              </div>
+            </div>
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">3</div>
+              <div class="process-step-content">
+                <h3>Implementácia</h3>
+                <p>Vytvoríme a nasadíme riešenie. Prepojíme ho s Vašimi existujúcimi systémami.</p>
+              </div>
+            </div>
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">4</div>
+              <div class="process-step-content">
+                <h3>Testovanie</h3>
+                <p>Otestujeme všetko na reálnych dátach. Uistíme sa, že systém funguje presne ako má.</p>
+              </div>
+            </div>
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">5</div>
+              <div class="process-step-content">
+                <h3>Schvaľovací režim</h3>
+                <p>Vy kontrolujete každú akciu AI asistenta. Nič sa neodošle bez Vášho súhlasu, kým nie ste spokojný s výsledkami.</p>
+              </div>
+            </div>
+
+            <div class="process-step animate-on-scroll">
+              <div class="process-step-number">6</div>
+              <div class="process-step-content">
+                <h3>Plná automatizácia</h3>
+                <p>Keď ste spokojný, systém pracuje samostatne 24/7. Vy sa sústredíte na to, čo Vás živí.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== WHY SOFTCLICK ===== -->
+      <section class="section" id="preco">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Výhody</span>
+            <h2 class="section-title">Prečo SoftClick.ai</h2>
+            <p class="section-subtitle">Postaráme sa o Vašu administratívu – Vy sa sústreďte na to, čo Vás živí.</p>
+          </div>
+          <div class="benefits-grid stagger-children">
+
+            <div class="benefit-card animate-on-scroll">
+              <div class="benefit-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h3>Na mieru, nie šablóny</h3>
+              <p>Každého asistenta navrhujeme presne podľa Vašich potrieb. Personalizovaný systém, ktorý kopíruje Váš workflow.</p>
+            </div>
+
+            <div class="benefit-card animate-on-scroll">
+              <div class="benefit-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <h3>Funguje 24/7</h3>
+              <p>Naši AI asistenti pracujú nepretržite. Je to ako mať zamestnanca, ktorý nikdy nespí.</p>
+            </div>
+
+            <div class="benefit-card animate-on-scroll">
+              <div class="benefit-icon">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <h3>Plná kontrola</h3>
+              <p>Vy máte vždy plnú kontrolu. Nič sa neodošle bez Vášho vedomia, kým sa nerozhodnete inak.</p>
+            </div>
+
+            <div class="benefit-card animate-on-scroll">
+              <div class="benefit-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+              <h3>GDPR compliance</h3>
+              <p>Pracujeme v súlade s GDPR, uzatvárame sprostredkovateľskú zmluvu a údaje spracovávame v rámci EÚ.</p>
+            </div>
+
+            <div class="benefit-card animate-on-scroll">
+              <div class="benefit-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <h3>Osobný prístup</h3>
+              <p>Sme malý, flexibilný tím. Komunikujete priamo so zakladateľom, nie s call centrom.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== REFERENCES ===== -->
+      <section class="section" id="referencie">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Referencie</span>
+            <h2 class="section-title">Čo sme realizovali</h2>
+            <p class="section-subtitle">Pomáhame firmám v rôznych oblastiach automatizovať ich každodenné procesy.</p>
+          </div>
+          <div class="references-grid stagger-children">
+
+            <div class="reference-card animate-on-scroll">
+              <div class="reference-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 5 10-5"/></svg>
+              </div>
+              <h3>AI Email Asistent</h3>
+              <p>Automatické odpovede na emaily, triedenie podľa priority, CRM zápis a dohadovanie stretnutí – všetko v jednom riešení.</p>
+            </div>
+
+            <div class="reference-card animate-on-scroll">
+              <div class="reference-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </div>
+              <h3>Outreach Systém</h3>
+              <p>Oslovovanie cieľovej skupiny personalizovanými emailmi. Každá správa vytvorená na mieru pre konkrétneho príjemcu.</p>
+            </div>
+
+            <div class="reference-card animate-on-scroll">
+              <div class="reference-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+              </div>
+              <h3>Správa sociálnych sietí</h3>
+              <p>Automatická tvorba obsahu, plánovanie a publikovanie príspevkov na sociálne siete podľa harmonogramu.</p>
+            </div>
+
+            <div class="reference-card animate-on-scroll">
+              <div class="reference-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83-2.83l-.06.06A1.65 1.65 0 0015 15.4V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68V3a2 2 0 014 0v.09c0 .66.38 1.26 1 1.51l.06-.06a2 2 0 012.83 2.83l-.06.06c-.45.45-.64 1.1-.33 1.82H21a2 2 0 010 4h-.09c-.66 0-1.26.38-1.51 1z"/></svg>
+              </div>
+              <h3>Workflow Automatizácie</h3>
+              <p>Komplexné prepojenie viacerých systémov do jedného automatizovaného workflow-u. Onboarding, reporting, dokumenty.</p>
+            </div>
+
+            <div class="reference-card animate-on-scroll">
+              <div class="reference-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3>Follow-up Systém</h3>
+              <p>Automatické posielanie personalizovaných emailov na neodpovedané správy. Systém rozpozná správny čas na pripomienku.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PRICING ===== -->
+      <section class="section" id="cennik">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Cenník</span>
+            <h2 class="section-title">Individuálny prístup</h2>
+            <p class="section-subtitle">Každé riešenie je iné, preto aj cena. Cenovú ponuku pripravíme na mieru presne podľa Vašich potrieb.</p>
+          </div>
+          <div class="pricing-wrapper animate-on-scroll">
+            <div class="pricing-card">
+              <h3>Ako to funguje</h3>
+              <p>Nepracujeme s fixnými balíčkami. Po bezplatnej konzultácii presne pochopíme, čo potrebujete, a pripravíme cenovú ponuku na mieru.</p>
+              <ul class="pricing-features">
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Bezplatná úvodná konzultácia
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Cenová ponuka do 48 hodín
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Žiadne skryté poplatky
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Platíte len za to, čo využívate
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Priebežná podpora a údržba
+                </li>
+              </ul>
+              <a href="#" class="btn btn-primary btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+                Nezáväzná konzultácia zadarmo
+                <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ===== -->
+      <section class="section" id="onas">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">O nás</span>
+            <h2 class="section-title">Kto za tým stojí</h2>
+          </div>
+          <div class="team-wrapper animate-on-scroll">
+            <div class="team-card">
+              <div class="team-photo">
+                <!-- Placeholder - nahraďte reálnou fotkou: <img src="assets/adam.jpg" alt="Adam Barbeník"> -->
+                AB
+              </div>
+              <h3>Adam Barbeník</h3>
+              <p class="team-role">Founder</p>
+              <p class="team-bio">Má na starosti vývoj, nasadzovanie a údržbu AI agentov a automatizácií, ako aj komunikáciu s klientmi. Verí, že AI dokáže odbremeniť ľudí od rutinnej práce a uvoľniť im ruky na to, čo ich naozaj baví.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FAQ ===== -->
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">Často kladené otázky</h2>
+          </div>
+          <div class="faq-wrapper">
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Čo je AI asistent a ako funguje?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>AI asistent je softvérový agent poháňaný umelou inteligenciou, ktorý dokáže vykonávať úlohy ako odpovedanie na emaily, zapisovanie do CRM, dohadovanie stretnutí alebo správu sociálnych sietí. Funguje nepretržite, automaticky a bez potreby Vášho zásahu – presne podľa pravidiel, ktoré spolu nastavíme.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Je to bezpečné? Ako je to s GDPR?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Áno, bezpečnosť je naša priorita. Pracujeme v súlade s GDPR, uzatvárame sprostredkovateľskú zmluvu a všetky údaje spracovávame v rámci EÚ. Máte plnú kontrolu nad tým, čo AI asistent robí – nič sa neodošle bez Vášho vedomia.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Koľko času mi to reálne ušetrí?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Záleží od objemu Vašej práce, ale väčšina našich klientov ušetrí 2-4 hodiny denne na rutinnej administratíve. To je 40-80 hodín mesačne, ktoré môžete venovať práci, ktorá Vás naozaj živí.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Čo ak mi riešenie nebude vyhovovať?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Každé riešenie prispôsobujeme presne Vašim potrebám. Ak niečo nefunguje podľa očakávaní, upravíme to. Na začiatku máte plnú kontrolu v schvaľovacom režime, takže vidíte presne, čo AI robí, ešte predtým než ho pustíte plne automaticky.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Ako dlho trvá implementácia?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Jednoduchšie automatizácie (napr. email asistent) vieme nasadiť do niekoľkých dní. Komplexnejšie riešenia s prepojením viacerých systémov zvyčajne trvajú 1-2 týždne. Presný harmonogram dohodneme na úvodnej konzultácii.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Musím niečo meniť vo svojich existujúcich systémoch?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Nie. Naše riešenia sa napájajú na Vaše existujúce nástroje (email, CRM, kalendár, Slack a pod.) bez potreby čokoľvek meniť. Pracujeme s tým, čo už používate.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+              <button class="faq-question" aria-expanded="false">
+                Koľko to stojí?
+                <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-answer" role="region">
+                <div class="faq-answer-inner">
+                  <p>Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CTA SECTION ===== -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content animate-on-scroll">
+            <h2>Vaši noví AI zamestnanci sú pripravení nastúpiť</h2>
+            <p>Odpisujú na emaily, zapisujú do CRM, dohadujú stretnutia a nikdy nezabudnú na follow-up.</p>
+            <a href="#" class="btn btn-primary btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+              Dohodnite si bezplatnú konzultáciu
+              <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CONTACT ===== -->
+      <section class="section" id="kontakt">
+        <div class="container">
+          <div class="section-header animate-on-scroll">
+            <span class="section-label">Kontakt</span>
+            <h2 class="section-title">Ozvite sa nám</h2>
+            <p class="section-subtitle">Máte otázku alebo chcete vedieť viac? Napíšte nám alebo si rovno dohodnite bezplatnú konzultáciu.</p>
+          </div>
+          <div class="contact-grid">
+            <div class="contact-info animate-on-scroll">
+              <h3>Spojme sa</h3>
+              <p>Radi Vám odpovieme na akékoľvek otázky. Zvyčajne odpovedáme do 24 hodín.</p>
+              <div class="contact-detail">
+                <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 5 10-5"/></svg>
+                <a href="mailto:adam@softclick.ai">adam@softclick.ai</a>
+              </div>
+              <div class="contact-detail">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                <a href="https://softclick.ai" target="_blank" rel="noopener">softclick.ai</a>
+              </div>
+              <div style="margin-top: var(--space-2xl);">
+                <a href="#" class="btn btn-secondary" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/sasik-marek05/30min'});return false;">
+                  Dohodnúť si stretnutie cez Calendly
+                </a>
+              </div>
+            </div>
+
+            <form class="contact-form animate-on-scroll" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+              <!-- Web3Forms access key - REPLACE with your actual key -->
+              <input type="hidden" name="access_key" value="4e528eff-9291-4aa2-a835-ae71118cbef0">
+              <input type="hidden" name="subject" value="Nová správa z webu SoftClick.ai">
+              <input type="hidden" name="from_name" value="SoftClick.ai Web">
+              <!-- Honeypot -->
+              <input type="checkbox" name="botcheck" style="display: none;">
+
+              <div class="form-group">
+                <label for="name">Meno</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Vaše meno" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="vas@email.sk" required>
+              </div>
+              <div class="form-group">
+                <label for="message">Správa</label>
+                <textarea id="message" name="message" class="form-textarea" placeholder="Opíšte nám, čo by ste chceli automatizovať..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary form-submit">
+                Odoslať správu
+                <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="form-status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-inner">
+          <a href="#" class="footer-logo logo" aria-label="SoftClick.ai">
+            <span class="logo-soft">Soft</span><span class="logo-click">Click</span><span class="logo-ai">.ai</span>
+          </a>
+          <ul class="footer-links">
+            <li><a href="#sluzby">Služby</a></li>
+            <li><a href="#proces">Proces</a></li>
+            <li><a href="#preco">Prečo my</a></li>
+            <li><a href="#onas">O nás</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+          <p class="footer-copy">&copy; 2025 <a href="#">SoftClick.ai</a>. Všetky práva vyhradené.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- .page-wrapper -->
+
+  <!-- Scripts -->
+  <script src="js/stars.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+
+  <!-- Calendly -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+  <!-- Google Analytics - REPLACE G-XXXXXXXXXX with your Measurement ID -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+</body>
+</html>
