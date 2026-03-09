@@ -41,25 +41,9 @@
   flex-shrink: 0;
 }
 
-.logo-soft {
-  color: #FFFFFF;
-}
-
-.logo-click {
-  background: var(--cta-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.logo-ai {
-  color: var(--text-muted);
-}
-
-.logo-icon {
-  width: 28px;
-  height: 28px;
-  margin-left: 4px;
+.logo-img {
+  height: 32px;
+  width: auto;
 }
 
 /* Navigation */
