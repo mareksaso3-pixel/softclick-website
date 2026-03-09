@@ -48,8 +48,8 @@
   /* Layout */
   --container-max: 1280px;
   --container-padding: 1.5rem;
-  --header-height: 100px;
-  --header-height-scrolled: 70px;
+  --header-height: 80px;
+  --header-height-scrolled: 64px;
 
   /* Border Radius */
   --radius-sm: 8px;

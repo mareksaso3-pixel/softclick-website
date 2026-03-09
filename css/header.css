@@ -42,13 +42,13 @@
 }
 
 .logo-img {
-  height: 80px;
+  height: 60px;
   width: auto;
   transition: height var(--transition-base);
 }
 
 .site-header.scrolled .logo-img {
-  height: 52px;
+  height: 44px;
 }
 
 /* Navigation */
