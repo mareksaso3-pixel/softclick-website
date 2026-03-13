@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://softclick.ai/sitemap.xml
