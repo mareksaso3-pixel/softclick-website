@@ -304,18 +304,6 @@
   border: 1px solid var(--card-border);
   border-radius: var(--radius-xl);
   padding: var(--space-4xl) var(--space-3xl);
-  position: relative;
-  overflow: hidden;
-}
-
-.pricing-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--cta-gradient);
 }
 
 .pricing-card h3 {
