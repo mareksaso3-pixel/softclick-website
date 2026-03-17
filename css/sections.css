@@ -70,6 +70,28 @@
   line-height: 1.6;
 }
 
+/* Featured service card - full width */
+.service-card--featured {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  text-align: left;
+}
+
+.service-card--featured .service-icon {
+  flex-shrink: 0;
+}
+
+.service-card--featured h3 {
+  font-size: var(--font-size-2xl);
+}
+
+.service-card--featured p {
+  font-size: var(--font-size-base);
+  max-width: 640px;
+}
+
 /* ===== STATS SECTION ===== */
 .stats-section {
   padding: var(--space-4xl) 0;
