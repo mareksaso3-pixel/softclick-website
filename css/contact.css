@@ -12,9 +12,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(155, 108, 255, 0.10) 0%, rgba(217, 70, 239, 0.04) 40%, transparent 65%);
+  width: 1200px;
+  height: 1200px;
+  background: radial-gradient(circle, rgba(155, 108, 255, 0.06) 0%, rgba(217, 70, 239, 0.02) 30%, transparent 55%);
   pointer-events: none;
 }
 
