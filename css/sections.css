@@ -70,22 +70,21 @@
   line-height: 1.6;
 }
 
-/* Featured service card - full width */
+/* Featured service card - centered */
 .service-card--featured {
   grid-column: 1 / -1;
-  padding: var(--space-3xl) var(--space-2xl);
+  max-width: 540px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
   text-align: center;
 }
 
 .service-card--featured h3 {
-  font-size: var(--font-size-3xl);
-  margin-bottom: var(--space-md);
+  font-size: var(--font-size-xl);
 }
 
 .service-card--featured p {
-  font-size: var(--font-size-lg);
-  max-width: 700px;
-  margin: 0 auto;
+  font-size: var(--font-size-sm);
   line-height: 1.7;
 }
 
