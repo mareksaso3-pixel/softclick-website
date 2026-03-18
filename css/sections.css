@@ -1,7 +1,33 @@
 /* ===== SERVICES SECTION ===== */
-.services-grid {
+.services-split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: start;
+}
+
+.services-left {
+  position: sticky;
+  top: 120px;
+}
+
+.services-left h3 {
+  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--space-xl);
+  color: var(--text-heading);
+}
+
+.services-left p {
+  font-size: var(--font-size-lg);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.services-right {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xl);
 }
 
@@ -50,24 +76,6 @@
 .service-card p {
   font-size: var(--font-size-sm);
   line-height: 1.6;
-}
-
-/* Featured service card - centered */
-.service-card--featured {
-  grid-column: 1 / -1;
-  max-width: 540px;
-  margin: 0 auto;
-  padding: var(--space-2xl);
-  text-align: center;
-}
-
-.service-card--featured h3 {
-  font-size: var(--font-size-xl);
-}
-
-.service-card--featured p {
-  font-size: var(--font-size-sm);
-  line-height: 1.7;
 }
 
 /* ===== STATS SECTION ===== */

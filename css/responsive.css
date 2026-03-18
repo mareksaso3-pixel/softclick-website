@@ -26,8 +26,13 @@
     max-width: 100%;
   }
 
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .services-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .services-left {
+    position: static;
   }
 
   .stats-grid {
@@ -92,10 +97,6 @@
     height: 300px;
     right: -20%;
     top: 5%;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
   }
 
   .stats-grid {
