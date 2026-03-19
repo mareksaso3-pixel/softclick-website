@@ -7,17 +7,11 @@
 }
 
 .services-left {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
-}
-
-.services-right {
   position: sticky;
   top: 120px;
 }
 
-.services-right h3 {
+.services-left h3 {
   font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
   font-weight: 700;
   line-height: 1.2;
@@ -25,10 +19,16 @@
   color: var(--text-heading);
 }
 
-.services-right p {
+.services-left p {
   font-size: var(--font-size-lg);
   color: var(--text-muted);
   line-height: 1.7;
+}
+
+.services-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
 }
 
 .section-title--lg {
