@@ -87,48 +87,58 @@
   });
 
   // ===== STATS COUNTER ANIMATION =====
-  function animateCounter(el) {
-    const target = el.getAttribute('data-count');
-    const prefix = el.getAttribute('data-prefix') || '';
-    const suffix = el.getAttribute('data-suffix') || '';
-    const isSpecial = target === '24/7' || target === '~0';
+  var COUNTER_DURATION = 3000; // all counters finish together in 3s
 
-    if (isSpecial) {
-      el.textContent = target;
-      return;
-    }
-
-    const num = parseInt(target, 10);
-    const duration = 1500;
-    const start = performance.now();
+  function animateCountUp(el) {
+    var num = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var start = performance.now();
 
     function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(eased * num);
-      el.textContent = prefix + current + suffix;
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
+      var progress = Math.min((now - start) / COUNTER_DURATION, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * num) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
     }
-
     requestAnimationFrame(update);
   }
 
-  // Observe stats for counter animation
-  const statsObserver = new IntersectionObserver(function (entries) {
+  function animateCountDown(el) {
+    var from = parseInt(el.getAttribute('data-countdown'), 10);
+    var finalText = el.getAttribute('data-final');
+    var start = performance.now();
+
+    function update(now) {
+      var progress = Math.min((now - start) / COUNTER_DURATION, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      if (progress >= 1) {
+        el.textContent = finalText;
+      } else {
+        el.textContent = Math.round(from - eased * from);
+      }
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Observe stats - all start together so they finish together
+  var statsObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        const counters = entry.target.querySelectorAll('.stat-number[data-count]');
-        counters.forEach(animateCounter);
+        var counters = entry.target.querySelectorAll('.stat-number[data-sync]');
+        counters.forEach(function (el) {
+          if (el.hasAttribute('data-countdown')) {
+            animateCountDown(el);
+          } else if (el.hasAttribute('data-count')) {
+            animateCountUp(el);
+          }
+        });
         statsObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.3 });
 
-  const statsSection = document.querySelector('.stats-section');
+  var statsSection = document.querySelector('.stats-section');
   if (statsSection) {
     statsObserver.observe(statsSection);
   }
