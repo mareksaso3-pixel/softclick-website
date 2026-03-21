@@ -2,6 +2,17 @@
  * Main JS: Sticky header, mobile menu, smooth scroll, FAQ accordion, contact form, stats counter.
  */
 (function () {
+  // ===== CALENDLY POPUP =====
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-calendly]');
+    if (btn) {
+      e.preventDefault();
+      if (typeof Calendly !== 'undefined') {
+        Calendly.initPopupWidget({ url: btn.getAttribute('data-calendly') });
+      }
+    }
+  });
+
   // ===== STICKY HEADER =====
   const header = document.querySelector('.site-header');
   let lastScroll = 0;

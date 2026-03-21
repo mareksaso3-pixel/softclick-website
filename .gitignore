@@ -1,1 +1,11 @@
-.vercel
+.vercel/
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+node_modules/
+assets/partners/extracted/
+assets/partners/*.zip
