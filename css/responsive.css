@@ -138,6 +138,10 @@
     padding: var(--space-2xl) var(--space-lg);
   }
 
+  .team-wrapper {
+    grid-template-columns: 1fr;
+  }
+
   .team-card {
     padding: var(--space-2xl);
   }

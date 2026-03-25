@@ -359,7 +359,10 @@
 
 /* ===== ABOUT / TEAM ===== */
 .team-wrapper {
-  max-width: 500px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
