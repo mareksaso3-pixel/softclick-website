@@ -92,3 +92,9 @@
     opacity: 0.7;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb {
+    animation: none;
+  }
+}

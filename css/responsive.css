@@ -43,13 +43,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Center the 5th benefit card on its own row */
-  .benefits-grid .benefit-card:nth-child(5) {
-    grid-column: 1 / -1;
-    max-width: 50%;
-    margin: 0 auto;
-  }
-
   .references-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -84,7 +77,7 @@
 
   .hero-cta-group {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .hero-cta-group .btn {
@@ -124,10 +117,6 @@
 
   .benefits-grid {
     grid-template-columns: 1fr;
-  }
-
-  .benefits-grid .benefit-card:nth-child(5) {
-    max-width: 100%;
   }
 
   .references-grid {
