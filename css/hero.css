@@ -29,10 +29,10 @@
 }
 
 .hero-subheadline {
-  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.35rem);
+  font-size: clamp(0.9rem, 1vw + 0.4rem, 1.1rem);
   color: var(--text-muted);
-  line-height: 1.7;
-  max-width: 600px;
+  line-height: 1.6;
+  max-width: 540px;
   margin-bottom: var(--space-3xl);
 }
 
