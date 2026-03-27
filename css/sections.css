@@ -25,6 +25,20 @@
   line-height: 1.7;
 }
 
+.services-visual {
+  margin-top: var(--space-2xl);
+  position: relative;
+}
+
+.services-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 40%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 40%, transparent 75%);
+}
+
 .services-right {
   display: flex;
   flex-direction: column;
