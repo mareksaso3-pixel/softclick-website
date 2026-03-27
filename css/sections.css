@@ -26,17 +26,42 @@
 }
 
 .services-visual {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-lg);
   position: relative;
+  perspective: 800px;
+  display: flex;
+  justify-content: center;
 }
 
 .services-visual img {
-  width: 100%;
+  width: 85%;
+  max-width: 500px;
   height: auto;
   display: block;
-  border-radius: var(--radius-lg);
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 40%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 40%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 35%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 35%, transparent 70%);
+  animation: brainFloat 8s ease-in-out infinite;
+}
+
+@keyframes brainFloat {
+  0%, 100% {
+    transform: rotateY(0deg) rotateX(0deg) scale(1);
+  }
+  25% {
+    transform: rotateY(8deg) rotateX(-3deg) scale(1.02);
+  }
+  50% {
+    transform: rotateY(0deg) rotateX(0deg) scale(1);
+  }
+  75% {
+    transform: rotateY(-8deg) rotateX(3deg) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-visual img {
+    animation: none;
+  }
 }
 
 .services-right {
