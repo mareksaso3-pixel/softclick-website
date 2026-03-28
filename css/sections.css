@@ -352,7 +352,7 @@
 }
 
 .pricing-card h3 {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
   margin-bottom: var(--space-lg);
 }
 
