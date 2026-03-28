@@ -59,8 +59,8 @@
 }
 
 .hero-video video {
-  width: 100%;
-  max-width: 500px;
+  width: 120%;
+  max-width: 700px;
   height: auto;
   display: block;
   mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 40%, transparent 72%);
