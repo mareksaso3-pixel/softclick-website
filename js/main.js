@@ -103,12 +103,13 @@
   function animateCountUp(el) {
     var num = parseInt(el.getAttribute('data-count'), 10);
     var suffix = el.getAttribute('data-suffix') || '';
+    var prefix = el.getAttribute('data-prefix') || '';
     var start = performance.now();
 
     function update(now) {
       var progress = Math.min((now - start) / COUNTER_DURATION, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * num) + suffix;
+      el.textContent = prefix + Math.round(eased * num) + suffix;
       if (progress < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);
