@@ -32,7 +32,7 @@
 .cta-content p {
   font-size: var(--font-size-lg);
   color: var(--text-muted);
-  max-width: 500px;
+  max-width: 720px;
   margin: 0 auto var(--space-2xl);
 }
 
