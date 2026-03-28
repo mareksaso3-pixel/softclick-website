@@ -8,14 +8,14 @@
 
 .services-left {
   position: sticky;
-  top: 120px;
+  top: 80px;
 }
 
 .services-left h3 {
   font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-md);
   color: var(--text-heading);
 }
 
@@ -26,7 +26,7 @@
 }
 
 .services-visual {
-  margin-top: var(--space-lg);
+  margin-top: var(--space-sm);
   position: relative;
   perspective: 800px;
   display: flex;
@@ -34,8 +34,8 @@
 }
 
 .services-visual img {
-  width: 85%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 650px;
   height: auto;
   display: block;
   mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 35%, transparent 70%);
