@@ -22,8 +22,21 @@
     display: block;
   }
 
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
   .hero-content {
     max-width: 100%;
+  }
+
+  .hero-video {
+    order: -1;
+  }
+
+  .hero-video video {
+    max-width: 350px;
   }
 
   .services-split {

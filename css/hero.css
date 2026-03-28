@@ -14,9 +14,16 @@
   width: 100%;
 }
 
+/* Split layout: text left, video right */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
 .hero-content {
   max-width: 800px;
-  /* Offset to the left, not centered */
 }
 
 .hero-headline {
@@ -41,6 +48,23 @@
   align-items: center;
   gap: var(--space-lg);
   flex-wrap: wrap;
+}
+
+/* Hero video */
+.hero-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero-video video {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 40%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 40%, transparent 72%);
 }
 
 /* Cosmic glow behind hero */
@@ -95,6 +119,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-orb {
+    animation: none;
+  }
+  .hero-video video {
     animation: none;
   }
 }
