@@ -10,131 +10,43 @@
   font-weight: 700;
   font-size: var(--font-size-base);
   text-decoration: none;
-  border: none;
   cursor: pointer;
-  border-radius: var(--radius-full);
+  border-radius: 50px;
   padding: 0.85rem 2rem;
-  position: relative;
-  transition: all var(--transition-base);
-  isolation: isolate;
+  transition: all 0.3s ease;
 }
 
-/* ===== PRIMARY CTA (Neon blue glowing border) ===== */
+/* ===== PRIMARY CTA ===== */
 .btn-primary {
-  background: rgba(5, 8, 18, 0.9);
+  background: linear-gradient(to bottom, #0d0d3b, #000000);
+  border: 2px solid #5a5aff;
   color: #FFFFFF;
-  border: none;
-  z-index: 0;
-  box-shadow:
-    0 0 20px rgba(0, 200, 255, 0.5),
-    0 0 45px rgba(0, 160, 255, 0.3),
-    0 0 75px rgba(0, 220, 255, 0.15);
-}
-
-/* Neon blue gradient border with blur glow */
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, #00E5FF 0%, #00AAFF 25%, #4488FF 50%, #00CCFF 75%, #00FFFF 100%);
-  z-index: -2;
-  filter: blur(1.5px);
-  transition: filter var(--transition-base);
-}
-
-/* Inner fill - very transparent for maximum glow visibility */
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 30, 70, 0.45) 0%, rgba(3, 5, 15, 0.82) 55%);
-  z-index: -1;
-  box-shadow:
-    inset 0 0 20px rgba(0, 210, 255, 0.6),
-    inset 0 0 45px rgba(0, 160, 255, 0.35),
-    inset 0 0 70px rgba(0, 220, 255, 0.2),
-    inset 0 0 100px rgba(0, 180, 255, 0.1);
-  transition: box-shadow var(--transition-base), background var(--transition-base);
+  box-shadow: 0 0 15px rgba(90, 90, 255, 0.6), inset 0 0 10px rgba(90, 90, 255, 0.4);
 }
 
 .btn-primary:hover {
-  transform: scale(1.03);
-  box-shadow:
-    0 0 28px rgba(0, 200, 255, 0.7),
-    0 0 60px rgba(0, 160, 255, 0.4),
-    0 0 100px rgba(0, 220, 255, 0.2);
+  box-shadow: 0 0 25px rgba(90, 90, 255, 0.9), inset 0 0 15px rgba(90, 90, 255, 0.6);
+  transform: scale(1.02);
   color: #FFFFFF;
-}
-
-.btn-primary:hover::before {
-  filter: blur(3px);
-}
-
-.btn-primary:hover::after {
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 35, 80, 0.35) 0%, rgba(3, 5, 15, 0.75) 55%);
-  box-shadow:
-    inset 0 0 25px rgba(0, 210, 255, 0.7),
-    inset 0 0 55px rgba(0, 160, 255, 0.4),
-    inset 0 0 85px rgba(0, 220, 255, 0.25),
-    inset 0 0 110px rgba(0, 180, 255, 0.12);
 }
 
 .btn-primary:active {
   transform: scale(0.98);
 }
 
-/* ===== SECONDARY (Neon blue border, subtle) ===== */
+/* ===== SECONDARY ===== */
 .btn-secondary {
-  background: rgba(5, 8, 18, 0.7);
+  background: linear-gradient(to bottom, #0d0d3b, #000000);
+  border: 1px solid rgba(90, 90, 255, 0.4);
   color: rgba(255, 255, 255, 0.85);
-  border: none;
-  z-index: 0;
-}
-
-.btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: -1.5px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0, 210, 255, 0.5), rgba(0, 160, 255, 0.4), rgba(0, 230, 255, 0.45));
-  z-index: -2;
-  filter: blur(0.5px);
-  transition: filter var(--transition-base), opacity var(--transition-base);
-}
-
-.btn-secondary::after {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  background: rgba(3, 5, 15, 0.85);
-  z-index: -1;
-  box-shadow:
-    inset 0 0 18px rgba(0, 210, 255, 0.35),
-    inset 0 0 40px rgba(0, 160, 255, 0.15);
-  transition: box-shadow var(--transition-base), background var(--transition-base);
+  box-shadow: 0 0 8px rgba(90, 90, 255, 0.3), inset 0 0 6px rgba(90, 90, 255, 0.2);
 }
 
 .btn-secondary:hover {
+  border-color: #5a5aff;
   color: #FFFFFF;
-  transform: scale(1.03);
-  box-shadow:
-    0 0 20px rgba(0, 200, 255, 0.3),
-    0 0 45px rgba(0, 160, 255, 0.15);
-}
-
-.btn-secondary:hover::before {
-  filter: blur(2px);
-  background: linear-gradient(135deg, rgba(0, 210, 255, 0.7), rgba(0, 160, 255, 0.6), rgba(0, 230, 255, 0.65));
-}
-
-.btn-secondary:hover::after {
-  background: rgba(3, 5, 15, 0.78);
-  box-shadow:
-    inset 0 0 22px rgba(0, 210, 255, 0.45),
-    inset 0 0 50px rgba(0, 160, 255, 0.2);
+  transform: scale(1.02);
+  box-shadow: 0 0 18px rgba(90, 90, 255, 0.7), inset 0 0 12px rgba(90, 90, 255, 0.4);
 }
 
 .btn-secondary:active {
@@ -158,17 +70,16 @@
   display: inline-flex;
   width: 20px;
   height: 20px;
-  opacity: 0.8;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
 }
 
 .btn:hover .btn-arrow {
   transform: translateX(4px);
-  opacity: 1;
 }
 
 /* Focus visible */
 .btn:focus-visible {
-  outline: 2px solid rgba(0, 200, 255, 0.6);
+  outline: 2px solid rgba(90, 90, 255, 0.6);
   outline-offset: 3px;
 }
