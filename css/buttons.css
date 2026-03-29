@@ -27,30 +27,29 @@
   z-index: 0;
 }
 
-/* Outer glow halo */
+/* Thin gradient border */
 .btn-primary::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -1.5px;
   border-radius: inherit;
   background: linear-gradient(135deg, #508cff 0%, #9B6CFF 35%, #D946EF 65%, #3DB8FF 100%);
   z-index: -2;
-  filter: blur(1px);
   transition: filter var(--transition-base), opacity var(--transition-base);
 }
 
-/* Inner fill with inset glow from border */
+/* Inner fill with strong inset glow from border */
 .btn-primary::after {
   content: '';
   position: absolute;
-  inset: 2px;
+  inset: 1px;
   border-radius: inherit;
-  background: radial-gradient(ellipse at 50% 50%, rgba(15, 18, 40, 0.75) 0%, rgba(8, 10, 24, 0.92) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(20, 25, 55, 0.6) 0%, rgba(8, 10, 24, 0.88) 65%);
   z-index: -1;
   box-shadow:
-    inset 0 0 20px rgba(80, 140, 255, 0.25),
-    inset 0 0 40px rgba(155, 108, 255, 0.12),
-    inset 0 0 60px rgba(80, 140, 255, 0.06);
+    inset 0 0 30px rgba(80, 140, 255, 0.4),
+    inset 0 0 55px rgba(155, 108, 255, 0.2),
+    inset 0 0 80px rgba(80, 140, 255, 0.1);
   transition: box-shadow var(--transition-base), background var(--transition-base);
 }
 
@@ -70,16 +69,12 @@
   color: #FFFFFF;
 }
 
-.btn-primary:hover::before {
-  filter: blur(2px);
-}
-
 .btn-primary:hover::after {
-  background: radial-gradient(ellipse at 50% 50%, rgba(15, 18, 40, 0.65) 0%, rgba(8, 10, 24, 0.88) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(25, 30, 65, 0.5) 0%, rgba(8, 10, 24, 0.82) 65%);
   box-shadow:
-    inset 0 0 25px rgba(80, 140, 255, 0.35),
-    inset 0 0 50px rgba(155, 108, 255, 0.18),
-    inset 0 0 70px rgba(80, 140, 255, 0.08);
+    inset 0 0 35px rgba(80, 140, 255, 0.5),
+    inset 0 0 65px rgba(155, 108, 255, 0.28),
+    inset 0 0 90px rgba(80, 140, 255, 0.12);
 }
 
 .btn-primary:active {
@@ -97,7 +92,7 @@
 .btn-secondary::before {
   content: '';
   position: absolute;
-  inset: -1.5px;
+  inset: -1px;
   border-radius: inherit;
   background: linear-gradient(135deg, rgba(80, 140, 255, 0.45), rgba(155, 108, 255, 0.35), rgba(217, 70, 239, 0.35));
   z-index: -2;
@@ -109,11 +104,11 @@
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: rgba(10, 12, 28, 0.88);
+  background: rgba(10, 12, 28, 0.85);
   z-index: -1;
   box-shadow:
-    inset 0 0 15px rgba(80, 140, 255, 0.12),
-    inset 0 0 30px rgba(155, 108, 255, 0.06);
+    inset 0 0 22px rgba(80, 140, 255, 0.25),
+    inset 0 0 45px rgba(155, 108, 255, 0.1);
   transition: box-shadow var(--transition-base), background var(--transition-base);
 }
 
