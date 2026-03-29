@@ -21,71 +21,73 @@
 
 /* ===== PRIMARY CTA (Neon blue glowing border) ===== */
 .btn-primary {
-  background: rgba(10, 12, 28, 0.9);
+  background: rgba(5, 8, 18, 0.9);
   color: #FFFFFF;
   border: none;
   z-index: 0;
+  box-shadow:
+    0 0 20px rgba(0, 200, 255, 0.5),
+    0 0 45px rgba(0, 160, 255, 0.3),
+    0 0 75px rgba(0, 220, 255, 0.15);
 }
 
-/* Neon blue gradient border */
+/* Neon blue gradient border with blur glow */
 .btn-primary::before {
   content: '';
   position: absolute;
-  inset: -1.5px;
+  inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #00D4FF 0%, #0099FF 25%, #3366FF 50%, #00BFFF 75%, #00E5FF 100%);
+  background: linear-gradient(135deg, #00E5FF 0%, #00AAFF 25%, #4488FF 50%, #00CCFF 75%, #00FFFF 100%);
   z-index: -2;
-  transition: filter var(--transition-base), opacity var(--transition-base);
+  filter: blur(1.5px);
+  transition: filter var(--transition-base);
 }
 
-/* Inner fill with intense neon inset glow */
+/* Inner fill - very transparent for maximum glow visibility */
 .btn-primary::after {
   content: '';
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 40, 80, 0.5) 0%, rgba(5, 8, 20, 0.85) 60%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 30, 70, 0.45) 0%, rgba(3, 5, 15, 0.82) 55%);
   z-index: -1;
   box-shadow:
-    inset 0 0 25px rgba(0, 180, 255, 0.5),
-    inset 0 0 50px rgba(0, 140, 255, 0.3),
-    inset 0 0 80px rgba(0, 200, 255, 0.15),
-    inset 0 0 100px rgba(50, 100, 255, 0.08);
+    inset 0 0 20px rgba(0, 210, 255, 0.6),
+    inset 0 0 45px rgba(0, 160, 255, 0.35),
+    inset 0 0 70px rgba(0, 220, 255, 0.2),
+    inset 0 0 100px rgba(0, 180, 255, 0.1);
   transition: box-shadow var(--transition-base), background var(--transition-base);
-}
-
-.btn-primary {
-  box-shadow:
-    0 0 18px rgba(0, 180, 255, 0.45),
-    0 0 40px rgba(0, 140, 255, 0.25),
-    0 0 65px rgba(0, 200, 255, 0.1);
 }
 
 .btn-primary:hover {
   transform: scale(1.03);
   box-shadow:
-    0 0 25px rgba(0, 180, 255, 0.6),
-    0 0 55px rgba(0, 140, 255, 0.35),
-    0 0 90px rgba(0, 200, 255, 0.15);
+    0 0 28px rgba(0, 200, 255, 0.7),
+    0 0 60px rgba(0, 160, 255, 0.4),
+    0 0 100px rgba(0, 220, 255, 0.2);
   color: #FFFFFF;
 }
 
+.btn-primary:hover::before {
+  filter: blur(3px);
+}
+
 .btn-primary:hover::after {
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 45, 90, 0.4) 0%, rgba(5, 8, 20, 0.78) 60%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 35, 80, 0.35) 0%, rgba(3, 5, 15, 0.75) 55%);
   box-shadow:
-    inset 0 0 30px rgba(0, 180, 255, 0.6),
-    inset 0 0 60px rgba(0, 140, 255, 0.35),
-    inset 0 0 90px rgba(0, 200, 255, 0.18),
-    inset 0 0 110px rgba(50, 100, 255, 0.1);
+    inset 0 0 25px rgba(0, 210, 255, 0.7),
+    inset 0 0 55px rgba(0, 160, 255, 0.4),
+    inset 0 0 85px rgba(0, 220, 255, 0.25),
+    inset 0 0 110px rgba(0, 180, 255, 0.12);
 }
 
 .btn-primary:active {
   transform: scale(0.98);
 }
 
-/* ===== SECONDARY (Blue gradient border, subtle) ===== */
+/* ===== SECONDARY (Neon blue border, subtle) ===== */
 .btn-secondary {
-  background: rgba(10, 12, 28, 0.7);
+  background: rgba(5, 8, 18, 0.7);
   color: rgba(255, 255, 255, 0.85);
   border: none;
   z-index: 0;
@@ -94,11 +96,12 @@
 .btn-secondary::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -1.5px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0, 180, 255, 0.45), rgba(0, 140, 255, 0.35), rgba(0, 200, 255, 0.4));
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.5), rgba(0, 160, 255, 0.4), rgba(0, 230, 255, 0.45));
   z-index: -2;
-  transition: opacity var(--transition-base);
+  filter: blur(0.5px);
+  transition: filter var(--transition-base), opacity var(--transition-base);
 }
 
 .btn-secondary::after {
@@ -106,11 +109,11 @@
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: rgba(5, 8, 20, 0.85);
+  background: rgba(3, 5, 15, 0.85);
   z-index: -1;
   box-shadow:
-    inset 0 0 22px rgba(0, 180, 255, 0.3),
-    inset 0 0 45px rgba(0, 140, 255, 0.12);
+    inset 0 0 18px rgba(0, 210, 255, 0.35),
+    inset 0 0 40px rgba(0, 160, 255, 0.15);
   transition: box-shadow var(--transition-base), background var(--transition-base);
 }
 
@@ -118,19 +121,20 @@
   color: #FFFFFF;
   transform: scale(1.03);
   box-shadow:
-    0 0 18px rgba(0, 180, 255, 0.25),
-    0 0 40px rgba(0, 140, 255, 0.12);
+    0 0 20px rgba(0, 200, 255, 0.3),
+    0 0 45px rgba(0, 160, 255, 0.15);
 }
 
 .btn-secondary:hover::before {
-  background: linear-gradient(135deg, rgba(0, 180, 255, 0.65), rgba(0, 140, 255, 0.55), rgba(0, 200, 255, 0.6));
+  filter: blur(2px);
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.7), rgba(0, 160, 255, 0.6), rgba(0, 230, 255, 0.65));
 }
 
 .btn-secondary:hover::after {
-  background: rgba(5, 8, 20, 0.8);
+  background: rgba(3, 5, 15, 0.78);
   box-shadow:
-    inset 0 0 25px rgba(0, 180, 255, 0.35),
-    inset 0 0 50px rgba(0, 140, 255, 0.15);
+    inset 0 0 22px rgba(0, 210, 255, 0.45),
+    inset 0 0 50px rgba(0, 160, 255, 0.2);
 }
 
 .btn-secondary:active {
@@ -165,6 +169,6 @@
 
 /* Focus visible */
 .btn:focus-visible {
-  outline: 2px solid rgba(0, 180, 255, 0.6);
+  outline: 2px solid rgba(0, 200, 255, 0.6);
   outline-offset: 3px;
 }
