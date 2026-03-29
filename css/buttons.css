@@ -7,7 +7,7 @@
   justify-content: center;
   gap: var(--space-sm);
   font-family: var(--font-family);
-  font-weight: 600;
+  font-weight: 700;
   font-size: var(--font-size-base);
   text-decoration: none;
   border: none;
@@ -15,85 +15,50 @@
   border-radius: var(--radius-full);
   padding: 0.85rem 2rem;
   position: relative;
-  overflow: hidden;
   transition: all var(--transition-base);
   isolation: isolate;
 }
 
-/* ===== PRIMARY CTA (Gradient) ===== */
+/* ===== PRIMARY CTA (Glowing border) ===== */
 .btn-primary {
-  background: var(--cta-gradient);
+  background: rgba(10, 12, 28, 0.85);
   color: #FFFFFF;
+  border: 2px solid rgba(80, 140, 255, 0.5);
   box-shadow:
-    0 0 20px rgba(155, 108, 255, 0.25),
-    0 0 40px rgba(217, 70, 239, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Sheen sweep effect */
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-}
-
-.btn-primary:hover::before {
-  left: 100%;
+    0 0 15px rgba(80, 140, 255, 0.2),
+    0 0 30px rgba(80, 140, 255, 0.1),
+    inset 0 0 20px rgba(80, 140, 255, 0.05);
 }
 
 .btn-primary:hover {
-  transform: scale(1.04);
+  border-color: rgba(80, 160, 255, 0.7);
   box-shadow:
-    0 0 25px rgba(155, 108, 255, 0.35),
-    0 0 50px rgba(217, 70, 239, 0.25),
-    0 0 80px rgba(61, 184, 255, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 0 20px rgba(80, 140, 255, 0.35),
+    0 0 45px rgba(80, 140, 255, 0.15),
+    inset 0 0 25px rgba(80, 140, 255, 0.08);
+  transform: scale(1.03);
   color: #FFFFFF;
 }
 
 .btn-primary:active {
   transform: scale(0.98);
+  border-color: rgba(80, 140, 255, 0.6);
 }
 
 /* ===== SECONDARY (Outline) ===== */
 .btn-secondary {
-  background: transparent;
-  color: var(--text-light);
-  border: 1px solid var(--card-border);
-  backdrop-filter: blur(4px);
-}
-
-.btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--cta-gradient);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  z-index: -1;
-  border-radius: inherit;
+  background: rgba(10, 12, 28, 0.6);
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(80, 140, 255, 0.25);
 }
 
 .btn-secondary:hover {
-  border-color: transparent;
+  border-color: rgba(80, 140, 255, 0.5);
   color: #FFFFFF;
-  transform: scale(1.04);
-  box-shadow: 0 0 20px rgba(155, 108, 255, 0.25);
-}
-
-.btn-secondary:hover::before {
-  opacity: 1;
+  transform: scale(1.03);
+  box-shadow:
+    0 0 15px rgba(80, 140, 255, 0.15),
+    0 0 30px rgba(80, 140, 255, 0.08);
 }
 
 .btn-secondary:active {
@@ -112,20 +77,22 @@
   font-size: var(--font-size-lg);
 }
 
-/* ===== ICON ARROW ===== */
+/* ===== DOUBLE CHEVRON ARROW ===== */
 .btn-arrow {
   display: inline-flex;
   width: 20px;
   height: 20px;
-  transition: transform var(--transition-base);
+  opacity: 0.8;
+  transition: transform var(--transition-base), opacity var(--transition-base);
 }
 
 .btn:hover .btn-arrow {
   transform: translateX(4px);
+  opacity: 1;
 }
 
 /* Focus visible */
 .btn:focus-visible {
-  outline: 2px solid var(--accent-violet);
+  outline: 2px solid rgba(80, 140, 255, 0.6);
   outline-offset: 3px;
 }
