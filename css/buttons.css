@@ -18,14 +18,27 @@
 
 /* ===== PRIMARY CTA ===== */
 .btn-primary {
-  background: linear-gradient(to bottom, #0d0d3b, #000000);
-  border: 2px solid #5a5aff;
+  background: linear-gradient(to bottom, #0d0d3b, #000000) padding-box,
+              linear-gradient(135deg, #4040ff, #6a3aff, #8b2fff, #6a3aff, #4040ff) border-box;
+  border: 2px solid transparent;
   color: #FFFFFF;
-  box-shadow: 0 0 15px rgba(90, 90, 255, 0.6), inset 0 0 10px rgba(90, 90, 255, 0.4);
+  box-shadow:
+    -4px -2px 18px rgba(100, 60, 255, 0.5),
+    4px 2px 14px rgba(70, 70, 255, 0.4),
+    0 4px 20px rgba(139, 47, 255, 0.3),
+    inset -3px -1px 12px rgba(100, 60, 255, 0.35),
+    inset 4px 2px 8px rgba(70, 70, 255, 0.2);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 25px rgba(90, 90, 255, 0.9), inset 0 0 15px rgba(90, 90, 255, 0.6);
+  background: linear-gradient(to bottom, #0f0f42, #050510) padding-box,
+              linear-gradient(135deg, #5050ff, #7b4aff, #9c3fff, #7b4aff, #5050ff) border-box;
+  box-shadow:
+    -6px -3px 25px rgba(100, 60, 255, 0.7),
+    5px 3px 20px rgba(70, 70, 255, 0.6),
+    0 5px 28px rgba(139, 47, 255, 0.45),
+    inset -4px -2px 18px rgba(100, 60, 255, 0.5),
+    inset 5px 3px 12px rgba(70, 70, 255, 0.3);
   transform: scale(1.02);
   color: #FFFFFF;
 }
@@ -36,17 +49,27 @@
 
 /* ===== SECONDARY ===== */
 .btn-secondary {
-  background: linear-gradient(to bottom, #0d0d3b, #000000);
-  border: 1px solid rgba(90, 90, 255, 0.4);
+  background: linear-gradient(to bottom, #0d0d3b, #000000) padding-box,
+              linear-gradient(135deg, rgba(64, 64, 255, 0.4), rgba(106, 58, 255, 0.5), rgba(64, 64, 255, 0.3)) border-box;
+  border: 1px solid transparent;
   color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 8px rgba(90, 90, 255, 0.3), inset 0 0 6px rgba(90, 90, 255, 0.2);
+  box-shadow:
+    -3px -1px 10px rgba(100, 60, 255, 0.25),
+    3px 1px 8px rgba(70, 70, 255, 0.2),
+    inset -2px -1px 8px rgba(100, 60, 255, 0.15),
+    inset 3px 1px 6px rgba(70, 70, 255, 0.1);
 }
 
 .btn-secondary:hover {
-  border-color: #5a5aff;
+  background: linear-gradient(to bottom, #0f0f42, #050510) padding-box,
+              linear-gradient(135deg, rgba(80, 80, 255, 0.7), rgba(123, 74, 255, 0.8), rgba(80, 80, 255, 0.6)) border-box;
   color: #FFFFFF;
   transform: scale(1.02);
-  box-shadow: 0 0 18px rgba(90, 90, 255, 0.7), inset 0 0 12px rgba(90, 90, 255, 0.4);
+  box-shadow:
+    -5px -2px 18px rgba(100, 60, 255, 0.5),
+    4px 2px 14px rgba(70, 70, 255, 0.4),
+    inset -3px -1px 12px rgba(100, 60, 255, 0.35),
+    inset 4px 2px 8px rgba(70, 70, 255, 0.2);
 }
 
 .btn-secondary:active {
