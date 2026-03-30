@@ -2,6 +2,15 @@
 <html lang="sk">
 <head>
   <meta charset="UTF-8">
+  <!-- Language detection (before any render) -->
+  <script>
+    (function(){
+      var l=localStorage.getItem('softclick-lang');
+      if(!l){var n=(navigator.language||'').toLowerCase();l=/^(sk|cs)/.test(n)?'sk':'en';}
+      document.documentElement.lang=l;
+      document.documentElement.dataset.lang=l;
+    })();
+  </script>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQRX1E29P0"></script>
   <script>
@@ -19,6 +28,8 @@
   <meta name="author" content="SoftClick.ai">
   <link rel="canonical" href="https://softclick.ai/">
   <link rel="alternate" hreflang="sk" href="https://softclick.ai/">
+  <link rel="alternate" hreflang="en" href="https://softclick.ai/">
+  <link rel="alternate" hreflang="x-default" href="https://softclick.ai/">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -44,7 +55,7 @@
   <meta name="twitter:image" content="https://softclick.ai/assets/og-image.png">
 
   <!-- Structured Data: Organization -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="ld-organization">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -72,7 +83,7 @@
   </script>
 
   <!-- Structured Data: WebSite -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="ld-website">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -83,7 +94,7 @@
   </script>
 
   <!-- Structured Data: Service -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="ld-service">
   {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -113,7 +124,7 @@
   </script>
 
   <!-- Structured Data: FAQ -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="ld-faq">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -186,6 +197,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/i18n.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/marquee.css">
@@ -196,11 +208,14 @@
 
   <!-- Calendly CSS -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+
+  <!-- No-JS fallback -->
+  <noscript><style>body{opacity:1!important;}</style></noscript>
 </head>
 <body>
 
   <!-- Skip to content -->
-  <a href="#main" class="skip-to-content">Preskočiť na obsah</a>
+  <a href="#main" class="skip-to-content" data-i18n="skip">Preskočiť na obsah</a>
 
   <!-- Aurora Background Layers -->
   <div class="aurora-bg" aria-hidden="true">
@@ -218,28 +233,33 @@
     <!-- ===== HEADER ===== -->
     <header class="site-header" role="banner">
       <div class="header-inner">
-        <a href="/" class="logo" aria-label="SoftClick.ai – Domov">
+        <a href="/" class="logo" data-i18n-aria="nav.logoAria" aria-label="SoftClick.ai – Domov">
           <img src="assets/logo-header.png" alt="SoftClick.ai" class="logo-img">
         </a>
 
-        <nav aria-label="Hlavná navigácia">
+        <nav data-i18n-aria="nav.ariaLabel" aria-label="Hlavná navigácia">
           <ul class="nav-links">
-            <li><a href="#sluzby">Služby</a></li>
-            <li><a href="#proces">Ako prebieha spolupráca</a></li>
-            <li><a href="#preco">Prečo my</a></li>
-            <li><a href="#onas">O nás</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#kontakt">Kontakt</a></li>
+            <li><a href="#sluzby" data-i18n="nav.services">Služby</a></li>
+            <li><a href="#proces" data-i18n="nav.process">Ako prebieha spolupráca</a></li>
+            <li><a href="#preco" data-i18n="nav.why">Prečo my</a></li>
+            <li><a href="#onas" data-i18n="nav.about">O nás</a></li>
+            <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+            <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
           </ul>
         </nav>
 
         <div class="header-cta">
-          <button type="button" class="btn btn-primary btn-sm" data-calendly="https://calendly.com/barbenikadam/30min">
+          <div class="lang-toggle" role="radiogroup" aria-label="Language">
+            <button type="button" class="lang-toggle__btn" data-lang="sk">SK</button>
+            <span class="lang-toggle__sep" aria-hidden="true">|</span>
+            <button type="button" class="lang-toggle__btn" data-lang="en">EN</button>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="nav.cta">
             Bezplatná konzultácia
           </button>
         </div>
 
-        <button class="hamburger" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="hamburger" data-i18n-aria="nav.menuOpen" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span>
           <span></span>
           <span></span>
@@ -248,15 +268,20 @@
     </header>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobilné menu">
+    <div class="mobile-menu" id="mobile-menu" role="dialog" data-i18n-aria="nav.menuAria" aria-label="Mobilné menu">
       <div class="mobile-menu-inner">
-        <a href="#sluzby">Služby</a>
-        <a href="#proces">Ako prebieha spolupráca</a>
-        <a href="#preco">Prečo my</a>
-        <a href="#onas">O nás</a>
-        <a href="#faq">FAQ</a>
-        <a href="#kontakt">Kontakt</a>
-        <button type="button" class="btn btn-primary" data-calendly="https://calendly.com/barbenikadam/30min">
+        <a href="#sluzby" data-i18n="nav.services">Služby</a>
+        <a href="#proces" data-i18n="nav.process">Ako prebieha spolupráca</a>
+        <a href="#preco" data-i18n="nav.why">Prečo my</a>
+        <a href="#onas" data-i18n="nav.about">O nás</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+        <div class="mobile-lang-toggle">
+          <button type="button" class="lang-toggle__btn" data-lang="sk">SK</button>
+          <span class="lang-toggle__sep" aria-hidden="true">|</span>
+          <button type="button" class="lang-toggle__btn" data-lang="en">EN</button>
+        </div>
+        <button type="button" class="btn btn-primary" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="nav.cta">
           Bezplatná konzultácia
         </button>
       </div>
@@ -269,20 +294,20 @@
         <div class="hero-orb" aria-hidden="true"></div>
         <div class="container">
           <div class="hero-content">
-            <h1 class="hero-headline">
+            <h1 class="hero-headline" data-i18n-html="hero.headline">
               AI automatizácia<br>pre Váš biznis
             </h1>
-            <p class="hero-subheadline">
+            <p class="hero-subheadline" data-i18n="hero.subheadline">
               Implementujeme AI riešenia, ktoré zefektívňujú administratívne a vnútopodnikové procesy. Budujeme digitálnu infraštruktúru, ktorá šetrí váš čas a mení váš biznis na moderný, digitálny systém.
             </p>
             <div class="hero-cta-group">
-              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min">
+              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="hero.ctaPrimary">
                 Dohodnite si bezplatnú konzultáciu
                 <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                   <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
-              <a href="#sluzby" class="btn btn-secondary btn-lg">
+              <a href="#sluzby" class="btn btn-secondary btn-lg" data-i18n="hero.ctaSecondary">
                 Pozrite si naše služby
               </a>
             </div>
@@ -291,8 +316,8 @@
       </section>
 
       <!-- ===== PARTNER MARQUEE ===== -->
-      <section class="marquee-section" aria-label="Technológie s ktorými pracujeme">
-        <p class="marquee-label">Technológie s ktorými pracujeme</p>
+      <section class="marquee-section" data-i18n-aria="marquee.label" aria-label="Technológie s ktorými pracujeme">
+        <p class="marquee-label" data-i18n="marquee.label">Technológie s ktorými pracujeme</p>
         <div class="marquee-wrapper">
           <div class="marquee-track">
             <!-- Set 1 -->
@@ -431,41 +456,41 @@
       <section class="section" id="sluzby">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <h2 class="section-title section-title--lg">Naše služby</h2>
+            <h2 class="section-title section-title--lg" data-i18n="services.title">Naše služby</h2>
           </div>
           <div class="services-split">
             <div class="services-left animate-on-scroll">
-              <h3>Riešenia poháňané umelou inteligenciou</h3>
-              <p>Od inteligentných asistentov až po komplexné automatizácie firemných procesov. Navrhujeme systémy, ktoré pracujú za vás.</p>
+              <h3 data-i18n="services.heading">Riešenia poháňané umelou inteligenciou</h3>
+              <p data-i18n="services.text">Od inteligentných asistentov až po komplexné automatizácie firemných procesov. Navrhujeme systémy, ktoré pracujú za vás.</p>
             </div>
             <div class="services-right stagger-children">
               <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 </div>
-                <h3>Automatizovaný AI ekosystém</h3>
-                <p>Navrhneme Custom AI riešenia pre Vaše špecifické potreby. Zefektívnime vnútrofiremné procesy a prepojíme všetky Vaše systémy do jedného inteligentného a plne automatizovaného celku.</p>
+                <h3 data-i18n="services.card1Title">Automatizovaný AI ekosystém</h3>
+                <p data-i18n="services.card1Text">Navrhneme Custom AI riešenia pre Vaše špecifické potreby. Zefektívnime vnútrofiremné procesy a prepojíme všetky Vaše systémy do jedného inteligentného a plne automatizovaného celku.</p>
               </div>
               <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
                 </div>
-                <h3>Samoobslužné CRM</h3>
-                <p>Plne autonómny CRM systém. Vaše kontakty, obchody a kľúčové dáta sa z e-mailov do databázy aktualizujú okamžite a bez Vašej asistencie.</p>
+                <h3 data-i18n="services.card2Title">Samoobslužné CRM</h3>
+                <p data-i18n="services.card2Text">Plne autonómny CRM systém. Vaše kontakty, obchody a kľúčové dáta sa z e-mailov do databázy aktualizujú okamžite a bez Vašej asistencie.</p>
               </div>
               <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                 </div>
-                <h3>Outreach & Follow-up</h3>
-                <p>Zabezpečíme automatické oslovovanie Vašej cieľovej skupiny personalizovanými e-mailami vrátane inteligentného follow-upu.</p>
+                <h3 data-i18n="services.card3Title">Outreach & Follow-up</h3>
+                <p data-i18n="services.card3Text">Zabezpečíme automatické oslovovanie Vašej cieľovej skupiny personalizovanými e-mailami vrátane inteligentného follow-upu.</p>
               </div>
               <div class="service-card animate-on-scroll">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 5 10-5"/></svg>
                 </div>
-                <h3>Inteligentný e-mailový manažér</h3>
-                <p>Samostatne odpovedá na dopyty, koordinuje termíny vo Vašom kalendári a z prichádzajúcich správ vytvára štruktúrované leady v CRM.</p>
+                <h3 data-i18n="services.card4Title">Inteligentný e-mailový manažér</h3>
+                <p data-i18n="services.card4Text">Samostatne odpovedá na dopyty, koordinuje termíny vo Vašom kalendári a z prichádzajúcich správ vytvára štruktúrované leady v CRM.</p>
               </div>
             </div>
           </div>
@@ -473,20 +498,20 @@
       </section>
 
       <!-- ===== STATS ===== -->
-      <section class="stats-section" aria-label="Štatistiky">
+      <section class="stats-section" data-i18n-aria="stats.ariaLabel" aria-label="Štatistiky">
         <div class="container">
           <div class="stats-grid">
             <div class="stat-item animate-on-scroll">
               <div class="stat-number" data-count="75" data-prefix="-" data-suffix="%" data-sync>0</div>
-              <div class="stat-label">rutinných úloh</div>
+              <div class="stat-label" data-i18n="stats.stat1Label">rutinných úloh</div>
             </div>
             <div class="stat-item animate-on-scroll">
               <div class="stat-number" data-count="3" data-suffix="x" data-sync>0</div>
-              <div class="stat-label">Rýchlejšie procesy</div>
+              <div class="stat-label" data-i18n="stats.stat2Label">Rýchlejšie procesy</div>
             </div>
             <div class="stat-item animate-on-scroll">
               <div class="stat-number" data-count="50" data-prefix="-" data-suffix=" %" data-sync>0</div>
-              <div class="stat-label">Menej nákladov</div>
+              <div class="stat-label" data-i18n="stats.stat3Label">Menej nákladov</div>
             </div>
           </div>
         </div>
@@ -496,57 +521,57 @@
       <section class="section" id="proces">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">Proces</span>
-            <h2 class="section-title">Ako prebieha spolupráca</h2>
-            <p class="section-subtitle">Od prvej konzultácie po plnú automatizáciu v 6 jednoduchých krokoch.</p>
+            <span class="section-label" data-i18n="process.label">Proces</span>
+            <h2 class="section-title" data-i18n="process.title">Ako prebieha spolupráca</h2>
+            <p class="section-subtitle" data-i18n="process.subtitle">Od prvej konzultácie po plnú automatizáciu v 6 jednoduchých krokoch.</p>
           </div>
           <div class="process-timeline">
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">1</div>
               <div class="process-step-content">
-                <h3>Bezplatná konzultácia</h3>
-                <p>Zistíme, ktoré procesy Vám zaberajú najviac času a kde vidíme najväčší potenciál na automatizáciu.</p>
+                <h3 data-i18n="process.step1Title">Bezplatná konzultácia</h3>
+                <p data-i18n="process.step1Text">Zistíme, ktoré procesy Vám zaberajú najviac času a kde vidíme najväčší potenciál na automatizáciu.</p>
               </div>
             </div>
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">2</div>
               <div class="process-step-content">
-                <h3>Návrh riešenia</h3>
-                <p>Navrhneme AI riešenie presne podľa vašich potrieb. Ukážeme vám, čo zautomatizujeme a aký prínos to prinesie vášmu biznisu.</p>
+                <h3 data-i18n="process.step2Title">Návrh riešenia</h3>
+                <p data-i18n="process.step2Text">Navrhneme AI riešenie presne podľa vašich potrieb. Ukážeme vám, čo zautomatizujeme a aký prínos to prinesie vášmu biznisu.</p>
               </div>
             </div>
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">3</div>
               <div class="process-step-content">
-                <h3>Implementácia</h3>
-                <p>Vytvoríme a nasadíme riešenie. Prepojíme ho s Vašimi existujúcimi systémami.</p>
+                <h3 data-i18n="process.step3Title">Implementácia</h3>
+                <p data-i18n="process.step3Text">Vytvoríme a nasadíme riešenie. Prepojíme ho s Vašimi existujúcimi systémami.</p>
               </div>
             </div>
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">4</div>
               <div class="process-step-content">
-                <h3>Testovanie</h3>
-                <p>Otestujeme všetko na reálnych dátach. Uistíme sa, že systém funguje presne ako má.</p>
+                <h3 data-i18n="process.step4Title">Testovanie</h3>
+                <p data-i18n="process.step4Text">Otestujeme všetko na reálnych dátach. Uistíme sa, že systém funguje presne ako má.</p>
               </div>
             </div>
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">5</div>
               <div class="process-step-content">
-                <h3>Schvaľovací režim</h3>
-                <p>Máte plnú kontrolu. AI systém pracuje pod vaším dohľadom, kým nie ste s výsledkami 100 % spokojní.</p>
+                <h3 data-i18n="process.step5Title">Schvaľovací režim</h3>
+                <p data-i18n="process.step5Text">Máte plnú kontrolu. AI systém pracuje pod vaším dohľadom, kým nie ste s výsledkami 100 % spokojní.</p>
               </div>
             </div>
 
             <div class="process-step animate-on-scroll">
               <div class="process-step-number">6</div>
               <div class="process-step-content">
-                <h3>Plná automatizácia</h3>
-                <p>Plne autonómny chod 24/7. Systém funguje spoľahlivo aj bez vašich manuálnych zásahov.</p>
+                <h3 data-i18n="process.step6Title">Plná automatizácia</h3>
+                <p data-i18n="process.step6Text">Plne autonómny chod 24/7. Systém funguje spoľahlivo aj bez vašich manuálnych zásahov.</p>
               </div>
             </div>
 
@@ -558,9 +583,9 @@
       <section class="section" id="preco">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">Výhody</span>
-            <h2 class="section-title">Prečo SoftClick.ai</h2>
-            <p class="section-subtitle">Meníme zdĺhavú administratívu na bleskové procesy. Ponúkame AI automatizáciu, ktorá nie je experimentom, ale investíciou s návratnosťou.</p>
+            <span class="section-label" data-i18n="why.label">Výhody</span>
+            <h2 class="section-title" data-i18n="why.title">Prečo SoftClick.ai</h2>
+            <p class="section-subtitle" data-i18n="why.subtitle">Meníme zdĺhavú administratívu na bleskové procesy. Ponúkame AI automatizáciu, ktorá nie je experimentom, ale investíciou s návratnosťou.</p>
           </div>
           <div class="benefits-grid stagger-children">
 
@@ -568,24 +593,24 @@
               <div class="benefit-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
               </div>
-              <h3>Individuálna AI architektúra</h3>
-              <p>Navrhujeme unikátne AI systémy na mieru Vašim potrebám. Získate personalizovaný systém, ktorý sa plne adaptuje na Vaše interné procesy.</p>
+              <h3 data-i18n="why.card1Title">Individuálna AI architektúra</h3>
+              <p data-i18n="why.card1Text">Navrhujeme unikátne AI systémy na mieru Vašim potrebám. Získate personalizovaný systém, ktorý sa plne adaptuje na Vaše interné procesy.</p>
             </div>
 
             <div class="benefit-card animate-on-scroll">
               <div class="benefit-icon">
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               </div>
-              <h3>Osobný prístup</h3>
-              <p>S každým klientom komunikujeme priamo a navrhujeme riešenia presne pre jeho potreby. Sme Váš flexibilný partner, ktorý rozumie špecifikám Vášho podnikania.</p>
+              <h3 data-i18n="why.card2Title">Osobný prístup</h3>
+              <p data-i18n="why.card2Text">S každým klientom komunikujeme priamo a navrhujeme riešenia presne pre jeho potreby. Sme Váš flexibilný partner, ktorý rozumie špecifikám Vášho podnikania.</p>
             </div>
 
             <div class="benefit-card animate-on-scroll">
               <div class="benefit-icon">
                 <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               </div>
-              <h3>Maximálny dôraz na ochranu dát</h3>
-              <p>Bezpečnosť klientskych dát je našou prioritou, preto pracujeme v súlade s GDPR a EU AI Act, uzatvárame prísne zmluvy a Vaše dáta nikdy neukladáme na vlastných serveroch.</p>
+              <h3 data-i18n="why.card3Title">Maximálny dôraz na ochranu dát</h3>
+              <p data-i18n="why.card3Text">Bezpečnosť klientskych dát je našou prioritou, preto pracujeme v súlade s GDPR a EU AI Act, uzatvárame prísne zmluvy a Vaše dáta nikdy neukladáme na vlastných serveroch.</p>
             </div>
 
           </div>
@@ -596,9 +621,9 @@
       <section class="section" id="referencie">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">REFERENCIE</span>
-            <h2 class="section-title">Čo sme realizovali</h2>
-            <p class="section-subtitle">Úspešne sme pomohli firmám z rôznych odvetví zautomatizovať ich každodenné procesy.</p>
+            <span class="section-label" data-i18n="references.label">REFERENCIE</span>
+            <h2 class="section-title" data-i18n="references.title">Čo sme realizovali</h2>
+            <p class="section-subtitle" data-i18n="references.subtitle">Úspešne sme pomohli firmám z rôznych odvetví zautomatizovať ich každodenné procesy.</p>
           </div>
           <div class="references-grid stagger-children">
 
@@ -606,24 +631,24 @@
               <div class="reference-icon">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>
               </div>
-              <h3>Komplexná automatizácia fakturácie</h3>
-              <p>Implementovali sme systém na kompletnú správu fakturačného cyklu. AI asistent automaticky skenuje doklady, vyčítava dáta, páruje platby a zabezpečuje archiváciu. Výsledkom je nulová chybovosť a eliminácia desiatok hodín manuálnej administratívy.</p>
+              <h3 data-i18n="references.card1Title">Komplexná automatizácia fakturácie</h3>
+              <p data-i18n="references.card1Text">Implementovali sme systém na kompletnú správu fakturačného cyklu. AI asistent automaticky skenuje doklady, vyčítava dáta, páruje platby a zabezpečuje archiváciu. Výsledkom je nulová chybovosť a eliminácia desiatok hodín manuálnej administratívy.</p>
             </div>
 
             <div class="reference-card animate-on-scroll">
               <div class="reference-icon">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v4M8.5 16.5l2-3M15.5 16.5l-2-3"/></svg>
               </div>
-              <h3>Celopodnikový AI ekosystém</h3>
-              <p>Prepojili sme interné systémy do jedného celku. E-mailový asistent autonómne spracováva dopyty a zapisuje informácie do CRM, zatiaľ čo vnútrofiremné automatizácie zrýchľujú komunikáciu medzi oddeleniami a odstraňujú administratívne bariéry.</p>
+              <h3 data-i18n="references.card2Title">Celopodnikový AI ekosystém</h3>
+              <p data-i18n="references.card2Text">Prepojili sme interné systémy do jedného celku. E-mailový asistent autonómne spracováva dopyty a zapisuje informácie do CRM, zatiaľ čo vnútrofiremné automatizácie zrýchľujú komunikáciu medzi oddeleniami a odstraňujú administratívne bariéry.</p>
             </div>
 
             <div class="reference-card animate-on-scroll">
               <div class="reference-icon">
                 <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
               </div>
-              <h3>Automatizácia sociálnych sietí</h3>
-              <p>Navrhli sme systém pre kompletnú správu sociálnych sietí. AI agent samostatne generuje kreatívne príspevky, prispôsobuje ich rôznym platformám a publikuje podľa strategického harmonogramu.</p>
+              <h3 data-i18n="references.card3Title">Automatizácia sociálnych sietí</h3>
+              <p data-i18n="references.card3Text">Navrhli sme systém pre kompletnú správu sociálnych sietí. AI agent samostatne generuje kreatívne príspevky, prispôsobuje ich rôznym platformám a publikuje podľa strategického harmonogramu.</p>
             </div>
 
           </div>
@@ -634,37 +659,37 @@
       <section class="section" id="cennik">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">Cenník</span>
-            <h2 class="section-title">Individuálny prístup</h2>
-            <p class="section-subtitle">Každé riešenie je unikátne. Ku každému klientovi pristupujeme individuálne a výsledná cena závisí od rozsahu a komplexnosti navrhnutej automatizácie.</p>
+            <span class="section-label" data-i18n="pricing.label">Cenník</span>
+            <h2 class="section-title" data-i18n="pricing.title">Individuálny prístup</h2>
+            <p class="section-subtitle" data-i18n="pricing.subtitle">Každé riešenie je unikátne. Ku každému klientovi pristupujeme individuálne a výsledná cena závisí od rozsahu a komplexnosti navrhnutej automatizácie.</p>
           </div>
           <div class="pricing-wrapper animate-on-scroll">
             <div class="pricing-card">
-              <h3>Tvorba cenovej ponuky</h3>
-              <p>Nepracujeme s fixnými balíčkami. Po bezplatnej konzultácii presne pochopíme, čo potrebujete, a pripravíme cenovú ponuku na mieru.</p>
+              <h3 data-i18n="pricing.cardTitle">Tvorba cenovej ponuky</h3>
+              <p data-i18n="pricing.cardText">Nepracujeme s fixnými balíčkami. Po bezplatnej konzultácii presne pochopíme, čo potrebujete, a pripravíme cenovú ponuku na mieru.</p>
               <ul class="pricing-features">
                 <li>
                   <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Bezplatná úvodná konzultácia
+                  <span data-i18n="pricing.feature1">Bezplatná úvodná konzultácia</span>
                 </li>
                 <li>
                   <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Cenová ponuka do 48 hodín
+                  <span data-i18n="pricing.feature2">Cenová ponuka do 48 hodín</span>
                 </li>
                 <li>
                   <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Žiadne skryté poplatky
+                  <span data-i18n="pricing.feature3">Žiadne skryté poplatky</span>
                 </li>
                 <li>
                   <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Platíte len za to, čo využívate
+                  <span data-i18n="pricing.feature4">Platíte len za to, čo využívate</span>
                 </li>
                 <li>
                   <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Priebežná podpora a údržba
+                  <span data-i18n="pricing.feature5">Priebežná podpora a údržba</span>
                 </li>
               </ul>
-              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min">
+              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="pricing.cta">
                 Nezáväzná konzultácia zadarmo
                 <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                   <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -679,21 +704,21 @@
       <section class="section" id="onas">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">O nás</span>
-            <h2 class="section-title">Kto za tým stojí</h2>
+            <span class="section-label" data-i18n="about.label">O nás</span>
+            <h2 class="section-title" data-i18n="about.title">Kto za tým stojí</h2>
           </div>
           <div class="team-wrapper animate-on-scroll">
             <div class="team-card">
               <img src="assets/team-adam.jpg" alt="Adam Barbeník" class="team-photo" loading="lazy">
               <h3>Adam Barbeník</h3>
-              <p class="team-role">Co-Founder</p>
-              <p class="team-bio">„Ak tvoj biznis v roku 2026 stále funguje manuálne, už teraz zaostávaš."</p>
+              <p class="team-role" data-i18n="about.adam.role">Co-Founder</p>
+              <p class="team-bio" data-i18n="about.adam.bio">„Ak tvoj biznis v roku 2026 stále funguje manuálne, už teraz zaostávaš."</p>
             </div>
             <div class="team-card">
               <img src="assets/team-marek.jpg" alt="Marek Sásik" class="team-photo" loading="lazy">
               <h3>Marek Sásik</h3>
-              <p class="team-role">Co-Founder</p>
-              <p class="team-bio">„Väčšina firiem nepotrebuje viac zamestnancov. Potrebuje lepšie systémy."</p>
+              <p class="team-role" data-i18n="about.marek.role">Co-Founder</p>
+              <p class="team-bio" data-i18n="about.marek.bio">„Väčšina firiem nepotrebuje viac zamestnancov. Potrebuje lepšie systémy."</p>
             </div>
           </div>
         </div>
@@ -703,91 +728,91 @@
       <section class="section" id="faq">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">FAQ</span>
-            <h2 class="section-title">Často kladené otázky</h2>
+            <span class="section-label" data-i18n="faq.label">FAQ</span>
+            <h2 class="section-title" data-i18n="faq.title">Často kladené otázky</h2>
           </div>
           <div class="faq-wrapper">
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Čo je AI asistent a ako funguje?
+                <span data-i18n="faq.q1">Čo je AI asistent a ako funguje?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>AI asistent je softvérový agent poháňaný umelou inteligenciou, ktorý dokáže vykonávať úlohy ako odpovedanie na emaily, zapisovanie do CRM, dohadovanie stretnutí alebo správu sociálnych sietí. Funguje nepretržite, automaticky a bez potreby Vášho zásahu – presne podľa pravidiel, ktoré spolu nastavíme.</p>
+                  <p data-i18n="faq.a1">AI asistent je softvérový agent poháňaný umelou inteligenciou, ktorý dokáže vykonávať úlohy ako odpovedanie na emaily, zapisovanie do CRM, dohadovanie stretnutí alebo správu sociálnych sietí. Funguje nepretržite, automaticky a bez potreby Vášho zásahu – presne podľa pravidiel, ktoré spolu nastavíme.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Je to bezpečné? Ako je to s GDPR?
+                <span data-i18n="faq.q2">Je to bezpečné? Ako je to s GDPR?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Áno, bezpečnosť je naša priorita. Pracujeme v súlade s GDPR, uzatvárame sprostredkovateľskú zmluvu a všetky údaje spracovávame v rámci EÚ. Máte plnú kontrolu nad tým, čo AI asistent robí – nič sa neodošle bez Vášho vedomia.</p>
+                  <p data-i18n="faq.a2">Áno, bezpečnosť je naša priorita. Pracujeme v súlade s GDPR, uzatvárame sprostredkovateľskú zmluvu a všetky údaje spracovávame v rámci EÚ. Máte plnú kontrolu nad tým, čo AI asistent robí – nič sa neodošle bez Vášho vedomia.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Koľko času mi to reálne ušetrí?
+                <span data-i18n="faq.q3">Koľko času mi to reálne ušetrí?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Záleží od objemu Vašej práce, ale väčšina našich klientov ušetrí 2-4 hodiny denne na rutinnej administratíve. To je 40-80 hodín mesačne, ktoré môžete venovať práci, ktorá Vás naozaj živí.</p>
+                  <p data-i18n="faq.a3">Záleží od objemu Vašej práce, ale väčšina našich klientov ušetrí 2-4 hodiny denne na rutinnej administratíve. To je 40-80 hodín mesačne, ktoré môžete venovať práci, ktorá Vás naozaj živí.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Čo ak mi riešenie nebude vyhovovať?
+                <span data-i18n="faq.q4">Čo ak mi riešenie nebude vyhovovať?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Každé riešenie prispôsobujeme presne Vašim potrebám. Ak niečo nefunguje podľa očakávaní, upravíme to. Na začiatku máte plnú kontrolu v schvaľovacom režime, takže vidíte presne, čo AI robí, ešte predtým než ho pustíte plne automaticky.</p>
+                  <p data-i18n="faq.a4">Každé riešenie prispôsobujeme presne Vašim potrebám. Ak niečo nefunguje podľa očakávaní, upravíme to. Na začiatku máte plnú kontrolu v schvaľovacom režime, takže vidíte presne, čo AI robí, ešte predtým než ho pustíte plne automaticky.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Ako dlho trvá implementácia?
+                <span data-i18n="faq.q5">Ako dlho trvá implementácia?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Jednoduchšie automatizácie (napr. email asistent) vieme nasadiť do niekoľkých dní. Komplexnejšie riešenia s prepojením viacerých systémov zvyčajne trvajú 1-2 týždne. Presný harmonogram dohodneme na úvodnej konzultácii.</p>
+                  <p data-i18n="faq.a5">Jednoduchšie automatizácie (napr. email asistent) vieme nasadiť do niekoľkých dní. Komplexnejšie riešenia s prepojením viacerých systémov zvyčajne trvajú 1-2 týždne. Presný harmonogram dohodneme na úvodnej konzultácii.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Musím niečo meniť vo svojich existujúcich systémoch?
+                <span data-i18n="faq.q6">Musím niečo meniť vo svojich existujúcich systémoch?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Nie. Naše riešenia sa napájajú na Vaše existujúce nástroje (email, CRM, kalendár, Slack a pod.) bez potreby čokoľvek meniť. Pracujeme s tým, čo už používate.</p>
+                  <p data-i18n="faq.a6">Nie. Naše riešenia sa napájajú na Vaše existujúce nástroje (email, CRM, kalendár, Slack a pod.) bez potreby čokoľvek meniť. Pracujeme s tým, čo už používate.</p>
                 </div>
               </div>
             </div>
 
             <div class="faq-item animate-on-scroll">
               <button class="faq-question" aria-expanded="false">
-                Koľko to stojí?
+                <span data-i18n="faq.q7">Koľko to stojí?</span>
                 <svg class="faq-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p>Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná.</p>
+                  <p data-i18n="faq.a7">Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná.</p>
                 </div>
               </div>
             </div>
@@ -800,9 +825,9 @@
       <section class="cta-section">
         <div class="container">
           <div class="cta-content animate-on-scroll">
-            <h2>Ste pripravení nasadiť nový AI systém do vášho biznisu?</h2>
-            <p>Náš ekosystém automaticky odpisuje na e-maily, zapisuje dáta do CRM a plánuje stretnutia. Získate systém, ktorý za vás spoľahlivo vyrieši celú administratívu.</p>
-            <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min">
+            <h2 data-i18n="cta.heading">Ste pripravení nasadiť nový AI systém do vášho biznisu?</h2>
+            <p data-i18n="cta.text">Náš ekosystém automaticky odpisuje na e-maily, zapisuje dáta do CRM a plánuje stretnutia. Získate systém, ktorý za vás spoľahlivo vyrieši celú administratívu.</p>
+            <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="cta.button">
               Dohodnite si bezplatnú konzultáciu
               <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -816,9 +841,9 @@
       <section class="section" id="kontakt">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label">Kontakt</span>
-            <h2 class="section-title">Ozvite sa nám</h2>
-            <p class="section-subtitle">Máte otázku alebo chcete vedieť viac? Napíšte nám alebo si rovno dohodnite bezplatnú konzultáciu.</p>
+            <span class="section-label" data-i18n="contact.label">Kontakt</span>
+            <h2 class="section-title" data-i18n="contact.title">Ozvite sa nám</h2>
+            <p class="section-subtitle" data-i18n="contact.subtitle">Máte otázku alebo chcete vedieť viac? Napíšte nám alebo si rovno dohodnite bezplatnú konzultáciu.</p>
           </div>
           <div class="contact-grid">
             <div class="contact-info animate-on-scroll">
@@ -828,7 +853,7 @@
               </div>
               <div class="contact-detail">
                 <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Banská Bystrica, Slovakia</span>
+                <span data-i18n="contact.location">Banská Bystrica, Slovakia</span>
               </div>
               <div class="contact-detail">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
@@ -837,26 +862,26 @@
             </div>
 
             <form class="contact-form animate-on-scroll" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-              <!-- Web3Forms access key - REPLACE with your actual key -->
+              <!-- Web3Forms access key -->
               <input type="hidden" name="access_key" value="1d930258-7c90-4cc5-b66c-4593e4e1fd88">
-              <input type="hidden" name="subject" value="Nová správa z webu SoftClick.ai">
+              <input type="hidden" name="subject" data-i18n-value="contact.formSubject" value="Nová správa z webu SoftClick.ai">
               <input type="hidden" name="from_name" value="SoftClick.ai Web">
               <!-- Honeypot -->
               <input type="checkbox" name="botcheck" style="display: none;">
 
               <div class="form-group">
-                <label for="name">Meno</label>
-                <input type="text" id="name" name="name" class="form-input" placeholder="Vaše meno" required>
+                <label for="name" data-i18n="contact.formName">Meno</label>
+                <input type="text" id="name" name="name" class="form-input" data-i18n-placeholder="contact.formNamePlaceholder" placeholder="Vaše meno" required>
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="vas@email.sk" required>
+                <label for="email" data-i18n="contact.formEmail">Email</label>
+                <input type="email" id="email" name="email" class="form-input" data-i18n-placeholder="contact.formEmailPlaceholder" placeholder="vas@email.sk" required>
               </div>
               <div class="form-group">
-                <label for="message">Správa</label>
-                <textarea id="message" name="message" class="form-textarea" placeholder="Opíšte nám, čo by ste chceli automatizovať..." required></textarea>
+                <label for="message" data-i18n="contact.formMessage">Správa</label>
+                <textarea id="message" name="message" class="form-textarea" data-i18n-placeholder="contact.formMessagePlaceholder" placeholder="Opíšte nám, čo by ste chceli automatizovať..." required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary form-submit">
+              <button type="submit" class="btn btn-primary form-submit" data-i18n="contact.formSubmit">
                 Odoslať správu
                 <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                   <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -878,14 +903,14 @@
             <img src="assets/logo-header.png" alt="SoftClick.ai" class="logo-img">
           </a>
           <ul class="footer-links">
-            <li><a href="#sluzby">Služby</a></li>
-            <li><a href="#proces">Proces</a></li>
-            <li><a href="#preco">Prečo my</a></li>
-            <li><a href="#onas">O nás</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#kontakt">Kontakt</a></li>
+            <li><a href="#sluzby" data-i18n="footer.services">Služby</a></li>
+            <li><a href="#proces" data-i18n="footer.process">Proces</a></li>
+            <li><a href="#preco" data-i18n="footer.why">Prečo my</a></li>
+            <li><a href="#onas" data-i18n="footer.about">O nás</a></li>
+            <li><a href="#faq" data-i18n="footer.faq">FAQ</a></li>
+            <li><a href="#kontakt" data-i18n="footer.contact">Kontakt</a></li>
           </ul>
-          <p class="footer-copy">&copy; 2025 <a href="/">SoftClick.ai</a>. Všetky práva vyhradené.</p>
+          <p class="footer-copy">&copy; 2025 <a href="/">SoftClick.ai</a>. <span data-i18n="footer.copy">Všetky práva vyhradené.</span></p>
         </div>
       </div>
     </footer>
@@ -893,23 +918,12 @@
   </div><!-- .page-wrapper -->
 
   <!-- Scripts -->
+  <script src="js/i18n.js"></script>
   <script src="js/stars.js"></script>
   <script src="js/main.js"></script>
   <script src="js/animations.js"></script>
 
   <!-- Calendly -->
   <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
-  <!-- Google Analytics - REPLACE G-XXXXXXXXXX with your Measurement ID -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-  -->
-
 </body>
 </html>

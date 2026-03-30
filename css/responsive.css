@@ -10,7 +10,8 @@
     display: none;
   }
 
-  .header-cta .btn {
+  .header-cta .btn,
+  .header-cta .lang-toggle {
     display: none;
   }
 

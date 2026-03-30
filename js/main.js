@@ -165,7 +165,7 @@
       const submitBtn = contactForm.querySelector('.form-submit');
       const originalText = submitBtn.textContent;
 
-      submitBtn.textContent = 'Odosielam...';
+      submitBtn.textContent = I18n.t('js.sending');
       submitBtn.disabled = true;
 
       try {
@@ -178,14 +178,14 @@
         const result = await response.json();
 
         if (result.success) {
-          status.textContent = 'Správa bola úspešne odoslaná! Ozveme sa Vám čo najskôr.';
+          status.textContent = I18n.t('js.success');
           status.className = 'form-status success';
           contactForm.reset();
         } else {
-          throw new Error('Odoslanie zlyhalo');
+          throw new Error(I18n.t('js.sendFailed'));
         }
       } catch (err) {
-        status.textContent = 'Niečo sa pokazilo. Skúste to znova alebo nám napíšte na adam@softclick.ai';
+        status.textContent = I18n.t('js.error');
         status.className = 'form-status error';
       }
 

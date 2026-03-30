@@ -1,0 +1,63 @@
+/* ===== ANTI-FOUC ===== */
+body:not(.i18n-ready) {
+  opacity: 0;
+}
+
+body.i18n-ready {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+/* ===== LANGUAGE TOGGLE ===== */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-left: var(--space-lg);
+}
+
+.lang-toggle__btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+  letter-spacing: 0.05em;
+}
+
+.lang-toggle__btn:hover {
+  color: var(--text-light);
+}
+
+.lang-toggle__btn.active {
+  color: var(--accent-violet);
+}
+
+.lang-toggle__sep {
+  color: rgba(139, 157, 195, 0.25);
+  font-weight: 300;
+  user-select: none;
+  pointer-events: none;
+  font-size: var(--font-size-sm);
+}
+
+/* ===== MOBILE TOGGLE ===== */
+.mobile-lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobile-lang-toggle .lang-toggle__btn {
+  font-size: var(--font-size-lg);
+  padding: 0.35rem 0.6rem;
+}
+
+.mobile-lang-toggle .lang-toggle__sep {
+  font-size: var(--font-size-lg);
+}

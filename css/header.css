@@ -200,3 +200,16 @@
 .mobile-menu-inner a:hover {
   color: var(--accent-violet);
 }
+
+/* Mobile language toggle animation */
+.mobile-menu-inner .mobile-lang-toggle {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-menu.open .mobile-menu-inner .mobile-lang-toggle {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 380ms;
+}
