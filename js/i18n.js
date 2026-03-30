@@ -112,11 +112,11 @@ var TRANSLATIONS = {
       title: "Kto za tým stojí",
       adam: {
         role: "Co-Founder",
-        bio: "„Ak tvoj biznis v roku 2026 stále funguje manuálne, už teraz zaostávaš.""
+        bio: "\u201EAk tvoj biznis v roku 2026 stále funguje manuálne, už teraz zaostávaš.\u201C"
       },
       marek: {
         role: "Co-Founder",
-        bio: "„Väčšina firiem nepotrebuje viac zamestnancov. Potrebuje lepšie systémy.""
+        bio: "\u201EVäčšina firiem nepotrebuje viac zamestnancov. Potrebuje lepšie systémy.\u201C"
       }
     },
     faq: {
