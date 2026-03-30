@@ -478,10 +478,25 @@ var I18n = (function () {
 
     var t = TRANSLATIONS[lang];
 
-    // Text content
+    // Text content (preserves child elements like SVG arrows)
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var val = resolve(t, el.getAttribute('data-i18n'));
-      if (val) el.textContent = val;
+      if (!val) return;
+      // Find first text node or create one
+      var textNode = null;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
+          textNode = el.childNodes[i];
+          break;
+        }
+      }
+      if (textNode) {
+        textNode.textContent = val + ' ';
+      } else if (!el.querySelector('svg, img')) {
+        el.textContent = val;
+      } else {
+        el.insertBefore(document.createTextNode(val + ' '), el.firstChild);
+      }
     });
 
     // HTML content (for <br> tags)
@@ -539,7 +554,7 @@ var I18n = (function () {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
-    // Reveal body
+    // Signal ready
     document.body.classList.add('i18n-ready');
   }
 
