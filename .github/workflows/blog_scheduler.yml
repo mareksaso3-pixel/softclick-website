@@ -1,0 +1,50 @@
+name: Weekly Blog Post
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # každý pondelok o 8:00 CET (7:00 UTC)
+  workflow_dispatch:        # manuálne spustenie z GitHub UI
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Generate blog post
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python execution/generate_blog_post.py
+
+      - name: Setup Node (pre Vercel CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_vlwjvtH6Rd2U53Muy3oqBw36
+          VERCEL_PROJECT_ID: prj_6n68qVY0rbMM8uyEWHL8kjOz7CpE
+        run: vercel --prod --token $VERCEL_TOKEN --yes
+
+      - name: Commit zmeny späť do repozitára
+        run: |
+          git config user.name "SoftClick Bot"
+          git config user.email "bot@softclick.ai"
+          git add blog/ sitemap.xml
+          git diff --staged --quiet || git commit -m "feat(blog): auto-generated weekly post [skip ci]"
+          git push

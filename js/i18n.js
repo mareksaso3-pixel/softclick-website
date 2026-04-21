@@ -356,16 +356,18 @@ var STRUCTURED_DATA = {
       "logo": "https://softclick.ai/assets/logo-header.png",
       "description": "AI automatizácia pre firmy. Vytvárame AI asistentov na mieru – automatizácia emailov, CRM, kalendára a interných procesov.",
       "email": "info@softclick.ai",
-      "founder": {"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Founder"},
+      "address": {"@type": "PostalAddress", "addressLocality": "Banská Bystrica", "addressCountry": "SK"},
+      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Saso", "jobTitle": "Co-Founder"}],
       "contactPoint": {"@type": "ContactPoint", "email": "info@softclick.ai", "contactType": "customer service", "availableLanguage": ["Slovak", "English"]},
-      "areaServed": {"@type": "Country", "name": "Slovakia"}
+      "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}]
     },
     website: {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "SoftClick.ai",
       "url": "https://softclick.ai",
-      "description": "AI automatizácia pre firmy – AI asistenti na mieru pre automatizáciu emailov, CRM, kalendára a interných procesov."
+      "description": "AI automatizácia pre firmy – AI asistenti na mieru pre automatizáciu emailov, CRM, kalendára a interných procesov.",
+      "inLanguage": ["sk", "en"]
     },
     service: {
       "@context": "https://schema.org",
@@ -374,7 +376,7 @@ var STRUCTURED_DATA = {
       "provider": {"@type": "Organization", "name": "SoftClick.ai", "url": "https://softclick.ai"},
       "name": "AI automatizácia pre firmy",
       "description": "Komplexné AI riešenia pre automatizáciu firemných procesov vrátane emailovej komunikácie, CRM integrácie, správy kalendára, follow-up systémov, outreach automatizácie a správy sociálnych sietí.",
-      "areaServed": {"@type": "Country", "name": "Slovakia"},
+      "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "AI Automatizačné Služby",
@@ -409,16 +411,18 @@ var STRUCTURED_DATA = {
       "logo": "https://softclick.ai/assets/logo-header.png",
       "description": "AI automation for businesses. We build custom AI assistants – email automation, CRM, calendar, and internal process automation.",
       "email": "info@softclick.ai",
-      "founder": {"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Founder"},
+      "address": {"@type": "PostalAddress", "addressLocality": "Banská Bystrica", "addressCountry": "SK"},
+      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Saso", "jobTitle": "Co-Founder"}],
       "contactPoint": {"@type": "ContactPoint", "email": "info@softclick.ai", "contactType": "customer service", "availableLanguage": ["Slovak", "English"]},
-      "areaServed": {"@type": "Country", "name": "Slovakia"}
+      "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}]
     },
     website: {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "SoftClick.ai",
       "url": "https://softclick.ai",
-      "description": "AI automation for businesses – custom AI assistants for email automation, CRM, calendar, and internal process automation."
+      "description": "AI automation for businesses – custom AI assistants for email automation, CRM, calendar, and internal process automation.",
+      "inLanguage": ["sk", "en"]
     },
     service: {
       "@context": "https://schema.org",
@@ -427,7 +431,7 @@ var STRUCTURED_DATA = {
       "provider": {"@type": "Organization", "name": "SoftClick.ai", "url": "https://softclick.ai"},
       "name": "AI automation for businesses",
       "description": "Comprehensive AI solutions for business process automation including email communication, CRM integration, calendar management, follow-up systems, outreach automation, and social media management.",
-      "areaServed": {"@type": "Country", "name": "Slovakia"},
+      "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "AI Automation Services",
