@@ -21,6 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install openai
 
+      - name: Doplniť témy ak je fronta nízka
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python execution/replenish_topics.py
+
       - name: Generate blog post
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
