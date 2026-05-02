@@ -937,28 +937,15 @@
   <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
   <!-- Chat Widget -->
-  <div style="width: 0; height: 0;" id="VG_OVERLAY_CONTAINER">
-    <!-- Here is where renders the widget. -->
-    <!-- Set render to 'full-width' then adjust the width and height to 500px (for example) to render the chatbot itself without the popup. -->
-  </div>
-
-  <!-- Remove 'defer' if you want widget to load faster (Will affect website loading) -->
-  <script defer>
-    (function() {
-      window.VG_CONFIG = {
-        ID: "iidLmT8W4uo7SoWjXV6I", // YOUR AGENT ID
-        region: 'na', // YOUR ACCOUNT REGION
-        render: 'bottom-right', // can be 'full-width' or 'bottom-left' or 'bottom-right'
-        stylesheets: [
-          // Base CONVOCORE CSS
-          "https://cdn.convocore.ai/vg_live_build/styles.css",
-        ],
-      }
-      var VG_SCRIPT = document.createElement("script");
-      VG_SCRIPT.src = "https://cdn.convocore.ai/vg_live_build/vg_bundle.js";
-      VG_SCRIPT.defer = true; // Remove 'defer' if you want widget to load faster (Will affect website loading)
-      document.body.appendChild(VG_SCRIPT);
-    })()
+  <div style="width: 0; height: 0;" id="VG_OVERLAY_CONTAINER"></div>
+  <script>
+    window.VG_CONFIG = {
+      ID: "iidLmT8W4uo7SoWjXV6I",
+      region: 'na',
+      render: 'bottom-right',
+      stylesheets: ["https://cdn.convocore.ai/vg_live_build/styles.css"],
+    };
   </script>
+  <script src="https://cdn.convocore.ai/vg_live_build/vg_bundle.js" defer></script>
 </body>
 </html>
