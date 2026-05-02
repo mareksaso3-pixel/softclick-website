@@ -947,5 +947,21 @@
     };
   </script>
   <script src="https://cdn.convocore.ai/vg_live_build/vg_bundle.js" defer></script>
+
+  <!-- Chat Widget → GA4 tracking -->
+  <script>
+    window.addEventListener('vg:open', function() {
+      gtag('event', 'chat_open', { event_category: 'chat_widget' });
+    });
+    window.addEventListener('vg:close', function() {
+      gtag('event', 'chat_close', { event_category: 'chat_widget' });
+    });
+    window.addEventListener('vg:message_sent', function() {
+      gtag('event', 'chat_message_sent', { event_category: 'chat_widget' });
+    });
+    window.addEventListener('vg:conversation_start', function() {
+      gtag('event', 'chat_conversation_start', { event_category: 'chat_widget' });
+    });
+  </script>
 </body>
 </html>
