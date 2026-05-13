@@ -155,54 +155,12 @@
   var current = 0;
   var videoCarousel = document.getElementById('videoCarousel');
 
-  // ===== BLOB CACHE — load entire video into memory for stutter-free playback =====
-  var _blobCache = {};
-
-  function fetchBlob(src) {
-    if (!src) return Promise.reject('no src');
-    if (_blobCache[src]) return Promise.resolve(_blobCache[src]);
-    return fetch(src)
-      .then(function (r) { return r.blob(); })
-      .then(function (blob) {
-        var url = URL.createObjectURL(blob);
-        _blobCache[src] = url;
-        return url;
-      });
-  }
-
-  function originalSrc(videoEl) {
-    return videoEl.dataset.originalSrc || videoEl.getAttribute('src') || '';
-  }
-
-  function playBlobVideo(videoEl) {
-    if (!videoEl) return;
-    var src = originalSrc(videoEl);
-    if (!src) return;
-    if (_blobCache[src]) {
-      videoEl.src = _blobCache[src];
-      videoEl.play().catch(function () {});
-    } else {
-      fetchBlob(src).then(function (blobUrl) {
-        videoEl.src = blobUrl;
-        videoEl.play().catch(function () {});
-      }).catch(function () {
-        videoEl.play().catch(function () {});
-      });
-    }
-  }
-
   if (videoCarousel) {
     var track = document.getElementById('videoTrack');
     slides = track.querySelectorAll('.video-slide');
     var dots = document.querySelectorAll('.carousel-dot');
     var prevBtn = document.getElementById('carouselPrev');
     var nextBtn = document.getElementById('carouselNext');
-
-    // Store original srcs before anything modifies them
-    slides.forEach(function (slide) {
-      var v = slide.querySelector('video');
-      if (v && !v.dataset.originalSrc) v.dataset.originalSrc = v.getAttribute('src') || '';
-    });
 
     function goTo(idx) {
       var prev = current;
@@ -212,14 +170,9 @@
       track.style.transform = 'translateX(-' + (current * 100) + '%)';
       dots[prev].classList.remove('active');
       dots[current].classList.add('active');
-      playBlobVideo(slides[current].querySelector('video'));
+      var nextVideo = slides[current].querySelector('video');
+      if (nextVideo) nextVideo.play().catch(function () {});
     }
-
-    slides.forEach(function (slide, i) {
-      var video = slide.querySelector('video');
-      if (!video) return;
-      video.addEventListener('ended', function () { goTo(i + 1); });
-    });
 
     dots.forEach(function (dot) {
       dot.addEventListener('click', function () { goTo(parseInt(this.getAttribute('data-idx'), 10)); });
@@ -231,13 +184,8 @@
     var carouselObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          // Pre-fetch all videos in background
-          slides.forEach(function (slide) {
-            var v = slide.querySelector('video');
-            if (v) fetchBlob(originalSrc(v)).catch(function () {});
-          });
-          // Play first video from blob
-          playBlobVideo(slides[0].querySelector('video'));
+          var firstVideo = slides[0].querySelector('video');
+          if (firstVideo) firstVideo.play().catch(function () {});
           carouselObserver.unobserve(entry.target);
         }
       });
@@ -259,19 +207,12 @@
     if (!overlayPlayer) return;
     overlayCurrentIdx = (idx + allSlides.length) % allSlides.length;
     var video = allSlides[overlayCurrentIdx] ? allSlides[overlayCurrentIdx].querySelector('video') : null;
-    var src = video ? originalSrc(video) : '';
+    var src = video ? (video.getAttribute('src') || '') : '';
     if (!src) return;
     overlayDotEls.forEach(function (d, i) { d.classList.toggle('active', i === overlayCurrentIdx); });
-    overlayPlayer.volume = 0.02;
-    if (_blobCache[src]) {
-      overlayPlayer.src = _blobCache[src];
-      overlayPlayer.play().catch(function () {});
-    } else {
-      fetchBlob(src).then(function (blobUrl) {
-        overlayPlayer.src = blobUrl;
-        overlayPlayer.play().catch(function () {});
-      });
-    }
+    overlayPlayer.volume = 0.5;
+    overlayPlayer.src = src;
+    overlayPlayer.play().catch(function () {});
   }
 
   function openOverlay(slideIdx) {
@@ -288,7 +229,8 @@
     document.body.style.overflow = '';
     if (overlayPlayer) { overlayPlayer.pause(); overlayPlayer.removeAttribute('src'); overlayPlayer.load(); }
     if (slides && slides[current]) {
-      playBlobVideo(slides[current].querySelector('video'));
+      var v = slides[current].querySelector('video');
+      if (v) v.play().catch(function () {});
     }
   }
 
