@@ -155,6 +155,20 @@
   var current = 0;
   var videoCarousel = document.getElementById('videoCarousel');
 
+  // Blob cache — pre-fetch videos into memory for stutter-free fullscreen playback
+  var _blobCache = {};
+  function fetchBlob(src) {
+    if (!src) return Promise.reject('no src');
+    if (_blobCache[src]) return Promise.resolve(_blobCache[src]);
+    return fetch(src)
+      .then(function (r) { return r.blob(); })
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        _blobCache[src] = url;
+        return url;
+      });
+  }
+
   if (videoCarousel) {
     var track = document.getElementById('videoTrack');
     slides = track.querySelectorAll('.video-slide');
@@ -184,8 +198,14 @@
     var carouselObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          // Play first video directly
           var firstVideo = slides[0].querySelector('video');
           if (firstVideo) firstVideo.play().catch(function () {});
+          // Pre-fetch all videos as blobs in background for smooth fullscreen
+          slides.forEach(function (slide) {
+            var v = slide.querySelector('video');
+            if (v) fetchBlob(v.getAttribute('src') || '').catch(function () {});
+          });
           carouselObserver.unobserve(entry.target);
         }
       });
@@ -210,9 +230,16 @@
     var src = video ? (video.getAttribute('src') || '') : '';
     if (!src) return;
     overlayDotEls.forEach(function (d, i) { d.classList.toggle('active', i === overlayCurrentIdx); });
-    overlayPlayer.volume = 0.5;
-    overlayPlayer.src = src;
-    overlayPlayer.play().catch(function () {});
+    overlayPlayer.volume = 0.08;
+    // Use blob if cached for stutter-free playback, otherwise direct src
+    if (_blobCache[src]) {
+      overlayPlayer.src = _blobCache[src];
+      overlayPlayer.play().catch(function () {});
+    } else {
+      overlayPlayer.src = src;
+      overlayPlayer.play().catch(function () {});
+      fetchBlob(src).catch(function () {});
+    }
   }
 
   function openOverlay(slideIdx) {
