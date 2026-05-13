@@ -273,10 +273,9 @@
 
 .video-overlay-player {
   width: min(92vw, 1100px);
+  aspect-ratio: 16 / 9;
   max-height: 78vh;
-  height: auto;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-glow-strong);
   display: block;
   background: #000;
 }

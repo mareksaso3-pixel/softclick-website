@@ -233,17 +233,18 @@
     overlayCurrentIdx = (idx + allSlides.length) % allSlides.length;
     var video = allSlides[overlayCurrentIdx] ? allSlides[overlayCurrentIdx].querySelector('video') : null;
     if (!video) return;
-    // Use absolute src so overlay player resolves URL correctly regardless of base
-    var absSrc = video.src || '';
     var relSrc = video.getAttribute('src') || '';
-    if (!absSrc && !relSrc) return;
+    var absSrc = video.src || relSrc;
+    if (!relSrc) return;
     overlayDotEls.forEach(function (d, i) { d.classList.toggle('active', i === overlayCurrentIdx); });
     overlayPlayer.volume = 0.08;
-    // Prefer blob cache (stutter-free), fall back to absolute src
     var cachedBlob = _blobCache[relSrc] || _blobCache[absSrc];
-    overlayPlayer.src = cachedBlob || absSrc;
+    overlayPlayer.setAttribute('src', cachedBlob || absSrc);
     overlayPlayer.load();
-    overlayPlayer.play().catch(function () {});
+    overlayPlayer.addEventListener('canplay', function onReady() {
+      overlayPlayer.removeEventListener('canplay', onReady);
+      overlayPlayer.play().catch(function () {});
+    });
   }
 
   function openOverlay(slideIdx) {
