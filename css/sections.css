@@ -9,13 +9,12 @@
 .services-left {
   position: sticky;
   top: var(--header-height);
-  height: calc(100vh - var(--header-height));
+  align-self: start;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow: visible;
   padding-top: var(--space-2xl);
-  padding-bottom: var(--space-xl);
+  padding-bottom: var(--space-2xl);
 }
 
 .services-left h3 {
@@ -345,9 +344,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-xl);
-  padding: var(--space-md) var(--space-xl);
-  background: rgba(5, 13, 26, 0.92);
-  border-top: 1px solid var(--card-border);
+  padding: var(--space-lg) var(--space-xl);
+  background: rgba(5, 13, 26, 0.95);
+  border-top: 1px solid rgba(155, 108, 255, 0.15);
 }
 
 .carousel-dots {
