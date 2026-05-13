@@ -42,6 +42,7 @@
       hamburger.setAttribute('aria-expanded', isOpen);
     });
 
+    // Close on link click
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         hamburger.classList.remove('active');
@@ -51,6 +52,7 @@
       });
     });
 
+    // Close on Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
         hamburger.classList.remove('active');
@@ -81,11 +83,13 @@
       const item = this.closest('.faq-item');
       const isActive = item.classList.contains('active');
 
+      // Close all
       document.querySelectorAll('.faq-item.active').forEach(function (openItem) {
         openItem.classList.remove('active');
         openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
       });
 
+      // Toggle current
       if (!isActive) {
         item.classList.add('active');
         this.setAttribute('aria-expanded', 'true');
@@ -94,7 +98,7 @@
   });
 
   // ===== STATS COUNTER ANIMATION =====
-  var COUNTER_DURATION = 3000;
+  var COUNTER_DURATION = 3000; // all counters finish together in 3s
 
   function animateCountUp(el) {
     var num = parseInt(el.getAttribute('data-count'), 10);
@@ -129,6 +133,7 @@
     requestAnimationFrame(update);
   }
 
+  // Observe stats - all start together so they finish together
   var statsObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -151,138 +156,124 @@
   }
 
   // ===== VIDEO CAROUSEL =====
-  var slides = null;
-  var current = 0;
   var videoCarousel = document.getElementById('videoCarousel');
-
-  // Blob cache — pre-fetch videos into memory for stutter-free fullscreen playback
-  var _blobCache = {};
-  function fetchBlob(src) {
-    if (!src) return Promise.reject('no src');
-    if (_blobCache[src]) return Promise.resolve(_blobCache[src]);
-    return fetch(src)
-      .then(function (r) { return r.blob(); })
-      .then(function (blob) {
-        var url = URL.createObjectURL(blob);
-        _blobCache[src] = url;
-        return url;
-      });
-  }
-
   if (videoCarousel) {
-    var track = document.getElementById('videoTrack');
-    slides = track.querySelectorAll('.video-slide');
-    var dots = document.querySelectorAll('.carousel-dot');
-    var prevBtn = document.getElementById('carouselPrev');
-    var nextBtn = document.getElementById('carouselNext');
+    var track       = document.getElementById('videoTrack');
+    var slides      = track ? track.querySelectorAll('.video-slide') : [];
+    var dots        = document.querySelectorAll('.carousel-dot');
+    var prevBtn     = document.getElementById('carouselPrev');
+    var nextBtn     = document.getElementById('carouselNext');
+    var current     = 0;
+
+    // Blob cache – pre-fetch videos into memory for stutter-free fullscreen
+    var blobCache = {};
+    function fetchBlob(src) {
+      if (!src) return Promise.reject();
+      if (blobCache[src]) return Promise.resolve(blobCache[src]);
+      return fetch(src)
+        .then(function (r) { return r.blob(); })
+        .then(function (b) { var u = URL.createObjectURL(b); blobCache[src] = u; return u; });
+    }
 
     function goTo(idx) {
       var prev = current;
       current = (idx + slides.length) % slides.length;
-      var prevVideo = slides[prev].querySelector('video');
-      if (prevVideo) { prevVideo.pause(); prevVideo.currentTime = 0; }
+      var prevVid = slides[prev].querySelector('video');
+      if (prevVid) { prevVid.pause(); prevVid.currentTime = 0; }
       track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dots[prev].classList.remove('active');
-      dots[current].classList.add('active');
-      var nextVideo = slides[current].querySelector('video');
-      if (nextVideo) nextVideo.play().catch(function () {});
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+      var nextVid = slides[current].querySelector('video');
+      if (nextVid) nextVid.play().catch(function () {});
     }
-
-    dots.forEach(function (dot) {
-      dot.addEventListener('click', function () { goTo(parseInt(this.getAttribute('data-idx'), 10)); });
-    });
 
     if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { goTo(+this.getAttribute('data-idx')); });
+    });
 
+    // Autoplay when carousel enters viewport; pre-fetch blobs in background
     var carouselObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          // Play first video directly
-          var firstVideo = slides[0].querySelector('video');
-          if (firstVideo) firstVideo.play().catch(function () {});
-          // Pre-fetch all videos as blobs in background for smooth fullscreen
-          slides.forEach(function (slide) {
-            var v = slide.querySelector('video');
-            if (v) {
-              var rel = v.getAttribute('src') || '';
-              var abs = v.src || '';
-              // Cache under both keys so overlay lookup works
-              if (rel) fetchBlob(rel).then(function(b) { _blobCache[abs] = b; }).catch(function () {});
-            }
-          });
-          carouselObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+      if (entries[0].isIntersecting) {
+        var first = slides[0] && slides[0].querySelector('video');
+        if (first) first.play().catch(function () {});
+        slides.forEach(function (s) {
+          var v = s.querySelector('video');
+          if (v) fetchBlob(v.getAttribute('src') || '').catch(function () {});
+        });
+        carouselObserver.unobserve(videoCarousel);
+      }
+    }, { threshold: 0.3 });
     carouselObserver.observe(videoCarousel);
-  }
 
-  // ===== VIDEO FULLSCREEN OVERLAY =====
-  var overlay = document.getElementById('videoOverlay');
-  var overlayPlayer = document.getElementById('videoOverlayPlayer');
-  var overlayClose = document.getElementById('videoOverlayClose');
-  var overlayPrevBtn = document.getElementById('overlayPrev');
-  var overlayNextBtn = document.getElementById('overlayNext');
-  var overlayDotEls = document.querySelectorAll('.overlay-dot');
-  var overlayCurrentIdx = 0;
-  var allSlides = document.querySelectorAll('.video-slide');
+    // ===== FULLSCREEN OVERLAY =====
+    var overlay       = document.getElementById('videoOverlay');
+    var overlayPlayer = document.getElementById('videoOverlayPlayer');
+    var overlayClose  = document.getElementById('videoOverlayClose');
+    var overlayPrev   = document.getElementById('overlayPrev');
+    var overlayNext   = document.getElementById('overlayNext');
+    var overlayDots   = document.querySelectorAll('.overlay-dot');
+    var allSlides     = document.querySelectorAll('.video-slide');
+    var overlayIdx    = 0;
 
-  function overlayGoTo(idx) {
-    if (!overlayPlayer) return;
-    overlayCurrentIdx = (idx + allSlides.length) % allSlides.length;
-    var video = allSlides[overlayCurrentIdx] ? allSlides[overlayCurrentIdx].querySelector('video') : null;
-    if (!video) return;
-    var relSrc = video.getAttribute('src') || '';
-    var absSrc = video.src || relSrc;
-    if (!relSrc) return;
-    overlayDotEls.forEach(function (d, i) { d.classList.toggle('active', i === overlayCurrentIdx); });
-    overlayPlayer.volume = 0.08;
-    var cachedBlob = _blobCache[relSrc] || _blobCache[absSrc];
-    overlayPlayer.setAttribute('src', cachedBlob || absSrc);
-    overlayPlayer.load();
-    overlayPlayer.addEventListener('canplay', function onReady() {
-      overlayPlayer.removeEventListener('canplay', onReady);
-      overlayPlayer.play().catch(function () {});
+    function overlayGoTo(idx) {
+      if (!overlayPlayer) return;
+      overlayIdx = (idx + allSlides.length) % allSlides.length;
+      var v = allSlides[overlayIdx] && allSlides[overlayIdx].querySelector('video');
+      if (!v) return;
+      var rel = v.getAttribute('src') || '';
+      overlayDots.forEach(function (d, i) { d.classList.toggle('active', i === overlayIdx); });
+      overlayPlayer.volume = 0.08;
+      var cached = blobCache[rel];
+      if (cached) {
+        overlayPlayer.src = cached;
+        overlayPlayer.play().catch(function () {});
+      } else {
+        overlayPlayer.src = v.src; // absolute URL resolved by browser
+        overlayPlayer.load();
+        overlayPlayer.addEventListener('canplay', function h() {
+          overlayPlayer.removeEventListener('canplay', h);
+          overlayPlayer.play().catch(function () {});
+        });
+        fetchBlob(rel).then(function () {}).catch(function () {});
+      }
+    }
+
+    function openOverlay(idx) {
+      if (!overlay) return;
+      var cv = slides[current] && slides[current].querySelector('video');
+      if (cv) cv.pause();
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      overlayGoTo(idx);
+    }
+
+    function closeOverlay() {
+      if (!overlay) return;
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      if (overlayPlayer) { overlayPlayer.pause(); overlayPlayer.removeAttribute('src'); overlayPlayer.load(); }
+      var cv = slides[current] && slides[current].querySelector('video');
+      if (cv) cv.play().catch(function () {});
+    }
+
+    allSlides.forEach(function (s, i) {
+      s.addEventListener('click', function () { openOverlay(i); });
+    });
+    if (overlayClose) overlayClose.addEventListener('click', closeOverlay);
+    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
+    if (overlayPrev) overlayPrev.addEventListener('click', function () { overlayGoTo(overlayIdx - 1); });
+    if (overlayNext) overlayNext.addEventListener('click', function () { overlayGoTo(overlayIdx + 1); });
+    overlayDots.forEach(function (d) {
+      d.addEventListener('click', function () { overlayGoTo(+this.getAttribute('data-idx')); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay || !overlay.classList.contains('active')) return;
+      if (e.key === 'Escape') closeOverlay();
+      if (e.key === 'ArrowLeft') overlayGoTo(overlayIdx - 1);
+      if (e.key === 'ArrowRight') overlayGoTo(overlayIdx + 1);
     });
   }
-
-  function openOverlay(slideIdx) {
-    if (!overlay || !overlayPlayer) return;
-    if (slides && slides[current]) slides[current].querySelector('video').pause();
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    overlayGoTo(slideIdx);
-  }
-
-  function closeOverlay() {
-    if (!overlay) return;
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-    if (overlayPlayer) { overlayPlayer.pause(); overlayPlayer.removeAttribute('src'); overlayPlayer.load(); }
-    if (slides && slides[current]) {
-      var v = slides[current].querySelector('video');
-      if (v) v.play().catch(function () {});
-    }
-  }
-
-  allSlides.forEach(function (slide, i) {
-    slide.addEventListener('click', function () { openOverlay(i); });
-  });
-
-  if (overlayClose) overlayClose.addEventListener('click', closeOverlay);
-  if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
-  if (overlayPrevBtn) overlayPrevBtn.addEventListener('click', function () { overlayGoTo(overlayCurrentIdx - 1); });
-  if (overlayNextBtn) overlayNextBtn.addEventListener('click', function () { overlayGoTo(overlayCurrentIdx + 1); });
-  overlayDotEls.forEach(function (dot) {
-    dot.addEventListener('click', function () { overlayGoTo(parseInt(this.getAttribute('data-idx'), 10)); });
-  });
-  document.addEventListener('keydown', function (e) {
-    if (!overlay || !overlay.classList.contains('active')) return;
-    if (e.key === 'Escape') closeOverlay();
-    if (e.key === 'ArrowLeft') overlayGoTo(overlayCurrentIdx - 1);
-    if (e.key === 'ArrowRight') overlayGoTo(overlayCurrentIdx + 1);
-  });
 
   // ===== CONTACT FORM (Web3Forms) =====
   const contactForm = document.getElementById('contact-form');

@@ -9,12 +9,13 @@
 .services-left {
   position: sticky;
   top: var(--header-height);
-  align-self: start;
+  height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow: visible;
   padding-top: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
+  padding-bottom: var(--space-xl);
 }
 
 .services-left h3 {
@@ -272,12 +273,13 @@
 }
 
 .video-overlay-player {
-  width: min(92vw, 1100px);
-  aspect-ratio: 16 / 9;
+  max-width: 92vw;
   max-height: 78vh;
+  width: auto;
+  height: auto;
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glow-strong);
   display: block;
-  background: #000;
 }
 
 .video-overlay-controls {
@@ -343,9 +345,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-xl);
-  padding: var(--space-lg) var(--space-xl);
-  background: rgba(5, 13, 26, 0.95);
-  border-top: 1px solid rgba(155, 108, 255, 0.15);
+  padding: var(--space-md) var(--space-xl);
+  background: rgba(5, 13, 26, 0.92);
+  border-top: 1px solid var(--card-border);
 }
 
 .carousel-dots {
