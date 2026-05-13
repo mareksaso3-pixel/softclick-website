@@ -204,7 +204,12 @@
           // Pre-fetch all videos as blobs in background for smooth fullscreen
           slides.forEach(function (slide) {
             var v = slide.querySelector('video');
-            if (v) fetchBlob(v.getAttribute('src') || '').catch(function () {});
+            if (v) {
+              var rel = v.getAttribute('src') || '';
+              var abs = v.src || '';
+              // Cache under both keys so overlay lookup works
+              if (rel) fetchBlob(rel).then(function(b) { _blobCache[abs] = b; }).catch(function () {});
+            }
           });
           carouselObserver.unobserve(entry.target);
         }
@@ -227,19 +232,18 @@
     if (!overlayPlayer) return;
     overlayCurrentIdx = (idx + allSlides.length) % allSlides.length;
     var video = allSlides[overlayCurrentIdx] ? allSlides[overlayCurrentIdx].querySelector('video') : null;
-    var src = video ? (video.getAttribute('src') || '') : '';
-    if (!src) return;
+    if (!video) return;
+    // Use absolute src so overlay player resolves URL correctly regardless of base
+    var absSrc = video.src || '';
+    var relSrc = video.getAttribute('src') || '';
+    if (!absSrc && !relSrc) return;
     overlayDotEls.forEach(function (d, i) { d.classList.toggle('active', i === overlayCurrentIdx); });
     overlayPlayer.volume = 0.08;
-    // Use blob if cached for stutter-free playback, otherwise direct src
-    if (_blobCache[src]) {
-      overlayPlayer.src = _blobCache[src];
-      overlayPlayer.play().catch(function () {});
-    } else {
-      overlayPlayer.src = src;
-      overlayPlayer.play().catch(function () {});
-      fetchBlob(src).catch(function () {});
-    }
+    // Prefer blob cache (stutter-free), fall back to absolute src
+    var cachedBlob = _blobCache[relSrc] || _blobCache[absSrc];
+    overlayPlayer.src = cachedBlob || absSrc;
+    overlayPlayer.load();
+    overlayPlayer.play().catch(function () {});
   }
 
   function openOverlay(slideIdx) {

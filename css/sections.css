@@ -272,13 +272,13 @@
 }
 
 .video-overlay-player {
-  max-width: 92vw;
+  width: min(92vw, 1100px);
   max-height: 78vh;
-  width: auto;
   height: auto;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-glow-strong);
   display: block;
+  background: #000;
 }
 
 .video-overlay-controls {
