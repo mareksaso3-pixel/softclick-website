@@ -1,5 +1,13 @@
 [
   {
+    "slug": "spracovanie-faktur-ai",
+    "title": "Spracovanie faktúr pomocou AI: Ako firmy šetria desiatky hodín mesačne",
+    "keywords": "spracovanie faktúr AI, automatizácia účtovníctva, OCR faktúry Slovensko, AI faktúry Omega Pohoda",
+    "tag": "Faktúry & účtovníctvo",
+    "status": "done",
+    "published": "2026-05-25"
+  },
+  {
     "slug": "co-je-ai-asistent",
     "title": "Čo je AI asistent a na čo ho môže firma využiť?",
     "keywords": "AI asistent pre firmy, umelá inteligencia biznis, čo je AI asistent",
@@ -68,7 +76,8 @@
     "title": "Návratnosť investície do AI automatizácie – ako to vypočítať pre vašu firmu",
     "keywords": "ROI AI automatizácia, návratnosť investície AI, AI cena výhody",
     "tag": "Financie",
-    "status": "pending"
+    "status": "done",
+    "published": "2026-06-15"
   },
   {
     "slug": "ai-pre-realitnu-kancelariu",
