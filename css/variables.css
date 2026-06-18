@@ -46,7 +46,7 @@
   --space-5xl: 8rem;
 
   /* Layout */
-  --container-max: 1280px;
+  --container-max: clamp(1280px, 90vw, 1680px);
   --container-padding: 1.5rem;
   --header-height: 80px;
   --header-height-scrolled: 64px;

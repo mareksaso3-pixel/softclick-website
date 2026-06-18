@@ -34,6 +34,14 @@
 
   .services-left {
     position: static;
+    height: auto;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .services-right {
+    padding-top: 0;
+    padding-bottom: var(--space-2xl);
   }
 
   .stats-grid {
@@ -55,6 +63,10 @@
 
   .process-timeline {
     max-width: 100%;
+  }
+
+  .carousel-video {
+    max-height: 360px;
   }
 }
 
@@ -100,6 +112,19 @@
 
   .stat-item {
     padding: var(--space-md);
+  }
+
+  .services-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-video {
+    max-height: 260px;
+  }
+
+  .carousel-controls {
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
   }
 
   .process-step {
@@ -184,9 +209,4 @@
   }
 }
 
-/* Wide screens: 1440px+ */
-@media (min-width: 1440px) {
-  :root {
-    --container-max: 1360px;
-  }
-}
+/* Wide screens: šírku obsahu rieši plynulý clamp v --container-max (variables.css). */

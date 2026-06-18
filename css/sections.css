@@ -42,7 +42,7 @@
 
 .services-visual img {
   width: 100%;
-  max-width: 650px;
+  max-width: 40.625rem;
   height: auto;
   display: block;
   mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 35%, transparent 70%);
@@ -133,7 +133,7 @@
 /* ===== SERVICES INTRO ===== */
 .services-intro {
   text-align: center;
-  max-width: 720px;
+  max-width: 45rem;
   margin: 0 auto var(--space-3xl);
 }
 
@@ -464,7 +464,7 @@
 /* ===== PROCESS / HOW IT WORKS ===== */
 .process-timeline {
   position: relative;
-  max-width: 700px;
+  max-width: 43.75rem;
   margin: 0 auto;
 }
 
@@ -632,7 +632,7 @@
 
 /* ===== PRICING ===== */
 .pricing-wrapper {
-  max-width: 700px;
+  max-width: 43.75rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -653,7 +653,7 @@
   font-size: var(--font-size-lg);
   color: var(--text-muted);
   margin-bottom: var(--space-2xl);
-  max-width: 500px;
+  max-width: 31.25rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -661,7 +661,7 @@
 .pricing-features {
   list-style: none;
   text-align: left;
-  max-width: 400px;
+  max-width: 25rem;
   margin: 0 auto var(--space-2xl);
 }
 
@@ -688,7 +688,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -740,7 +740,7 @@
 
 /* ===== FAQ ===== */
 .faq-wrapper {
-  max-width: 700px;
+  max-width: 43.75rem;
   margin: 0 auto;
 }
 
