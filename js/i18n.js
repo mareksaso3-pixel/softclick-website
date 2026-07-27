@@ -28,26 +28,10 @@ var TRANSLATIONS = {
       menuAria: "Mobilné menu"
     },
     hero: {
-      eyebrow: "AI systémy v prevádzke 24/7",
-      headline: "AI <em>automatizácia</em><br>pre Váš biznis",
+      headline: "AI automatizácia<br>pre Váš biznis",
       subheadline: "Implementujeme AI riešenia, ktoré zefektívňujú administratívne a vnútopodnikové procesy. Budujeme digitálnu infraštruktúru, ktorá šetrí váš čas a mení váš biznis na moderný, digitálny systém.",
       ctaPrimary: "Dohodnite si bezplatnú konzultáciu",
-      ctaSecondary: "Pozrite si naše služby",
-      consoleStatus: "beží",
-      consoleLines: [
-        { k: "in",  t: "Nový e-mail: dopyt na cenovú ponuku" },
-        { k: "run", t: "Analyzujem obsah správy…" },
-        { k: "ok",  t: "Lead zapísaný do CRM" },
-        { k: "ok",  t: "Odpoveď pripravená a odoslaná" },
-        { k: "ok",  t: "Stretnutie navrhnuté: štvrtok 10:00" },
-        { k: "in",  t: "Prijatá faktúra č. 2381" },
-        { k: "ok",  t: "Faktúra spárovaná s platbou" },
-        { k: "ok",  t: "Follow-up naplánovaný o 3 dni" },
-        { k: "in",  t: "Nová objednávka z e-shopu" },
-        { k: "ok",  t: "Objednávka zapísaná do systému" },
-        { k: "ok",  t: "Kalendár synchronizovaný" },
-        { k: "ok",  t: "Denný report vygenerovaný" }
-      ]
+      ctaSecondary: "Pozrite si naše služby"
     },
     marquee: {
       label: "Technológie s ktorými pracujeme"
@@ -215,26 +199,10 @@ var TRANSLATIONS = {
       menuAria: "Mobile menu"
     },
     hero: {
-      eyebrow: "AI systems running 24/7",
-      headline: "AI <em>Automation</em><br>for Your Business",
+      headline: "AI Automation<br>for Your Business",
       subheadline: "We implement AI solutions that streamline administrative and internal business processes. We build digital infrastructure that saves your time and transforms your business into a modern, digital system.",
       ctaPrimary: "Book a Free Consultation",
-      ctaSecondary: "See Our Services",
-      consoleStatus: "live",
-      consoleLines: [
-        { k: "in",  t: "New email: pricing inquiry" },
-        { k: "run", t: "Analyzing message content…" },
-        { k: "ok",  t: "Lead saved to CRM" },
-        { k: "ok",  t: "Reply drafted and sent" },
-        { k: "ok",  t: "Meeting proposed: Thursday 10:00" },
-        { k: "in",  t: "Invoice #2381 received" },
-        { k: "ok",  t: "Invoice matched with payment" },
-        { k: "ok",  t: "Follow-up scheduled in 3 days" },
-        { k: "in",  t: "New e-shop order" },
-        { k: "ok",  t: "Order recorded in the system" },
-        { k: "ok",  t: "Calendar synced" },
-        { k: "ok",  t: "Daily report generated" }
-      ]
+      ctaSecondary: "See Our Services"
     },
     marquee: {
       label: "Technologies we work with"
@@ -385,11 +353,11 @@ var STRUCTURED_DATA = {
       "@type": "Organization",
       "name": "SoftClick.ai",
       "url": "https://softclick.ai",
-      "logo": {"@type": "ImageObject", "url": "https://softclick.ai/assets/favicon.png", "width": 180, "height": 180},
+      "logo": "https://softclick.ai/assets/logo-header.png",
       "description": "AI automatizácia pre firmy. Vytvárame AI asistentov na mieru – automatizácia emailov, CRM, kalendára a interných procesov.",
       "email": "info@softclick.ai",
       "address": {"@type": "PostalAddress", "addressLocality": "Banská Bystrica", "addressCountry": "SK"},
-      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Sásik", "jobTitle": "Co-Founder"}],
+      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Saso", "jobTitle": "Co-Founder"}],
       "contactPoint": {"@type": "ContactPoint", "email": "info@softclick.ai", "contactType": "customer service", "availableLanguage": ["Slovak", "English"]},
       "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}]
     },
@@ -440,11 +408,11 @@ var STRUCTURED_DATA = {
       "@type": "Organization",
       "name": "SoftClick.ai",
       "url": "https://softclick.ai",
-      "logo": {"@type": "ImageObject", "url": "https://softclick.ai/assets/favicon.png", "width": 180, "height": 180},
+      "logo": "https://softclick.ai/assets/logo-header.png",
       "description": "AI automation for businesses. We build custom AI assistants – email automation, CRM, calendar, and internal process automation.",
       "email": "info@softclick.ai",
       "address": {"@type": "PostalAddress", "addressLocality": "Banská Bystrica", "addressCountry": "SK"},
-      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Sásik", "jobTitle": "Co-Founder"}],
+      "founder": [{"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"}, {"@type": "Person", "name": "Marek Saso", "jobTitle": "Co-Founder"}],
       "contactPoint": {"@type": "ContactPoint", "email": "info@softclick.ai", "contactType": "customer service", "availableLanguage": ["Slovak", "English"]},
       "areaServed": [{"@type": "Country", "name": "Slovakia"}, {"@type": "Country", "name": "Czech Republic"}]
     },
