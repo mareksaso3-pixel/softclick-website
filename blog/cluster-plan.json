@@ -1,0 +1,1192 @@
+{
+  "version": "1.9.0",
+  "seed_keyword": "AI automatizácia pre firmy",
+  "created_at": "2026-07-27T08:28:08.450145+00:00",
+  "market": "Slovensko + Česko (B2B SME)",
+  "methodology_note": "WebSearch (no paid SERP API available) was used for keyword expansion and pairwise SERP sampling on ~15 head-term Slovak-language queries. The Slovak B2B AI-automation SERP is highly fragmented (dozens of small competing agencies each ranking for slightly different long-tails), so raw exact-URL overlap scores mostly fell in the 0-3 band (separate/interlink) rather than 4+. No pair reached the 7-10 'same post' merge threshold -- zero cannibalization risk detected. Because raw overlap signal was thin, cluster assignment for the remaining ~35 long-tail variants (not individually SERP-checked) relied on the methodology's intent-alignment tiebreak rule, validated by spot-checking boundary keywords.",
+  "pillar": {
+    "title": "AI automatizácia: kompletný sprievodca pre firmy (2026)",
+    "keyword": "AI automatizácia pre firmy",
+    "volume": "medium, fragmented (no single dominant head term; qualitative demand confirmed -- 89% SMB AI adoption, Intuit/ICIC 2026)",
+    "template": "ultimate-guide",
+    "wordCount": 3200,
+    "url": "/ai-automatizacia.html",
+    "status": "written"
+  },
+  "clusters": [
+    {
+      "name": "Základy a rozhodovanie",
+      "posts": [
+        {
+          "id": "cluster-0-post-0",
+          "slug": "co-je-ai-asistent",
+          "title": "Čo je AI asistent a na čo ho môže firma využiť?",
+          "keyword": "AI asistent pre firmu",
+          "intent": "Informational (concept)",
+          "template": "explainer",
+          "wordCount": 1500,
+          "url": "/blog/co-je-ai-asistent.html",
+          "status": "written"
+        },
+        {
+          "id": "cluster-0-post-1",
+          "slug": "ai-pre-malu-firmu",
+          "title": "AI automatizácia pre malé firmy a živnostníkov – kde začať?",
+          "keyword": "AI pre malé firmy",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1400,
+          "url": "/blog/ai-pre-malu-firmu.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-0-post-2",
+          "slug": "kolko-casu-usetri-ai",
+          "title": "Koľko času reálne ušetrí AI automatizácia? Čísla z praxe",
+          "keyword": "koľko času ušetrí AI automatizácia",
+          "intent": "Informational (data/concept)",
+          "template": "explainer",
+          "wordCount": 1300,
+          "url": "/blog/kolko-casu-usetri-ai.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-0-post-3",
+          "slug": "gdpr-a-ai-automatizacia",
+          "title": "GDPR a AI automatizácia – čo musíte vedieť pred nasadením",
+          "keyword": "GDPR AI automatizácia",
+          "intent": "Informational (concept/compliance)",
+          "template": "explainer",
+          "wordCount": 1400,
+          "url": "/blog/gdpr-a-ai-automatizacia.html",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Náklady, návratnosť a nástroje",
+      "posts": [
+        {
+          "id": "cluster-1-post-0",
+          "slug": "navratnost-investicie-do-ai",
+          "title": "Návratnosť investície do AI automatizácie: ako ju vypočítať pre vašu firmu",
+          "keyword": "návratnosť investície do AI",
+          "intent": "Informational (how) / Commercial (evaluate)",
+          "template": "how-to",
+          "wordCount": 1800,
+          "url": "/blog/navratnost-investicie-do-ai.html",
+          "status": "written"
+        },
+        {
+          "id": "cluster-1-post-1",
+          "slug": "kolko-stoji-ai-automatizacia",
+          "title": "Koľko stojí AI automatizácia pre firmu? Cenník a reálne rozpočty (2026)",
+          "keyword": "koľko stojí AI automatizácia",
+          "intent": "Commercial (evaluate/pricing)",
+          "template": "comparison",
+          "wordCount": 1500,
+          "url": "/blog/kolko-stoji-ai-automatizacia.html",
+          "status": "planned",
+          "gap": true
+        },
+        {
+          "id": "cluster-1-post-2",
+          "slug": "n8n-vs-make-porovnanie",
+          "title": "n8n vs Make.com – ktorý nástroj na automatizáciu je lepší pre slovenské firmy?",
+          "keyword": "n8n vs Make.com",
+          "intent": "Commercial (compare)",
+          "template": "comparison",
+          "wordCount": 1600,
+          "url": "/blog/n8n-vs-make-porovnanie.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-1-post-3",
+          "slug": "ai-chatbot-pre-web",
+          "title": "AI chatbot na web stránku: zvýši konverzie alebo odradí zákazníkov?",
+          "keyword": "AI chatbot na web stránku",
+          "intent": "Commercial (evaluate)",
+          "template": "review",
+          "wordCount": 1500,
+          "url": "/blog/ai-chatbot-pre-web.html",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Automatizácia komunikácie so zákazníkmi",
+      "posts": [
+        {
+          "id": "cluster-2-post-0",
+          "slug": "ai-automatizacia-emailov",
+          "title": "Ako automatizovať emaily vo firme pomocou AI – kompletný návod",
+          "keyword": "AI automatizácia emailov",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1700,
+          "url": "/blog/ai-automatizacia-emailov.html",
+          "status": "written"
+        },
+        {
+          "id": "cluster-2-post-1",
+          "slug": "ai-follow-up-automatizacia",
+          "title": "Automatický follow-up: prečo väčšina firiem prichádza o zákazníkov po prvom kontakte",
+          "keyword": "follow-up automatizácia",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1400,
+          "url": "/blog/ai-follow-up-automatizacia.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-2-post-2",
+          "slug": "automatizacia-socialnych-sieti",
+          "title": "Automatizácia sociálnych sietí pomocou AI – ako to funguje v praxi",
+          "keyword": "automatizácia sociálnych sietí AI",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1400,
+          "url": "/blog/automatizacia-socialnych-sieti.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-2-post-3",
+          "slug": "whatsapp-automatizacia-pre-firmy",
+          "title": "WhatsApp a Messenger automatizácia pre firmy pomocou AI",
+          "keyword": "WhatsApp automatizácia pre firmu",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1300,
+          "url": "/blog/whatsapp-automatizacia-pre-firmy.html",
+          "status": "planned",
+          "gap": true
+        }
+      ]
+    },
+    {
+      "name": "Administratíva a interné procesy",
+      "posts": [
+        {
+          "id": "cluster-3-post-0",
+          "slug": "spracovanie-faktur-ai",
+          "title": "Spracovanie faktúr pomocou AI: Ako firmy šetria desiatky hodín mesačne",
+          "keyword": "spracovanie faktúr AI",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1800,
+          "url": "/blog/spracovanie-faktur-ai.html",
+          "status": "written"
+        },
+        {
+          "id": "cluster-3-post-1",
+          "slug": "5-firemnych-procesov-na-automatizaciu",
+          "title": "5 firemných procesov, ktoré môžete automatizovať už dnes",
+          "keyword": "5 firemných procesov na automatizáciu",
+          "intent": "Informational (list)",
+          "template": "listicle",
+          "wordCount": 1600,
+          "url": "/blog/5-firemnych-procesov-na-automatizaciu.html",
+          "status": "written"
+        },
+        {
+          "id": "cluster-3-post-2",
+          "slug": "crm-automatizacia",
+          "title": "CRM automatizácia: ako mať vždy aktuálne dáta bez manuálneho zadávania",
+          "keyword": "CRM automatizácia",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1500,
+          "url": "/blog/crm-automatizacia.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-3-post-3",
+          "slug": "automatizacia-hr-a-naboru",
+          "title": "Automatizácia HR a náboru pomocou AI – kde ušetríte najviac času",
+          "keyword": "automatizácia HR AI",
+          "intent": "Informational (how)",
+          "template": "how-to",
+          "wordCount": 1400,
+          "url": "/blog/automatizacia-hr-a-naboru.html",
+          "status": "planned",
+          "gap": true
+        }
+      ]
+    },
+    {
+      "name": "AI automatizácia podľa odvetvia",
+      "posts": [
+        {
+          "id": "cluster-4-post-0",
+          "slug": "ai-pre-realitnu-kancelariu",
+          "title": "AI automatizácia pre realitnú kanceláriu – dopyt, prehliadky, zmluvy",
+          "keyword": "AI automatizácia realitná kancelária",
+          "intent": "Transactional",
+          "template": "landing-page",
+          "wordCount": 1600,
+          "url": "/blog/ai-pre-realitnu-kancelariu.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-4-post-1",
+          "slug": "ai-pre-ecommerce",
+          "title": "AI pre e-commerce: automatizácia objednávok, reklamácií a zákazníckej podpory",
+          "keyword": "AI eshop automatizácia",
+          "intent": "Transactional",
+          "template": "landing-page",
+          "wordCount": 1500,
+          "url": "/blog/ai-pre-ecommerce.html",
+          "status": "planned"
+        },
+        {
+          "id": "cluster-4-post-2",
+          "slug": "ai-pre-gastro-restauracie",
+          "title": "AI automatizácia pre reštaurácie a gastro prevádzky",
+          "keyword": "AI automatizácia reštaurácia gastro",
+          "intent": "Transactional",
+          "template": "landing-page",
+          "wordCount": 1500,
+          "url": "/blog/ai-pre-gastro-restauracie.html",
+          "status": "planned",
+          "gap": true
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-0",
+      "type": "mandatory",
+      "anchor": "AI asistent pre firmu"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-1",
+      "type": "mandatory",
+      "anchor": "AI pre malé firmy"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-2",
+      "type": "mandatory",
+      "anchor": "koľko času ušetrí AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-2",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-3",
+      "type": "mandatory",
+      "anchor": "GDPR AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-0",
+      "type": "mandatory",
+      "anchor": "návratnosť investície do AI"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-1",
+      "type": "mandatory",
+      "anchor": "koľko stojí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-2",
+      "type": "mandatory",
+      "anchor": "n8n vs Make.com"
+    },
+    {
+      "from": "cluster-1-post-2",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-3",
+      "type": "mandatory",
+      "anchor": "AI chatbot na web stránku"
+    },
+    {
+      "from": "cluster-1-post-3",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-0",
+      "type": "mandatory",
+      "anchor": "AI automatizácia emailov"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-1",
+      "type": "mandatory",
+      "anchor": "follow-up automatizácia"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-2",
+      "type": "mandatory",
+      "anchor": "automatizácia sociálnych sietí AI"
+    },
+    {
+      "from": "cluster-2-post-2",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-3",
+      "type": "mandatory",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-2-post-3",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-3-post-0",
+      "type": "mandatory",
+      "anchor": "spracovanie faktúr AI"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-3-post-1",
+      "type": "mandatory",
+      "anchor": "5 firemných procesov na automatizáciu"
+    },
+    {
+      "from": "cluster-3-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-3-post-2",
+      "type": "mandatory",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-3-post-2",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-3-post-3",
+      "type": "mandatory",
+      "anchor": "automatizácia HR AI"
+    },
+    {
+      "from": "cluster-3-post-3",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-4-post-0",
+      "type": "mandatory",
+      "anchor": "AI automatizácia realitná kancelária"
+    },
+    {
+      "from": "cluster-4-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-4-post-1",
+      "type": "mandatory",
+      "anchor": "AI eshop automatizácia"
+    },
+    {
+      "from": "cluster-4-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-4-post-2",
+      "type": "mandatory",
+      "anchor": "AI automatizácia reštaurácia gastro"
+    },
+    {
+      "from": "cluster-4-post-2",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "AI automatizácia pre firmy (kompletný sprievodca)"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-0-post-1",
+      "type": "recommended",
+      "anchor": "AI pre malé firmy"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-0-post-2",
+      "type": "recommended",
+      "anchor": "koľko času ušetrí AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-0-post-3",
+      "type": "recommended",
+      "anchor": "GDPR AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "AI asistent pre firmu"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "cluster-0-post-2",
+      "type": "recommended",
+      "anchor": "koľko času ušetrí AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "cluster-0-post-3",
+      "type": "recommended",
+      "anchor": "GDPR AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-2",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "AI asistent pre firmu"
+    },
+    {
+      "from": "cluster-0-post-2",
+      "to": "cluster-0-post-1",
+      "type": "recommended",
+      "anchor": "AI pre malé firmy"
+    },
+    {
+      "from": "cluster-0-post-2",
+      "to": "cluster-0-post-3",
+      "type": "recommended",
+      "anchor": "GDPR AI automatizácia"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "AI asistent pre firmu"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "cluster-0-post-1",
+      "type": "recommended",
+      "anchor": "AI pre malé firmy"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "cluster-0-post-2",
+      "type": "recommended",
+      "anchor": "koľko času ušetrí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-1-post-1",
+      "type": "recommended",
+      "anchor": "koľko stojí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-1-post-2",
+      "type": "recommended",
+      "anchor": "n8n vs Make.com"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-1-post-3",
+      "type": "recommended",
+      "anchor": "AI chatbot na web stránku"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "návratnosť investície do AI"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "cluster-1-post-2",
+      "type": "recommended",
+      "anchor": "n8n vs Make.com"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "cluster-1-post-3",
+      "type": "recommended",
+      "anchor": "AI chatbot na web stránku"
+    },
+    {
+      "from": "cluster-1-post-2",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "návratnosť investície do AI"
+    },
+    {
+      "from": "cluster-1-post-2",
+      "to": "cluster-1-post-1",
+      "type": "recommended",
+      "anchor": "koľko stojí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-2",
+      "to": "cluster-1-post-3",
+      "type": "recommended",
+      "anchor": "AI chatbot na web stránku"
+    },
+    {
+      "from": "cluster-1-post-3",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "návratnosť investície do AI"
+    },
+    {
+      "from": "cluster-1-post-3",
+      "to": "cluster-1-post-1",
+      "type": "recommended",
+      "anchor": "koľko stojí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-3",
+      "to": "cluster-1-post-2",
+      "type": "recommended",
+      "anchor": "n8n vs Make.com"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "cluster-2-post-1",
+      "type": "recommended",
+      "anchor": "follow-up automatizácia"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "cluster-2-post-2",
+      "type": "recommended",
+      "anchor": "automatizácia sociálnych sietí AI"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "cluster-2-post-3",
+      "type": "recommended",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-2-post-0",
+      "type": "recommended",
+      "anchor": "AI automatizácia emailov"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-2-post-2",
+      "type": "recommended",
+      "anchor": "automatizácia sociálnych sietí AI"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-2-post-3",
+      "type": "recommended",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-2-post-2",
+      "to": "cluster-2-post-0",
+      "type": "recommended",
+      "anchor": "AI automatizácia emailov"
+    },
+    {
+      "from": "cluster-2-post-2",
+      "to": "cluster-2-post-1",
+      "type": "recommended",
+      "anchor": "follow-up automatizácia"
+    },
+    {
+      "from": "cluster-2-post-2",
+      "to": "cluster-2-post-3",
+      "type": "recommended",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-2-post-3",
+      "to": "cluster-2-post-0",
+      "type": "recommended",
+      "anchor": "AI automatizácia emailov"
+    },
+    {
+      "from": "cluster-2-post-3",
+      "to": "cluster-2-post-1",
+      "type": "recommended",
+      "anchor": "follow-up automatizácia"
+    },
+    {
+      "from": "cluster-2-post-3",
+      "to": "cluster-2-post-2",
+      "type": "recommended",
+      "anchor": "automatizácia sociálnych sietí AI"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "cluster-3-post-1",
+      "type": "recommended",
+      "anchor": "5 firemných procesov na automatizáciu"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "cluster-3-post-2",
+      "type": "recommended",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "cluster-3-post-3",
+      "type": "recommended",
+      "anchor": "automatizácia HR AI"
+    },
+    {
+      "from": "cluster-3-post-1",
+      "to": "cluster-3-post-0",
+      "type": "recommended",
+      "anchor": "spracovanie faktúr AI"
+    },
+    {
+      "from": "cluster-3-post-1",
+      "to": "cluster-3-post-2",
+      "type": "recommended",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-3-post-1",
+      "to": "cluster-3-post-3",
+      "type": "recommended",
+      "anchor": "automatizácia HR AI"
+    },
+    {
+      "from": "cluster-3-post-2",
+      "to": "cluster-3-post-0",
+      "type": "recommended",
+      "anchor": "spracovanie faktúr AI"
+    },
+    {
+      "from": "cluster-3-post-2",
+      "to": "cluster-3-post-1",
+      "type": "recommended",
+      "anchor": "5 firemných procesov na automatizáciu"
+    },
+    {
+      "from": "cluster-3-post-2",
+      "to": "cluster-3-post-3",
+      "type": "recommended",
+      "anchor": "automatizácia HR AI"
+    },
+    {
+      "from": "cluster-3-post-3",
+      "to": "cluster-3-post-0",
+      "type": "recommended",
+      "anchor": "spracovanie faktúr AI"
+    },
+    {
+      "from": "cluster-3-post-3",
+      "to": "cluster-3-post-1",
+      "type": "recommended",
+      "anchor": "5 firemných procesov na automatizáciu"
+    },
+    {
+      "from": "cluster-3-post-3",
+      "to": "cluster-3-post-2",
+      "type": "recommended",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-4-post-0",
+      "to": "cluster-4-post-1",
+      "type": "recommended",
+      "anchor": "AI eshop automatizácia"
+    },
+    {
+      "from": "cluster-4-post-0",
+      "to": "cluster-4-post-2",
+      "type": "recommended",
+      "anchor": "AI automatizácia reštaurácia gastro"
+    },
+    {
+      "from": "cluster-4-post-1",
+      "to": "cluster-4-post-0",
+      "type": "recommended",
+      "anchor": "AI automatizácia realitná kancelária"
+    },
+    {
+      "from": "cluster-4-post-1",
+      "to": "cluster-4-post-2",
+      "type": "recommended",
+      "anchor": "AI automatizácia reštaurácia gastro"
+    },
+    {
+      "from": "cluster-4-post-2",
+      "to": "cluster-4-post-0",
+      "type": "recommended",
+      "anchor": "AI automatizácia realitná kancelária"
+    },
+    {
+      "from": "cluster-4-post-2",
+      "to": "cluster-4-post-1",
+      "type": "recommended",
+      "anchor": "AI eshop automatizácia"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "cluster-1-post-1",
+      "type": "optional",
+      "anchor": "koľko stojí AI automatizácia"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-3-post-0",
+      "type": "optional",
+      "anchor": "spracovanie faktúr AI"
+    },
+    {
+      "from": "cluster-3-post-2",
+      "to": "cluster-2-post-1",
+      "type": "optional",
+      "anchor": "follow-up automatizácia"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-3-post-2",
+      "type": "optional",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-1-post-2",
+      "to": "cluster-3-post-1",
+      "type": "optional",
+      "anchor": "5 firemných procesov na automatizáciu"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "cluster-3-post-3",
+      "type": "optional",
+      "anchor": "automatizácia HR AI"
+    },
+    {
+      "from": "cluster-0-post-3",
+      "to": "cluster-3-post-2",
+      "type": "optional",
+      "anchor": "CRM automatizácia"
+    },
+    {
+      "from": "cluster-4-post-0",
+      "to": "cluster-1-post-3",
+      "type": "optional",
+      "anchor": "AI chatbot na web stránku"
+    },
+    {
+      "from": "cluster-4-post-1",
+      "to": "cluster-2-post-3",
+      "type": "optional",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-4-post-2",
+      "to": "cluster-2-post-3",
+      "type": "optional",
+      "anchor": "WhatsApp automatizácia pre firmu"
+    },
+    {
+      "from": "cluster-4-post-1",
+      "to": "cluster-2-post-0",
+      "type": "optional",
+      "anchor": "AI automatizácia emailov"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "cluster-1-post-1",
+      "type": "optional",
+      "anchor": "koľko stojí AI automatizácia"
+    }
+  ],
+  "serp_matrix": {
+    "keywords": [
+      "AI automatizácia pre firmy",
+      "automatizácia firemných procesov AI",
+      "AI chatbot pre firmu",
+      "WhatsApp automatizácia pre firmu",
+      "spracovanie faktúr AI",
+      "koľko stojí AI automatizácia",
+      "CRM automatizácia AI malé firmy",
+      "AI automatizácia e-commerce",
+      "AI automatizácia gastro reštaurácia",
+      "AI automatizácia realitná kancelária",
+      "n8n vs Make.com",
+      "follow-up automatizácia predaj",
+      "GDPR AI automatizácia",
+      "automatizácia sociálnych sietí AI",
+      "čo je AI asistent pre firmu"
+    ],
+    "scores": [
+      [
+        10,
+        1,
+        0,
+        0,
+        1,
+        3,
+        2,
+        1,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        10,
+        0,
+        0,
+        2,
+        2,
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        10,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        2,
+        1,
+        0,
+        0,
+        10,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        0,
+        0,
+        0,
+        2,
+        10,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10
+      ]
+    ]
+  },
+  "cannibalization_check": {
+    "duplicate_primary_keywords_found": 0,
+    "highest_pairwise_overlap": 3,
+    "merge_threshold_reached": false,
+    "close_pairs_flagged_for_differentiation": [
+      [
+        "navratnost-investicie-do-ai (ROI/výpočet)",
+        "kolko-stoji-ai-automatizacia (cenník/rozpočet)"
+      ],
+      [
+        "ai-automatizacia-emailov (triedenie/odpovedanie na doručenú poštu)",
+        "ai-follow-up-automatizacia (predajný follow-up po kontakte)"
+      ]
+    ]
+  },
+  "excluded_from_cluster": [
+    {
+      "slug": "seo-geo-optimalizacia-pre-firmy",
+      "reason": "Topically distinct from AI-automation pillar (SEO/GEO visibility service, not process automation). Currently links to /ai-automatizacia.html which dilutes topical relevance signal. Recommend spinning off as its own future pillar ('Viditeľnosť firmy v AI vyhľadávaní') rather than forcing into this cluster."
+    }
+  ],
+  "flagged_gaps_not_yet_scoped": [
+    {
+      "topic": "AI telefonický / hlasový asistent (recepcia, call centrum)",
+      "reason": "Confirmed as a real, active Slovak competitive vertical (aireceptionist.sk, VoiceFleet, Zudu AI) with zero SERP overlap with all other clusters -- fully separate demand. Not currently listed among SoftClick's 4 homepage services, so scoping is a product/positioning decision, not just a content one. Recommend validating with founders before committing a cluster to it; if greenlit, large enough to justify its own pillar."
+    }
+  ],
+  "scorecard": {
+    "coverage": 30.0,
+    "linkDensity": 4.47,
+    "orphanPages": 0,
+    "cannibalization": 0,
+    "contentGaps": 14
+  }
+}

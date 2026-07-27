@@ -3,14 +3,17 @@
   padding: var(--space-3xl) 0;
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .marquee-label {
   text-align: center;
-  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.22em;
   font-weight: 500;
   margin-bottom: var(--space-xl);
 }
@@ -41,13 +44,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  opacity: 0.6;
-  transition: opacity var(--transition-base);
+  opacity: 0.45;
+  filter: grayscale(1) brightness(1.4);
+  transition: opacity var(--transition-base), filter var(--transition-base);
   white-space: nowrap;
 }
 
 .marquee-item:hover {
-  opacity: 0.8;
+  opacity: 1;
+  filter: none;
 }
 
 .marquee-item svg {
@@ -57,17 +62,17 @@
 }
 
 .marquee-item img {
-  height: 32px;
+  height: 30px;
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
 }
 
 .marquee-item span {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--text-light);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
 }
 
 @keyframes marqueeScroll {

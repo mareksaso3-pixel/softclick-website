@@ -21,7 +21,7 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Automatizácia pre Firmy | SoftClick.ai – AI Asistenti na Mieru</title>
-  <meta name="description" content="AI automatizácia pre firmy od SoftClick.ai. Vytvárame AI asistentov na mieru – automatizácia emailov, CRM, kalendára a interných procesov. Ušetrite 2-4 hodiny denne. Bezplatná konzultácia.">
+  <meta name="description" content="AI automatizácia pre firmy od SoftClick.ai. Vytvárame AI asistentov na mieru pre email, CRM a kalendár. Ušetríte 2-4 hodiny denne. Bezplatná konzultácia.">
   <meta name="keywords" content="AI automatizácia, automatizácia procesov, AI asistent, automatizácia pre firmy, AI chatbot, umelá inteligencia pre biznis, automatizácia emailov, CRM automatizácia, AI agenti, workflow automatizácia, SoftClick">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="geo.region" content="SK-BC">
@@ -66,7 +66,12 @@
     "@type": "Organization",
     "name": "SoftClick.ai",
     "url": "https://softclick.ai",
-    "logo": "https://softclick.ai/assets/logo-header.png",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://softclick.ai/assets/favicon.png",
+      "width": 180,
+      "height": 180
+    },
     "description": "AI automatizácia pre firmy. Vytvárame AI asistentov na mieru – automatizácia emailov, CRM, kalendára a interných procesov.",
     "email": "info@softclick.ai",
     "address": {
@@ -76,7 +81,7 @@
     },
     "founder": [
       {"@type": "Person", "name": "Adam Barbeník", "jobTitle": "Co-Founder"},
-      {"@type": "Person", "name": "Marek Saso", "jobTitle": "Co-Founder"}
+      {"@type": "Person", "name": "Marek Sásik", "jobTitle": "Co-Founder"}
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -202,7 +207,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css">
@@ -244,7 +249,7 @@
     <header class="site-header" role="banner">
       <div class="header-inner">
         <a href="/" class="logo" data-i18n-aria="nav.logoAria" aria-label="SoftClick.ai – Domov">
-          <img src="assets/logo-header.png" alt="SoftClick.ai" class="logo-img">
+          <img src="assets/logo-header.webp" alt="SoftClick.ai" class="logo-img">
         </a>
 
         <nav data-i18n-aria="nav.ariaLabel" aria-label="Hlavná navigácia">
@@ -301,25 +306,40 @@
 
       <!-- ===== HERO ===== -->
       <section class="hero" id="hero">
-        <div class="hero-orb" aria-hidden="true"></div>
         <div class="container">
-          <div class="hero-content">
-            <h1 class="hero-headline" data-i18n-html="hero.headline">
-              AI automatizácia<br>pre Váš biznis
-            </h1>
-            <p class="hero-subheadline" data-i18n="hero.subheadline">
-              Implementujeme AI riešenia, ktoré zefektívňujú administratívne a vnútopodnikové procesy. Budujeme digitálnu infraštruktúru, ktorá šetrí váš čas a mení váš biznis na moderný, digitálny systém.
-            </p>
-            <div class="hero-cta-group">
-              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="hero.ctaPrimary">
-                Dohodnite si bezplatnú konzultáciu
-                <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                  <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <a href="#sluzby" class="btn btn-secondary btn-lg" data-i18n="hero.ctaSecondary">
-                Pozrite si naše služby
-              </a>
+          <div class="hero-grid">
+            <div class="hero-content">
+              <p class="hero-eyebrow">
+                <span class="pulse-dot" aria-hidden="true"></span>
+                <span data-i18n="hero.eyebrow">AI systémy v prevádzke 24/7</span>
+              </p>
+              <h1 class="hero-headline" data-i18n-html="hero.headline">
+                AI <em>automatizácia</em><br>pre Váš biznis
+              </h1>
+              <p class="hero-subheadline" data-i18n="hero.subheadline">
+                Implementujeme AI riešenia, ktoré zefektívňujú administratívne a vnútopodnikové procesy. Budujeme digitálnu infraštruktúru, ktorá šetrí váš čas a mení váš biznis na moderný, digitálny systém.
+              </p>
+              <div class="hero-cta-group">
+                <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="hero.ctaPrimary">
+                  Dohodnite si bezplatnú konzultáciu
+                  <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <a href="#sluzby" class="btn btn-secondary btn-lg" data-i18n="hero.ctaSecondary">
+                  Pozrite si naše služby
+                </a>
+              </div>
+            </div>
+
+            <!-- Live agent console (decorative, mirrors what the product does) -->
+            <div class="hero-console" id="heroConsole" aria-hidden="true">
+              <div class="console-bar">
+                <span class="console-dots"><i></i><i></i><i></i></span>
+                <span class="console-title">softclick · ai&#8209;agent</span>
+                <span class="console-status"><span class="pulse-dot pulse-dot--sm"></span><span data-i18n="hero.consoleStatus">beží</span></span>
+              </div>
+              <div class="console-body" id="consoleBody"></div>
             </div>
           </div>
         </div>
@@ -557,7 +577,7 @@
               <div class="stat-label" data-i18n="stats.stat2Label">Rýchlejšie procesy</div>
             </div>
             <div class="stat-item animate-on-scroll">
-              <div class="stat-number" data-count="50" data-prefix="-" data-suffix=" %" data-sync>0</div>
+              <div class="stat-number" data-count="50" data-prefix="-" data-suffix="%" data-sync>0</div>
               <div class="stat-label" data-i18n="stats.stat3Label">Menej nákladov</div>
             </div>
           </div>
@@ -871,7 +891,8 @@
       <!-- ===== CTA SECTION ===== -->
       <section class="cta-section">
         <div class="container">
-          <div class="cta-content animate-on-scroll">
+          <div class="cta-content plus-frame animate-on-scroll">
+            <span class="frame-tick" aria-hidden="true"></span><span class="frame-tick" aria-hidden="true"></span><span class="frame-tick" aria-hidden="true"></span><span class="frame-tick" aria-hidden="true"></span>
             <h2 data-i18n="cta.heading">Ste pripravení nasadiť nový AI systém do vášho biznisu?</h2>
             <p data-i18n="cta.text">Náš ekosystém automaticky odpisuje na e-maily, zapisuje dáta do CRM a plánuje stretnutia. Získate systém, ktorý za vás spoľahlivo vyrieši celú administratívu.</p>
             <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="cta.button">
@@ -947,7 +968,7 @@
       <div class="container">
         <div class="footer-inner">
           <a href="/" class="footer-logo logo" aria-label="SoftClick.ai">
-            <img src="assets/logo-header.png" alt="SoftClick.ai" class="logo-img">
+            <img src="assets/logo-header.webp" alt="SoftClick.ai" class="logo-img">
           </a>
           <ul class="footer-links">
             <li><a href="#sluzby" data-i18n="footer.services">Služby</a></li>
@@ -957,7 +978,7 @@
             <li><a href="#faq" data-i18n="footer.faq">FAQ</a></li>
             <li><a href="#kontakt" data-i18n="footer.contact">Kontakt</a></li>
           </ul>
-          <p class="footer-copy">&copy; 2025 <a href="/">SoftClick.ai</a>. <span data-i18n="footer.copy">Všetky práva vyhradené.</span></p>
+          <p class="footer-copy">&copy; <span data-footer-year>2026</span> <a href="/">SoftClick.ai</a>. <span data-i18n="footer.copy">Všetky práva vyhradené.</span></p>
         </div>
       </div>
     </footer>
