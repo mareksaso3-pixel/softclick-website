@@ -331,6 +331,7 @@
   if (!reducedMotion && !coarsePointer) {
     document.querySelectorAll('[data-tilt]').forEach(function (card) {
       var raf = null, rx = 0, ry = 0;
+      var scale = parseFloat(card.getAttribute('data-tilt-scale')) || 1.02;
       card.addEventListener('mouseenter', function () {
         card.style.transition = 'transform .12s ease-out, box-shadow .3s ease';
       });
@@ -340,7 +341,7 @@
         rx = -((e.clientY - r.top) / r.height - 0.5) * 18;
         if (!raf) {
           raf = requestAnimationFrame(function () {
-            card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02) translateY(-6px)';
+            card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(' + scale + ') translateY(-6px)';
             raf = null;
           });
         }
@@ -353,6 +354,10 @@
   }
 
   // ===== SPOTLIGHT GLOW BORDER (cursor-reactive, brand-colored) =====
+  // Buttons get the same glow border as cards.
+  document.querySelectorAll('.btn').forEach(function (btn) {
+    btn.setAttribute('data-glow', '');
+  });
   var glowCards = document.querySelectorAll('[data-glow]');
   if (!reducedMotion && !coarsePointer && glowCards.length) {
     var glowRaf = null;
