@@ -18,27 +18,22 @@
 
 /* ===== PRIMARY CTA ===== */
 .btn-primary {
-  background: linear-gradient(to bottom, #0d0d3b, #000000) padding-box,
-              linear-gradient(135deg, #4040ff, #6a3aff, #8b2fff, #6a3aff, #4040ff) border-box;
-  border: 2px solid transparent;
+  background: linear-gradient(135deg, rgba(155, 108, 255, 0.4), rgba(217, 70, 239, 0.28));
+  border: 1px solid rgba(255, 255, 255, 0.28);
   color: #FFFFFF;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   box-shadow:
-    -4px -2px 18px rgba(100, 60, 255, 0.5),
-    4px 2px 14px rgba(70, 70, 255, 0.4),
-    0 4px 20px rgba(139, 47, 255, 0.3),
-    inset -3px -1px 12px rgba(100, 60, 255, 0.35),
-    inset 4px 2px 8px rgba(70, 70, 255, 0.2);
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 8px 24px rgba(139, 47, 255, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(to bottom, #0f0f42, #050510) padding-box,
-              linear-gradient(135deg, #5050ff, #7b4aff, #9c3fff, #7b4aff, #5050ff) border-box;
+  background: linear-gradient(135deg, rgba(155, 108, 255, 0.55), rgba(217, 70, 239, 0.4));
+  border-color: rgba(255, 255, 255, 0.4);
   box-shadow:
-    -6px -3px 25px rgba(100, 60, 255, 0.7),
-    5px 3px 20px rgba(70, 70, 255, 0.6),
-    0 5px 28px rgba(139, 47, 255, 0.45),
-    inset -4px -2px 18px rgba(100, 60, 255, 0.5),
-    inset 5px 3px 12px rgba(70, 70, 255, 0.3);
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 10px 30px rgba(139, 47, 255, 0.45);
   transform: scale(1.02);
   color: #FFFFFF;
 }
@@ -49,27 +44,24 @@
 
 /* ===== SECONDARY ===== */
 .btn-secondary {
-  background: linear-gradient(to bottom, #0d0d3b, #000000) padding-box,
-              linear-gradient(135deg, rgba(64, 64, 255, 0.4), rgba(106, 58, 255, 0.5), rgba(64, 64, 255, 0.3)) border-box;
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   box-shadow:
-    -3px -1px 10px rgba(100, 60, 255, 0.25),
-    3px 1px 8px rgba(70, 70, 255, 0.2),
-    inset -2px -1px 8px rgba(100, 60, 255, 0.15),
-    inset 3px 1px 6px rgba(70, 70, 255, 0.1);
+    inset 0 1px 1px rgba(255, 255, 255, 0.15),
+    0 4px 14px rgba(100, 60, 255, 0.15);
 }
 
 .btn-secondary:hover {
-  background: linear-gradient(to bottom, #0f0f42, #050510) padding-box,
-              linear-gradient(135deg, rgba(80, 80, 255, 0.7), rgba(123, 74, 255, 0.8), rgba(80, 80, 255, 0.6)) border-box;
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(217, 70, 239, 0.4);
   color: #FFFFFF;
   transform: scale(1.02);
   box-shadow:
-    -5px -2px 18px rgba(100, 60, 255, 0.5),
-    4px 2px 14px rgba(70, 70, 255, 0.4),
-    inset -3px -1px 12px rgba(100, 60, 255, 0.35),
-    inset 4px 2px 8px rgba(70, 70, 255, 0.2);
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    0 6px 20px rgba(139, 47, 255, 0.3);
 }
 
 .btn-secondary:active {

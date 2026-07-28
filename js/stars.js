@@ -12,6 +12,15 @@
   var ctx = canvas.getContext('2d');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Mouse parallax (smoothed toward target so it feels floaty, not snappy)
+  var mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+  if (!reduced) {
+    window.addEventListener('mousemove', function (e) {
+      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+  }
+
   // Offscreen canvases
   var nebulaCanvas = document.createElement('canvas');
   var nebulaCtx = nebulaCanvas.getContext('2d');
@@ -170,7 +179,7 @@
   // ───────────────────────────────────────────
 
   function createStars() {
-    var count = Math.min(Math.floor(W * H / 1600), 800);
+    var count = Math.min(Math.floor(W * H / 2600), 480);
     stars = [];
 
     for (var i = 0; i < count; i++) {
@@ -194,7 +203,7 @@
         twinklePhase: Math.random() * Math.PI * 2,
         twinkleAmt: layer < 2 ? 0.1 : 0.25 + Math.random() * 0.3,
         color: color,
-        glow: layer >= 2,
+        glow: layer >= 3,
         dx: Math.cos(angle) * spd,
         dy: Math.sin(angle) * spd,
         layer: layer,
@@ -211,7 +220,7 @@
   // ───────────────────────────────────────────
 
   function createDepthParticles() {
-    var count = Math.min(Math.floor(W * H / 8000), 150);
+    var count = Math.min(Math.floor(W * H / 13000), 90);
     depthParticles = [];
 
     for (var i = 0; i < count; i++) {
@@ -297,7 +306,7 @@
       ctx.fill();
 
       // Glow on larger particles
-      if (size > 1.2) {
+      if (size > 1.8) {
         var glowR = size * 3;
         var glow = ctx.createRadialGradient(px, py, 0, px, py, glowR);
         glow.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.3) + ')');
@@ -378,11 +387,18 @@
   function draw(time) {
     ctx.clearRect(0, 0, W, H);
 
-    // 1. Nebula base layer (breathing)
+    if (!reduced) {
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
+    }
+
+    // 1. Nebula base layer (breathing), drifts slightly opposite the cursor for depth
     var baseBreath = reduced ? 0.6 : 0.5 + 0.15 * Math.sin(time * 0.00012);
+    var nebulaShiftX = reduced ? 0 : -mouseX * 24;
+    var nebulaShiftY = reduced ? 0 : -mouseY * 24;
     ctx.globalAlpha = baseBreath;
     ctx.globalCompositeOperation = 'screen';
-    ctx.drawImage(nebulaCanvas, 0, 0);
+    ctx.drawImage(nebulaCanvas, nebulaShiftX, nebulaShiftY);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
 
@@ -427,10 +443,12 @@
       if (!reduced) {
         s.x = s.baseX
               + Math.sin(time * 0.00004 + s.twinklePhase) * (2 + s.layer * 1.5)
-              + (time * s.dx * 0.0006);
+              + (time * s.dx * 0.0006)
+              + mouseX * (8 + s.layer * 11);
         s.y = s.baseY
               + Math.cos(time * 0.00003 + s.twinklePhase) * (1.5 + s.layer)
-              + (time * s.dy * 0.0006);
+              + (time * s.dy * 0.0006)
+              + mouseY * (8 + s.layer * 11);
 
         if (s.x > W + 4) { s.x -= W + 8; s.baseX -= W + 8; }
         if (s.x < -4) { s.x += W + 8; s.baseX += W + 8; }

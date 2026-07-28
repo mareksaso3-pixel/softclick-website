@@ -321,3 +321,8 @@ img {
   height: auto;
   display: block;
 }
+
+/* ===== 3D TILT CARDS ===== */
+[data-tilt] {
+  will-change: transform;
+}

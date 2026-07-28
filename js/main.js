@@ -192,6 +192,17 @@
       d.addEventListener('click', function () { goTo(+this.getAttribute('data-idx')); });
     });
 
+    // Auto-advance: when a slide's video finishes, play the next one.
+    // goTo() wraps with modulo, so the last slide automatically loops back to the first.
+    slides.forEach(function (s, i) {
+      var v = s.querySelector('video');
+      if (v) {
+        v.addEventListener('ended', function () {
+          if (i === current) goTo(current + 1);
+        });
+      }
+    });
+
     // Autoplay when carousel enters viewport; pre-fetch blobs in background
     var carouselObserver = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) {
@@ -311,6 +322,33 @@
 
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
+    });
+  }
+
+  // ===== 3D TILT ON GLASS CARDS =====
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (!reducedMotion && !coarsePointer) {
+    document.querySelectorAll('[data-tilt]').forEach(function (card) {
+      var raf = null, rx = 0, ry = 0;
+      card.addEventListener('mouseenter', function () {
+        card.style.transition = 'transform .12s ease-out, box-shadow .3s ease';
+      });
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        ry = ((e.clientX - r.left) / r.width - 0.5) * 18;
+        rx = -((e.clientY - r.top) / r.height - 0.5) * 18;
+        if (!raf) {
+          raf = requestAnimationFrame(function () {
+            card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale(1.02) translateY(-6px)';
+            raf = null;
+          });
+        }
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transition = 'transform .5s ease, box-shadow .3s ease';
+        card.style.transform = '';
+      });
     });
   }
 })();

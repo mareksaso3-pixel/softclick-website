@@ -11,9 +11,9 @@
   --accent-teal: #06B6D4;
   --cta-gradient: linear-gradient(135deg, #9B6CFF 0%, #D946EF 50%, #3DB8FF 100%);
   --cta-gradient-hover: linear-gradient(135deg, #A87CFF 0%, #E065F5 50%, #5CC8FF 100%);
-  --card-bg: rgba(4, 6, 16, 0.65);
-  --card-border: rgba(155, 108, 255, 0.10);
-  --card-border-hover: rgba(217, 70, 239, 0.30);
+  --card-bg: rgba(255, 255, 255, 0.045);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-border-hover: rgba(217, 70, 239, 0.35);
   --glass-bg: rgba(2, 4, 12, 0.92);
   --glass-border: rgba(155, 108, 255, 0.08);
 
