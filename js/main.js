@@ -351,4 +351,27 @@
       });
     });
   }
+
+  // ===== SPOTLIGHT GLOW BORDER (cursor-reactive, brand-colored) =====
+  var glowCards = document.querySelectorAll('[data-glow]');
+  if (!reducedMotion && !coarsePointer && glowCards.length) {
+    var glowRaf = null;
+    document.addEventListener('mousemove', function (e) {
+      if (glowRaf) return;
+      glowRaf = requestAnimationFrame(function () {
+        var xp = (e.clientX / window.innerWidth).toFixed(3);
+        var vh = window.innerHeight;
+        glowCards.forEach(function (card) {
+          var r = card.getBoundingClientRect();
+          // Skip off-screen cards (cheap culling, keeps scrolling smooth)
+          if (r.bottom < -200 || r.top > vh + 200) return;
+          // Coordinates relative to the card, so the spotlight lands ON the card
+          card.style.setProperty('--x', (e.clientX - r.left).toFixed(1) + 'px');
+          card.style.setProperty('--y', (e.clientY - r.top).toFixed(1) + 'px');
+          card.style.setProperty('--xp', xp);
+        });
+        glowRaf = null;
+      });
+    }, { passive: true });
+  }
 })();

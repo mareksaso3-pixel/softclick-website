@@ -75,7 +75,7 @@
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  padding-top: 20rem;
+  padding-top: 16rem;
   padding-bottom: 16rem;
 }
 
@@ -859,4 +859,65 @@
 
 .faq-item.active .faq-answer {
   max-height: 600px;
+}
+
+/* ===== SPOTLIGHT GLOW BORDER (cursor-reactive, brand hues) ===== */
+[data-glow] {
+  position: relative;
+  /* Brand hue range: cyan/blue -> violet -> magenta, driven by cursor X */
+  --base: 195;
+  --spread: 130;
+  --hue: calc(var(--base) + (var(--xp, 0.5) * var(--spread)));
+  --glow-size: 420px;
+  --border-size: 2px;
+}
+
+[data-glow]::before,
+[data-glow]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--border-size);
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Coloured border light that follows the cursor */
+[data-glow]::before {
+  background-image: radial-gradient(
+    var(--glow-size) var(--glow-size) at var(--x, 50%) var(--y, 50%),
+    hsl(var(--hue, 260) 100% 68%) 0%,
+    hsl(var(--hue, 260) 100% 60% / 0.55) 35%,
+    transparent 75%
+  );
+  filter: brightness(1.9) saturate(1.3);
+}
+
+/* Bright white core right under the cursor */
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--glow-size) * 0.32) calc(var(--glow-size) * 0.32) at var(--x, 50%) var(--y, 50%),
+    hsl(0 0% 100% / 0.9), transparent 70%
+  );
+}
+
+/* Soft outer halo in the same hue on hover */
+[data-glow]:hover {
+  border-color: hsl(var(--hue, 260) 90% 65% / 0.45);
+  box-shadow:
+    0 0 24px hsl(var(--hue, 260) 100% 62% / 0.35),
+    0 0 60px hsl(var(--hue, 260) 100% 60% / 0.18);
+}
+
+@media (hover: none), (pointer: coarse) {
+  [data-glow]::before,
+  [data-glow]::after {
+    display: none;
+  }
 }
