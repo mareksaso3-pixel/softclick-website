@@ -302,6 +302,23 @@
       <!-- ===== HERO ===== -->
       <section class="hero" id="hero">
         <div class="hero-orb" aria-hidden="true"></div>
+        <div class="hero-3d" aria-hidden="true">
+          <model-viewer
+            src="assets/logo-3d.glb"
+            alt="3D logo SoftClick.ai"
+            environment-image="neutral"
+            exposure="1.15"
+            shadow-intensity="0"
+            camera-orbit="25deg 75deg 105%"
+            camera-controls
+            min-camera-orbit="-Infinity 0deg auto"
+            max-camera-orbit="Infinity 180deg auto"
+            orbit-sensitivity="1.2"
+            disable-zoom
+            disable-tap
+            interaction-prompt="none"
+            loading="eager"></model-viewer>
+        </div>
         <div class="container">
           <div class="hero-content">
             <h1 class="hero-headline" data-i18n-html="hero.headline">
@@ -991,6 +1008,9 @@
   </div>
 
   <!-- Scripts -->
+  <!-- 3D model viewer (hero logo) -->
+  <script type="module" src="js/model-viewer.min.js"></script>
+
   <script src="js/i18n.js"></script>
   <script src="js/stars.js"></script>
   <script src="js/main.js"></script>

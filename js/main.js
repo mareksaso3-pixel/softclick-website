@@ -379,4 +379,95 @@
       });
     }, { passive: true });
   }
+
+  // ===== HERO 3D LOGO =====
+  // Sama sa pomaly toci. Po stlaceni laveho tlacidla sa da volne otacat
+  // tahanim. Po pusteni sa plynule vrati do vychodzej polohy a toci dalej.
+  var hero3d = document.querySelector('.hero-3d');
+  var heroModel = hero3d && hero3d.querySelector('model-viewer');
+  if (heroModel) {
+    var BASE_THETA = 25;      // deg
+    var BASE_PHI = 75;        // deg
+    var RADIUS = '105%';
+    var SPIN_SPEED = 14;      // stupnov za sekundu
+    var settleTimer = null;
+    var resumeTimer = null;
+    var dragging = false;
+    var spinning = false;
+    var spinRaf = null;
+    var lastT = 0;
+    var inView = true;
+
+    function deg(rad) { return rad * 180 / Math.PI; }
+
+    function setOrbit(theta, phi) {
+      heroModel.cameraOrbit = theta.toFixed(2) + 'deg ' + phi.toFixed(2) + 'deg ' + RADIUS;
+    }
+
+    // Vlastna rotacia namiesto vstavaneho auto-rotate (to sa v niektorych
+    // prehliadacoch pauzuje a nebolo by na com stavat).
+    function spinStep(ts) {
+      if (!spinning) { spinRaf = null; return; }
+      if (!lastT) lastT = ts;
+      var dt = Math.min((ts - lastT) / 1000, 0.1);
+      lastT = ts;
+      var o = heroModel.getCameraOrbit();
+      setOrbit(deg(o.theta) + SPIN_SPEED * dt, deg(o.phi));
+      spinRaf = requestAnimationFrame(spinStep);
+    }
+
+    function startSpin() {
+      if (spinning || dragging || !inView) return;
+      spinning = true;
+      lastT = 0;
+      heroModel.interpolationDecay = 1;   // bez dobiehania, aby rotacia bola hladka
+      if (!spinRaf) spinRaf = requestAnimationFrame(spinStep);
+    }
+
+    function stopSpin() {
+      spinning = false;
+      if (spinRaf) { cancelAnimationFrame(spinRaf); spinRaf = null; }
+    }
+
+    // Po roztoceni o viac otacok sa vraciame najkratsou cestou,
+    // nie spat cez vsetky otacky.
+    function nearestBaseTheta() {
+      var cur = deg(heroModel.getCameraOrbit().theta);
+      return BASE_THETA + 360 * Math.round((cur - BASE_THETA) / 360);
+    }
+
+    function glideBackAndSpin() {
+      heroModel.interpolationDecay = 220;          // pomaly, mekky navrat
+      setOrbit(nearestBaseTheta(), BASE_PHI);
+      resumeTimer = setTimeout(startSpin, 1600);   // az potom sa zase sama toci
+    }
+
+    hero3d.addEventListener('mousedown', function () {
+      dragging = true;
+      hero3d.classList.add('is-dragging');
+      clearTimeout(settleTimer);
+      clearTimeout(resumeTimer);
+      stopSpin();
+      heroModel.interpolationDecay = 50;           // svizne pocas tahania
+    });
+
+    window.addEventListener('mouseup', function () {
+      if (!dragging) return;
+      dragging = false;
+      hero3d.classList.remove('is-dragging');
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(glideBackAndSpin, 700);  // chvilu necha, kde pustil
+    });
+
+    // Netocime naprazdno, ked hero nie je na obrazovke (setri vykon)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView) startSpin(); else stopSpin();
+      }, { threshold: 0 }).observe(hero3d);
+    }
+
+    if (heroModel.loaded) startSpin();
+    else heroModel.addEventListener('load', startSpin, { once: true });
+  }
 })();
