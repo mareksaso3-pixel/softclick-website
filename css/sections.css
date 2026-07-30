@@ -675,7 +675,7 @@
 
 /* ===== PRICING ===== */
 .pricing-wrapper {
-  max-width: 43.75rem;
+  max-width: 38rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -686,7 +686,7 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border-radius: var(--radius-xl);
-  padding: var(--space-4xl) var(--space-3xl);
+  padding: var(--space-3xl) var(--space-2xl);
 }
 
 .pricing-card h3 {

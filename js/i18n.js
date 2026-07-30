@@ -163,6 +163,7 @@ var TRANSLATIONS = {
       about: "O nás",
       faq: "FAQ",
       contact: "Kontakt",
+      cookies: "Cookies",
       copy: "Všetky práva vyhradené."
     },
     js: {
@@ -334,6 +335,7 @@ var TRANSLATIONS = {
       about: "About",
       faq: "FAQ",
       contact: "Contact",
+      cookies: "Cookies",
       copy: "All rights reserved."
     },
     js: {
