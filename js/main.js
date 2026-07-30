@@ -478,7 +478,13 @@
       }, { threshold: 0 }).observe(hero3d);
     }
 
-    if (heroModel.loaded) startSpin();
-    else heroModel.addEventListener('load', startSpin, { once: true });
+    // Odkryjeme az ked je model naozaj vykresleny (viz poznamka v hero.css)
+    function reveal() { hero3d.classList.add('is-ready'); }
+
+    if (heroModel.loaded) { reveal(); startSpin(); }
+    else heroModel.addEventListener('load', function () {
+      reveal();
+      startSpin();
+    }, { once: true });
   }
 })();

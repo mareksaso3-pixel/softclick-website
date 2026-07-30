@@ -114,8 +114,18 @@
   height: 100%;
   --poster-color: transparent;
   background: transparent;
-  filter: drop-shadow(0 0 60px rgba(155, 108, 255, 0.35));
   cursor: grab;
+  /* Kym sa model nevykresli, ma vnutorne platno este predvolenu velkost
+     300x150 a jeho horny okraj presvital ako tenky cierny pruh.
+     Skryvame ho preto cez filter: opacity(), nie cez vlastnost opacity:
+     model-viewer si pri opacity: 0 mysli, ze nie je viditelny, a vobec
+     nedokonci nacitanie. Triedu prida main.js po udalosti 'load'. */
+  filter: drop-shadow(0 0 60px rgba(155, 108, 255, 0.35)) opacity(0);
+  transition: filter 0.6s ease;
+}
+
+.hero-3d.is-ready model-viewer {
+  filter: drop-shadow(0 0 60px rgba(155, 108, 255, 0.35)) opacity(1);
 }
 
 .hero-3d.is-dragging model-viewer {
