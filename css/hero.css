@@ -122,6 +122,9 @@
      nedokonci nacitanie. Triedu prida main.js po udalosti 'load'. */
   filter: drop-shadow(0 0 60px rgba(155, 108, 255, 0.35)) opacity(0);
   transition: filter 0.6s ease;
+  /* Horna hrana platna sa pri skladani priehladnosti prejavi ako tmavy
+     prúžok. Model je v strede, tak par pixelov z okrajov nechyba. */
+  clip-path: inset(5px 2px 2px 2px);
 }
 
 .hero-3d.is-ready model-viewer {
