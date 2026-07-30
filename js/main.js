@@ -406,8 +406,14 @@
 
     // Vlastna rotacia namiesto vstavaneho auto-rotate (to sa v niektorych
     // prehliadacoch pauzuje a nebolo by na com stavat).
+    // model-viewer je custom element, ktory sa upgraduje az po nacitani
+    // kniznice. Do vtedy metody ako getCameraOrbit este neexistuju.
+    function ready() {
+      return typeof heroModel.getCameraOrbit === 'function';
+    }
+
     function spinStep(ts) {
-      if (!spinning) { spinRaf = null; return; }
+      if (!spinning || !ready()) { spinRaf = null; return; }
       if (!lastT) lastT = ts;
       var dt = Math.min((ts - lastT) / 1000, 0.1);
       lastT = ts;
@@ -418,6 +424,10 @@
 
     function startSpin() {
       if (spinning || dragging || !inView) return;
+      if (!ready()) {                       // kniznica sa este nenacitala
+        heroModel.addEventListener('load', startSpin, { once: true });
+        return;
+      }
       spinning = true;
       lastT = 0;
       heroModel.interpolationDecay = 1;   // bez dobiehania, aby rotacia bola hladka
@@ -432,6 +442,7 @@
     // Po roztoceni o viac otacok sa vraciame najkratsou cestou,
     // nie spat cez vsetky otacky.
     function nearestBaseTheta() {
+      if (!ready()) return BASE_THETA;
       var cur = deg(heroModel.getCameraOrbit().theta);
       return BASE_THETA + 360 * Math.round((cur - BASE_THETA) / 360);
     }

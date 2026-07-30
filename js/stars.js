@@ -1,336 +1,182 @@
 /**
- * Cosmic Vortex Background — 3D Depth Effect
- * Central dark vortex with radiating light rays, nebula clouds,
- * depth particles moving outward, and twinkling stars.
+ * Cosmic Background — skutocna 3D perspektiva
  *
- * Respects prefers-reduced-motion.
+ * Hviezdy maju realne suradnice (x, y, z) a letia smerom ku kamere,
+ * takze rastu, zrychluju a rozostupuju sa od stredu (uicaci bod).
+ * Hmlovina je v troch hlbkovych vrstvach, kazda sa hybe inou rychlostou,
+ * co dava priestoru objem.
+ *
+ * Vykon: ziadne createRadialGradient v kazdom snimku. Ziara hviezd sa
+ * kresli z predpripravenych sprite obrazkov (drawImage), co je radovo
+ * lacnejsie a nesekalo pri scrollovani.
+ *
+ * Respektuje prefers-reduced-motion.
  */
 (function () {
   var canvas = document.getElementById('stars-canvas');
   if (!canvas) return;
 
-  var ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d', { alpha: true });
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Mouse parallax (smoothed toward target so it feels floaty, not snappy)
-  var mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+  var W, H, CX, CY;
+  var stars = [];
+  var shootingStars = [];
+  var nebulaLayers = [];
+  var glowSprites = {};
+
+  // ── Perspektiva ────────────────────────────────────────────
+  var FOCAL = 620;      // ohniskova vzdialenost, vyssie = uzsi zaber
+  var Z_NEAR = 140;      // za tymto bodom hviezda "preleti" a znovu sa zrodi
+  var Z_FAR = 1500;
+  var STAR_MIN_SPEED = 9;
+  var STAR_MAX_SPEED = 34;
+
+  // ── Mys: posuva ubiehaci bod, tym sa cely priestor natoci ──
+  var mx = 0, my = 0, tmx = 0, tmy = 0;
   if (!reduced) {
     window.addEventListener('mousemove', function (e) {
-      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      tmx = (e.clientX / window.innerWidth - 0.5) * 2;
+      tmy = (e.clientY / window.innerHeight - 0.5) * 2;
     }, { passive: true });
   }
 
-  // Offscreen canvases
-  var nebulaCanvas = document.createElement('canvas');
-  var nebulaCtx = nebulaCanvas.getContext('2d');
-  var raysCanvas = document.createElement('canvas');
-  var raysCtx = raysCanvas.getContext('2d');
-
-  var stars = [];
-  var depthParticles = [];
-  var shootingStars = [];
-  var W, H, CX, CY;
-
-  // Color palette matching the cosmic nebula reference
-  var nebulaColors = {
-    deepPurple: [80, 20, 160],
-    magenta: [200, 50, 180],
-    hotPink: [244, 114, 182],
-    cyan: [34, 211, 238],
-    blue: [60, 140, 255],
-    violet: [155, 108, 255],
-    warmPink: [255, 120, 160],
-    orange: [255, 160, 80],
-  };
-
   var starColors = [
-    [220, 230, 255], [200, 215, 255], [180, 200, 255],
-    [170, 185, 255], [150, 200, 245], [200, 180, 255],
-    [255, 255, 255], [240, 235, 255], [255, 220, 255],
-    [160, 220, 255], [255, 200, 240], [230, 200, 255],
+    [220, 230, 255], [200, 215, 255], [175, 195, 255],
+    [255, 255, 255], [240, 235, 255], [255, 215, 250],
+    [165, 220, 255], [225, 195, 255], [255, 200, 235],
   ];
 
   // ───────────────────────────────────────────
-  //  STATIC NEBULA (offscreen, rendered once)
+  //  PREDPRIPRAVENE SPRITY ZIARY (kreslia sa cez drawImage)
   // ───────────────────────────────────────────
-
-  function renderStaticNebula() {
-    nebulaCanvas.width = W;
-    nebulaCanvas.height = H;
-
-    var c = nebulaCtx;
-    c.clearRect(0, 0, W, H);
-    c.globalCompositeOperation = 'screen';
-
-    // Large nebula clouds radiating from center
-    var clouds = [
-      // Left purple-magenta cloud mass
-      { x: 0.25, y: 0.38, rx: 0.35, ry: 0.30, c: [60, 10, 100], a: 0.22 },
-      { x: 0.18, y: 0.30, rx: 0.25, ry: 0.22, c: [120, 25, 140], a: 0.16 },
-      { x: 0.12, y: 0.50, rx: 0.22, ry: 0.28, c: [90, 18, 120], a: 0.14 },
-
-      // Right blue-cyan cloud mass
-      { x: 0.78, y: 0.35, rx: 0.30, ry: 0.28, c: [18, 45, 140], a: 0.18 },
-      { x: 0.85, y: 0.45, rx: 0.25, ry: 0.25, c: [12, 90, 150], a: 0.14 },
-      { x: 0.72, y: 0.25, rx: 0.20, ry: 0.18, c: [35, 75, 180], a: 0.12 },
-
-      // Top pink-purple wisps
-      { x: 0.40, y: 0.15, rx: 0.30, ry: 0.18, c: [120, 30, 120], a: 0.13 },
-      { x: 0.60, y: 0.12, rx: 0.25, ry: 0.15, c: [140, 35, 110], a: 0.11 },
-
-      // Bottom blue-purple
-      { x: 0.35, y: 0.72, rx: 0.28, ry: 0.22, c: [35, 18, 100], a: 0.15 },
-      { x: 0.65, y: 0.68, rx: 0.25, ry: 0.20, c: [25, 40, 120], a: 0.12 },
-
-      // Subtle accent cores
-      { x: 0.30, y: 0.35, rx: 0.10, ry: 0.08, c: [140, 50, 200], a: 0.28 },
-      { x: 0.70, y: 0.38, rx: 0.08, ry: 0.07, c: [25, 120, 180], a: 0.24 },
-      { x: 0.22, y: 0.45, rx: 0.07, ry: 0.06, c: [160, 35, 150], a: 0.22 },
-      { x: 0.80, y: 0.30, rx: 0.06, ry: 0.05, c: [50, 100, 200], a: 0.20 },
-      { x: 0.45, y: 0.20, rx: 0.06, ry: 0.05, c: [200, 80, 130], a: 0.18 },
-      { x: 0.55, y: 0.65, rx: 0.07, ry: 0.06, c: [65, 35, 160], a: 0.16 },
-    ];
-
-    for (var i = 0; i < clouds.length; i++) {
-      drawCloud(c, clouds[i]);
+  function buildGlowSprites() {
+    glowSprites = {};
+    for (var i = 0; i < starColors.length; i++) {
+      var col = starColors[i];
+      var size = 64;
+      var cv = document.createElement('canvas');
+      cv.width = cv.height = size;
+      var c = cv.getContext('2d');
+      var g = c.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      var rgb = col[0] + ',' + col[1] + ',' + col[2];
+      g.addColorStop(0.00, 'rgba(' + rgb + ',1)');
+      g.addColorStop(0.18, 'rgba(' + rgb + ',0.55)');
+      g.addColorStop(0.45, 'rgba(' + rgb + ',0.14)');
+      g.addColorStop(1.00, 'rgba(' + rgb + ',0)');
+      c.fillStyle = g;
+      c.fillRect(0, 0, size, size);
+      glowSprites[i] = cv;
     }
   }
 
-  function drawCloud(c, cloud) {
-    var cx = W * cloud.x;
-    var cy = H * cloud.y;
-    var rx = W * cloud.rx;
-    var ry = H * cloud.ry;
+  // ───────────────────────────────────────────
+  //  HMLOVINA V TROCH HLBKOVYCH VRSTVACH
+  // ───────────────────────────────────────────
+  function drawCloud(c, cloud, w, h) {
+    var cx = w * cloud.x, cy = h * cloud.y;
+    var rx = w * cloud.rx, ry = h * cloud.ry;
     var r = Math.max(rx, ry);
-
     c.save();
     c.translate(cx, cy);
     c.scale(rx / r, ry / r);
     c.translate(-cx, -cy);
-
     var grad = c.createRadialGradient(cx, cy, 0, cx, cy, r);
-    var col = cloud.c;
-    var a = cloud.a;
-    grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + a + ')');
-    grad.addColorStop(0.15, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.85) + ')');
-    grad.addColorStop(0.4, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.45) + ')');
-    grad.addColorStop(0.7, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.12) + ')');
-    grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-
+    var col = cloud.c, a = cloud.a;
+    var rgb = col[0] + ',' + col[1] + ',' + col[2];
+    grad.addColorStop(0.00, 'rgba(' + rgb + ',' + a + ')');
+    grad.addColorStop(0.15, 'rgba(' + rgb + ',' + (a * 0.85) + ')');
+    grad.addColorStop(0.40, 'rgba(' + rgb + ',' + (a * 0.45) + ')');
+    grad.addColorStop(0.70, 'rgba(' + rgb + ',' + (a * 0.12) + ')');
+    grad.addColorStop(1.00, 'rgba(' + rgb + ',0)');
     c.fillStyle = grad;
     c.fillRect(cx - r * 1.3, cy - r * 1.3, r * 2.6, r * 2.6);
     c.restore();
   }
 
-  // ───────────────────────────────────────────
-  //  LIGHT RAYS (offscreen, static base)
-  // ───────────────────────────────────────────
-
-  function renderStaticRays() {
-    raysCanvas.width = W;
-    raysCanvas.height = H;
-
-    var c = raysCtx;
-    c.clearRect(0, 0, W, H);
-
-    var numRays = 48;
-    var maxLen = Math.max(W, H) * 0.85;
-
-    for (var i = 0; i < numRays; i++) {
-      var angle = (i / numRays) * Math.PI * 2 + (Math.random() - 0.5) * 0.08;
-      var length = maxLen * (0.4 + Math.random() * 0.6);
-      var width = 0.8 + Math.random() * 2.5;
-      var opacity = 0.01 + Math.random() * 0.035;
-
-      // Alternate colors: purple, magenta, blue, cyan, pink
-      var rayColors = [
-        nebulaColors.violet, nebulaColors.magenta, nebulaColors.blue,
-        nebulaColors.cyan, nebulaColors.hotPink, nebulaColors.deepPurple,
-        nebulaColors.warmPink, nebulaColors.orange,
-      ];
-      var col = rayColors[i % rayColors.length];
-
-      var ex = CX + Math.cos(angle) * length;
-      var ey = CY + Math.sin(angle) * length;
-
-      var grad = c.createLinearGradient(CX, CY, ex, ey);
-      grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-      grad.addColorStop(0.1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.5) + ')');
-      grad.addColorStop(0.3, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + opacity + ')');
-      grad.addColorStop(0.7, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.6) + ')');
-      grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-
-      c.save();
-      c.beginPath();
-      c.moveTo(CX, CY);
-      c.lineTo(ex, ey);
-      c.strokeStyle = grad;
-      c.lineWidth = width;
-      c.lineCap = 'round';
-      c.globalCompositeOperation = 'screen';
-      c.stroke();
-      c.restore();
-    }
-  }
-
-  // ───────────────────────────────────────────
-  //  STARFIELD (with depth layers)
-  // ───────────────────────────────────────────
-
-  function createStars() {
-    var count = Math.min(Math.floor(W * H / 2600), 480);
-    stars = [];
-
-    for (var i = 0; i < count; i++) {
-      var depth = Math.random();
-      var layer = depth < 0.5 ? 0 : depth < 0.8 ? 1 : depth < 0.95 ? 2 : 3;
-      var sizes = [0.3, 0.7, 1.4, 2.4];
-      var opacities = [0.15, 0.35, 0.6, 0.85];
-      var color = starColors[Math.floor(Math.random() * starColors.length)];
-
-      var y = Math.random() * H;
-      var angle = Math.random() * Math.PI * 2;
-      var spd = 0.01 + Math.random() * 0.04;
-
-      stars.push({
-        x: Math.random() * W,
-        y: y,
-        baseX: 0, baseY: 0,
-        size: sizes[layer] + Math.random() * 0.4,
-        baseOpacity: opacities[layer],
-        twinkleSpeed: 0.001 + Math.random() * 0.005,
-        twinklePhase: Math.random() * Math.PI * 2,
-        twinkleAmt: layer < 2 ? 0.1 : 0.25 + Math.random() * 0.3,
-        color: color,
-        glow: layer >= 3,
-        dx: Math.cos(angle) * spd,
-        dy: Math.sin(angle) * spd,
-        layer: layer,
-      });
-    }
-    for (var k = 0; k < stars.length; k++) {
-      stars[k].baseX = stars[k].x;
-      stars[k].baseY = stars[k].y;
-    }
-  }
-
-  // ───────────────────────────────────────────
-  //  DEPTH PARTICLES (3D outward flow)
-  // ───────────────────────────────────────────
-
-  function createDepthParticles() {
-    var count = Math.min(Math.floor(W * H / 13000), 90);
-    depthParticles = [];
-
-    for (var i = 0; i < count; i++) {
-      depthParticles.push(newDepthParticle());
-    }
-  }
-
-  function newDepthParticle() {
-    var angle = Math.random() * Math.PI * 2;
-    var dist = Math.random() * 0.15; // start near center
-    var speed = 0.0002 + Math.random() * 0.0006;
-    var palettes = [
-      nebulaColors.violet, nebulaColors.magenta, nebulaColors.cyan,
-      nebulaColors.blue, nebulaColors.hotPink, [255, 255, 255],
+  function buildNebula() {
+    // depth: 0 = najdalej (hybe sa najmenej), 2 = najblizsie
+    var groups = [
+      // Vzdialene pozadie, siroke masy
+      { depth: 0, parallax: 10, scale: 1.10, clouds: [
+        { x: 0.25, y: 0.38, rx: 0.38, ry: 0.32, c: [60, 10, 100], a: 0.22 },
+        { x: 0.78, y: 0.35, rx: 0.33, ry: 0.30, c: [18, 45, 140], a: 0.18 },
+        { x: 0.35, y: 0.72, rx: 0.30, ry: 0.24, c: [35, 18, 100], a: 0.15 },
+        { x: 0.65, y: 0.68, rx: 0.27, ry: 0.22, c: [25, 40, 120], a: 0.12 },
+      ]},
+      // Stredna vrstva
+      { depth: 1, parallax: 26, scale: 1.05, clouds: [
+        { x: 0.18, y: 0.30, rx: 0.25, ry: 0.22, c: [120, 25, 140], a: 0.16 },
+        { x: 0.12, y: 0.50, rx: 0.22, ry: 0.28, c: [90, 18, 120], a: 0.14 },
+        { x: 0.85, y: 0.45, rx: 0.25, ry: 0.25, c: [12, 90, 150], a: 0.14 },
+        { x: 0.72, y: 0.25, rx: 0.20, ry: 0.18, c: [35, 75, 180], a: 0.12 },
+        { x: 0.40, y: 0.15, rx: 0.30, ry: 0.18, c: [120, 30, 120], a: 0.13 },
+        { x: 0.60, y: 0.12, rx: 0.25, ry: 0.15, c: [140, 35, 110], a: 0.11 },
+      ]},
+      // Blizke jasne jadra, hybu sa najviac
+      { depth: 2, parallax: 52, scale: 1.0, clouds: [
+        { x: 0.30, y: 0.35, rx: 0.10, ry: 0.08, c: [140, 50, 200], a: 0.30 },
+        { x: 0.70, y: 0.38, rx: 0.08, ry: 0.07, c: [25, 120, 180], a: 0.26 },
+        { x: 0.22, y: 0.45, rx: 0.07, ry: 0.06, c: [160, 35, 150], a: 0.24 },
+        { x: 0.80, y: 0.30, rx: 0.06, ry: 0.05, c: [50, 100, 200], a: 0.22 },
+        { x: 0.45, y: 0.20, rx: 0.06, ry: 0.05, c: [200, 80, 130], a: 0.20 },
+        { x: 0.55, y: 0.65, rx: 0.07, ry: 0.06, c: [65, 35, 160], a: 0.18 },
+      ]},
     ];
-    var col = palettes[Math.floor(Math.random() * palettes.length)];
 
+    nebulaLayers = groups.map(function (g) {
+      var lw = Math.ceil(W * g.scale), lh = Math.ceil(H * g.scale);
+      var cv = document.createElement('canvas');
+      cv.width = lw; cv.height = lh;
+      var c = cv.getContext('2d');
+      c.globalCompositeOperation = 'screen';
+      for (var i = 0; i < g.clouds.length; i++) drawCloud(c, g.clouds[i], lw, lh);
+      return { canvas: cv, parallax: g.parallax, w: lw, h: lh };
+    });
+  }
+
+  // ───────────────────────────────────────────
+  //  3D HVIEZDNE POLE
+  // ───────────────────────────────────────────
+  function newStar(atFar) {
+    var z = atFar ? Z_FAR - Math.random() * 120
+                  : Z_NEAR + Math.random() * (Z_FAR - Z_NEAR);
+    // Rozptyl rastie s hlbkou, takze hviezdy pokryvaju obrazovku rovnomerne
+    // v kazdej vzdialenosti (inak by blizke skoro vsetky ulietli mimo zaber).
+    var k = z / Z_FAR;
+    var spreadX = W * 1.25 * k, spreadY = H * 1.25 * k;
     return {
-      angle: angle,
-      dist: dist,
-      speed: speed,
-      maxDist: 0.6 + Math.random() * 0.5,
-      size: 0.5 + Math.random() * 1.5,
-      color: col,
-      baseOpacity: 0.15 + Math.random() * 0.4,
-      trail: 3 + Math.random() * 8,
+      x: (Math.random() * 2 - 1) * spreadX,
+      y: (Math.random() * 2 - 1) * spreadY,
+      z: z,
+      speed: STAR_MIN_SPEED + Math.random() * (STAR_MAX_SPEED - STAR_MIN_SPEED),
+      size: 0.55 + Math.random() * 1.5,
+      ci: Math.floor(Math.random() * starColors.length),
+      tw: Math.random() * Math.PI * 2,          // faza blikania
+      tws: 0.6 + Math.random() * 1.8,           // rychlost blikania
+      glow: Math.random() < 0.34,               // len cast ma ziaru (vykon)
     };
   }
 
-  function drawDepthParticles() {
-    for (var i = 0; i < depthParticles.length; i++) {
-      var p = depthParticles[i];
-
-      // Move outward from center
-      p.dist += p.speed;
-
-      // Reset when too far
-      if (p.dist > p.maxDist) {
-        depthParticles[i] = newDepthParticle();
-        continue;
-      }
-
-      // Progress 0..1 through life
-      var life = p.dist / p.maxDist;
-      // Fade in then out
-      var opacity = life < 0.15 ? life / 0.15 : 1 - Math.pow((life - 0.15) / 0.85, 2);
-      opacity *= p.baseOpacity;
-      if (opacity < 0.01) continue;
-
-      // Size grows with distance (3D perspective)
-      var size = p.size * (0.5 + life * 2);
-
-      var px = CX + Math.cos(p.angle) * p.dist * Math.max(W, H);
-      var py = CY + Math.sin(p.angle) * p.dist * Math.max(W, H);
-
-      // Skip if offscreen
-      if (px < -20 || px > W + 20 || py < -20 || py > H + 20) continue;
-
-      // Trail line toward center
-      var trailLen = p.trail * life;
-      var tx = px - Math.cos(p.angle) * trailLen;
-      var ty = py - Math.sin(p.angle) * trailLen;
-
-      var col = p.color;
-
-      if (trailLen > 1) {
-        var grad = ctx.createLinearGradient(tx, ty, px, py);
-        grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-        grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.6) + ')');
-        ctx.beginPath();
-        ctx.moveTo(tx, ty);
-        ctx.lineTo(px, py);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = size * 0.6;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-      }
-
-      // Particle head
-      ctx.beginPath();
-      ctx.arc(px, py, size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + opacity + ')';
-      ctx.fill();
-
-      // Glow on larger particles
-      if (size > 1.8) {
-        var glowR = size * 3;
-        var glow = ctx.createRadialGradient(px, py, 0, px, py, glowR);
-        glow.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (opacity * 0.3) + ')');
-        glow.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-        ctx.fillStyle = glow;
-        ctx.fillRect(px - glowR, py - glowR, glowR * 2, glowR * 2);
-      }
-    }
+  function createStars() {
+    var count = Math.min(Math.round(W * H / 1500), 900);
+    stars = [];
+    for (var i = 0; i < count; i++) stars.push(newStar(false));
   }
 
   // ───────────────────────────────────────────
-  //  SHOOTING STARS
+  //  PADAJUCE HVIEZDY
   // ───────────────────────────────────────────
-
   function spawnShootingStar() {
     if (shootingStars.length >= 2) return;
     shootingStars.push({
       x: Math.random() * W * 0.7 + W * 0.1,
       y: Math.random() * H * 0.35,
       angle: Math.PI / 5 + Math.random() * Math.PI / 5,
-      speed: 5 + Math.random() * 7,
+      speed: 2.2 + Math.random() * 3,
       length: 100 + Math.random() * 150,
       life: 0,
-      maxLife: 28 + Math.random() * 30,
+      maxLife: 60 + Math.random() * 55,
       color: Math.random() > 0.5 ? [200, 180, 255] : [255, 180, 240],
     });
   }
@@ -341,183 +187,141 @@
       s.x += Math.cos(s.angle) * s.speed;
       s.y += Math.sin(s.angle) * s.speed;
       s.life++;
-
       var prog = s.life / s.maxLife;
       var op = prog < 0.12 ? prog / 0.12 : 1 - (prog - 0.12) / 0.88;
       if (op < 0) op = 0;
-
       if (s.life >= s.maxLife || s.x > W + 60 || s.y > H + 60) {
         shootingStars.splice(i, 1);
         continue;
       }
-
       var tx = s.x - Math.cos(s.angle) * s.length;
       var ty = s.y - Math.sin(s.angle) * s.length;
-
-      var grad = ctx.createLinearGradient(tx, ty, s.x, s.y);
-      grad.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',0)');
-      grad.addColorStop(0.5, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.3) + ')');
-      grad.addColorStop(1, 'rgba(255,255,255,' + (op * 0.9) + ')');
-
+      var g = ctx.createLinearGradient(tx, ty, s.x, s.y);
+      var rgb = s.color[0] + ',' + s.color[1] + ',' + s.color[2];
+      g.addColorStop(0, 'rgba(' + rgb + ',0)');
+      g.addColorStop(0.5, 'rgba(' + rgb + ',' + (op * 0.3) + ')');
+      g.addColorStop(1, 'rgba(255,255,255,' + (op * 0.9) + ')');
       ctx.beginPath();
       ctx.moveTo(tx, ty);
       ctx.lineTo(s.x, s.y);
-      ctx.strokeStyle = grad;
+      ctx.strokeStyle = g;
       ctx.lineWidth = 1.8;
       ctx.lineCap = 'round';
       ctx.stroke();
-
       ctx.beginPath();
-      ctx.arc(s.x, s.y, 2.5, 0, Math.PI * 2);
+      ctx.arc(s.x, s.y, 2.2, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,' + op + ')';
       ctx.fill();
-
-      var hg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 14);
-      hg.addColorStop(0, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (op * 0.45) + ')');
-      hg.addColorStop(1, 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',0)');
-      ctx.fillStyle = hg;
-      ctx.fillRect(s.x - 14, s.y - 14, 28, 28);
     }
   }
 
   // ───────────────────────────────────────────
-  //  MAIN DRAW LOOP
+  //  HLAVNA SLUCKA
   // ───────────────────────────────────────────
+  var lastTs = 0;
 
-  function draw(time) {
+  function draw(ts) {
+    var dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.08) : 0.016;
+    lastTs = ts;
+
+    // mekke dobiehanie mysi
+    mx += (tmx - mx) * 0.045;
+    my += (tmy - my) * 0.045;
+
     ctx.clearRect(0, 0, W, H);
 
-    if (!reduced) {
-      mouseX += (targetMouseX - mouseX) * 0.04;
-      mouseY += (targetMouseY - mouseY) * 0.04;
-    }
-
-    // 1. Nebula base layer (breathing), drifts slightly opposite the cursor for depth
-    var baseBreath = reduced ? 0.6 : 0.5 + 0.15 * Math.sin(time * 0.00012);
-    var nebulaShiftX = reduced ? 0 : -mouseX * 24;
-    var nebulaShiftY = reduced ? 0 : -mouseY * 24;
-    ctx.globalAlpha = baseBreath;
+    // 1) Hmlovina po vrstvach, kazda s inym posunom = hlbka
     ctx.globalCompositeOperation = 'screen';
-    ctx.drawImage(nebulaCanvas, nebulaShiftX, nebulaShiftY);
+    var breath = reduced ? 0.95 : 0.88 + 0.12 * Math.sin(ts * 0.00011);
+    for (var n = 0; n < nebulaLayers.length; n++) {
+      var L = nebulaLayers[n];
+      ctx.globalAlpha = breath;
+      ctx.drawImage(
+        L.canvas,
+        (W - L.w) / 2 - mx * L.parallax,
+        (H - L.h) / 2 - my * L.parallax
+      );
+    }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
 
-    // 2. Light rays (rotating slowly, pulsing)
-    if (!reduced) {
-      var rayRotation = time * 0.000008;
-      var rayPulse = 0.5 + 0.5 * Math.sin(time * 0.0002);
-      ctx.save();
-      ctx.globalAlpha = 0.2 + rayPulse * 0.2;
-      ctx.globalCompositeOperation = 'screen';
-      ctx.translate(CX, CY);
-      ctx.rotate(rayRotation);
-      ctx.translate(-CX, -CY);
-      ctx.drawImage(raysCanvas, 0, 0);
-      ctx.restore();
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = 'source-over';
+    // 2) Ubiehaci bod sa posuva s mysou => cely priestor sa natoci
+    var vpx = CX + mx * 90;
+    var vpy = CY + my * 70;
 
-      // Second ray layer, counter-rotating
-      var rayPulse2 = 0.4 + 0.4 * Math.sin(time * 0.00025 + 2);
-      ctx.save();
-      ctx.globalAlpha = 0.12 + rayPulse2 * 0.15;
-      ctx.globalCompositeOperation = 'screen';
-      ctx.translate(CX, CY);
-      ctx.rotate(-rayRotation * 1.3);
-      ctx.translate(-CX, -CY);
-      ctx.drawImage(raysCanvas, 0, 0);
-      ctx.restore();
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = 'source-over';
-    }
-
-    // 3. Depth particles (3D outward flow)
-    if (!reduced) {
-      drawDepthParticles();
-    }
-
-    // 5. Stars
+    // 3) Hviezdy v perspektive
+    ctx.globalCompositeOperation = 'lighter';
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
 
       if (!reduced) {
-        s.x = s.baseX
-              + Math.sin(time * 0.00004 + s.twinklePhase) * (2 + s.layer * 1.5)
-              + (time * s.dx * 0.0006)
-              + mouseX * (8 + s.layer * 11);
-        s.y = s.baseY
-              + Math.cos(time * 0.00003 + s.twinklePhase) * (1.5 + s.layer)
-              + (time * s.dy * 0.0006)
-              + mouseY * (8 + s.layer * 11);
-
-        if (s.x > W + 4) { s.x -= W + 8; s.baseX -= W + 8; }
-        if (s.x < -4) { s.x += W + 8; s.baseX += W + 8; }
-        if (s.y > H + 4) { s.y -= H + 8; s.baseY -= H + 8; }
-        if (s.y < -4) { s.y += H + 8; s.baseY += H + 8; }
+        s.z -= s.speed * dt * 3;
+        if (s.z <= Z_NEAR) { stars[i] = newStar(true); continue; }
       }
 
-      var op;
-      if (reduced) {
-        op = s.baseOpacity;
-      } else {
-        op = s.baseOpacity + Math.sin(time * s.twinkleSpeed + s.twinklePhase) * s.twinkleAmt;
-        if (op < 0.05) op = 0.05;
-        if (op > 1) op = 1;
+      var p = FOCAL / s.z;                 // perspektivny faktor
+      var sx = vpx + s.x * p;
+      var sy = vpy + s.y * p;
+
+      // mimo obrazovky -> preskocit (lacne)
+      if (sx < -60 || sx > W + 60 || sy < -60 || sy > H + 60) continue;
+
+      // velkost aj jas rastu ako sa hviezda priblizuje
+      var depth = 1 - (s.z - Z_NEAR) / (Z_FAR - Z_NEAR);   // 0 daleko .. 1 blizko
+      var r = s.size * p * 1.35;
+      if (r < 0.25) continue;
+      if (r > 3.2) r = 3.2;
+
+      var alpha = 0.12 + depth * 0.88;
+      if (!reduced) alpha *= 0.78 + 0.22 * Math.sin(ts * 0.001 * s.tws + s.tw);
+      if (alpha <= 0.02) continue;
+
+      // ziara zo sprite (bez gradientu v kazdom snimku)
+      if (s.glow && depth > 0.35) {
+        var gr = r * 9;
+        ctx.globalAlpha = alpha * 0.5;
+        ctx.drawImage(glowSprites[s.ci], sx - gr, sy - gr, gr * 2, gr * 2);
       }
 
-      var r = s.color[0], g = s.color[1], b = s.color[2];
-
-      if (s.glow) {
-        var gr = s.size * (s.layer === 3 ? 8 : 5);
-        var glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, gr);
-        glow.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + (op * 0.3) + ')');
-        glow.addColorStop(0.5, 'rgba(' + r + ',' + g + ',' + b + ',' + (op * 0.08) + ')');
-        glow.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-        ctx.fillStyle = glow;
-        ctx.fillRect(s.x - gr, s.y - gr, gr * 2, gr * 2);
-      }
-
+      var col = starColors[s.ci];
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = 'rgb(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + op + ')';
+      ctx.arc(sx, sy, r, 0, Math.PI * 2);
       ctx.fill();
     }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
 
-    // 6. Shooting stars
+    // 4) Padajuce hviezdy
     if (!reduced) {
       drawShootingStars();
-      if (Math.random() < 0.005) spawnShootingStar();
+      if (Math.random() < 0.004) spawnShootingStar();
       requestAnimationFrame(draw);
     }
   }
 
   // ───────────────────────────────────────────
-  //  RESIZE & INIT
+  //  RESIZE + START
   // ───────────────────────────────────────────
-
   function resize() {
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
     CX = W * 0.5;
-    CY = H * 0.42; // slightly above center for visual balance
-
-    renderStaticNebula();
-    renderStaticRays();
+    CY = H * 0.44;
+    buildNebula();
     createStars();
-    createDepthParticles();
   }
 
-  var resizeTimer;
+  var rt;
   window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 250);
+    clearTimeout(rt);
+    rt = setTimeout(resize, 250);
   });
 
+  buildGlowSprites();
   resize();
 
-  if (reduced) {
-    draw(0);
-  } else {
-    requestAnimationFrame(draw);
-  }
+  if (reduced) draw(0);
+  else requestAnimationFrame(draw);
 })();
