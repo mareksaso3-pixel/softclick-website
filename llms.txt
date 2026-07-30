@@ -1,0 +1,29 @@
+# SoftClick.ai
+
+> AI automatizácia pre firmy. SoftClick.ai navrhuje AI asistentov na mieru pre automatizáciu
+> e-mailovej komunikácie, CRM, kalendára a interných firemných procesov. Sídlime v Banskej
+> Bystrici, pôsobíme na Slovensku a v Česku. Firmu založili Adam Barbeník a Marek Sásik.
+
+SoftClick.ai builds custom AI automation systems for small and mid-size businesses in Slovakia
+and Czechia: autonomous email agents, self-updating CRM, outreach and follow-up automation,
+invoice processing, and full internal-process automation ecosystems. Typical clients save
+2 to 4 hours a day on routine admin work.
+
+## Služby
+- [AI automatizácia pre firmy, hlavná stránka](https://softclick.ai/): Prehľad služieb, proces spolupráce v 6 krokoch, cenník na mieru, časté otázky.
+- [Kompletný sprievodca AI automatizáciou](https://softclick.ai/ai-automatizacia.html): Čo je AI automatizácia, ktoré procesy automatizovať, ako to funguje v praxi, súlad s GDPR a EU AI Act.
+
+## Blog
+- [SEO a GEO optimalizácia pre firmy](https://softclick.ai/blog/seo-geo-optimalizacia-pre-firmy.html): Rozdiel medzi SEO a GEO, konkrétne kroky na optimalizáciu pre AI vyhľadávače.
+- [Návratnosť investície do AI automatizácie](https://softclick.ai/blog/navratnost-investicie-do-ai.html): Ako vypočítať ROI AI automatizácie, vzorec a príklad výpočtu.
+- [Spracovanie faktúr pomocou AI](https://softclick.ai/blog/spracovanie-faktur-ai.html): Presnosť 90 až 95 percent, integrácia s Omega, Pohoda, iDoklad a Superfaktúra.
+- [5 firemných procesov na automatizáciu](https://softclick.ai/blog/5-firemnych-procesov-na-automatizaciu.html)
+- [Čo je AI asistent](https://softclick.ai/blog/co-je-ai-asistent.html)
+- [Automatizácia e-mailov pomocou AI](https://softclick.ai/blog/ai-automatizacia-emailov.html)
+
+## Kontakt
+- Email: info@softclick.ai
+- Sídlo: Banská Bystrica, Slovensko
+
+## Doplnkové
+- [Sitemap](https://softclick.ai/sitemap.xml)
