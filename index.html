@@ -184,7 +184,7 @@
         "name": "Koľko to stojí?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Menšie automatizácie ako chatbot na web alebo email asistent štartujú na 200 € mesačne. Procesné riešenia typu spracovanie faktúr alebo prepojenie CRM začínajú na 1 500 € jednorazovo, komplexné firemné ekosystémy na 6 000 €. Orientačné rozpätie pre Vašu situáciu Vám za minútu vypočíta cenová kalkulačka na tejto stránke. Presnú ponuku pripravíme do 48 hodín po bezplatnej konzultácii."
+          "text": "Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná."
         }
       }
     ]
@@ -205,7 +205,6 @@
   <link rel="stylesheet" href="css/marquee.css?v=20260730g">
   <link rel="stylesheet" href="css/buttons.css?v=20260730g">
   <link rel="stylesheet" href="css/sections.css?v=20260730g">
-  <link rel="stylesheet" href="css/calculator.css?v=20260730g">
   <link rel="stylesheet" href="css/contact.css?v=20260730g">
   <link rel="stylesheet" href="css/responsive.css?v=20260730g">
   <link rel="stylesheet" href="css/cookies.css?v=20260730g">
@@ -246,7 +245,6 @@
             <li><a href="#sluzby" data-i18n="nav.services">Služby</a></li>
             <li><a href="#proces" data-i18n="nav.process">Ako prebieha spolupráca</a></li>
             <li><a href="#preco" data-i18n="nav.why">Prečo my</a></li>
-            <li><a href="#cennik" data-i18n="nav.pricing">Cenník</a></li>
             <li><a href="#onas" data-i18n="nav.about">O nás</a></li>
             <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
             <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
@@ -278,7 +276,6 @@
         <a href="#sluzby" data-i18n="nav.services">Služby</a>
         <a href="#proces" data-i18n="nav.process">Ako prebieha spolupráca</a>
         <a href="#preco" data-i18n="nav.why">Prečo my</a>
-        <a href="#cennik" data-i18n="nav.pricing">Cenník</a>
         <a href="#onas" data-i18n="nav.about">O nás</a>
         <a href="#faq" data-i18n="nav.faq">FAQ</a>
         <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
@@ -715,60 +712,51 @@
         </div>
       </section>
 
-      <!-- ===== PRICING + CENOVA KALKULACKA ===== -->
+      <!-- ===== PRICING ===== -->
       <section class="section" id="cennik">
         <div class="container">
           <div class="section-header animate-on-scroll">
-            <span class="section-label" data-i18n="calc.label">Cenník</span>
-            <h2 class="section-title" data-i18n="calc.title">Koľko to bude stáť u vás?</h2>
-            <p class="section-subtitle" data-i18n="calc.subtitle">Nepracujeme s fixnými balíčkami, ale nechceme, aby ste odchádzali bez predstavy. Za minútu dostanete orientačné rozpätie aj odhad, kedy sa vám investícia vráti.</p>
+            <span class="section-label" data-i18n="pricing.label">Cenník</span>
+            <h2 class="section-title" data-i18n="pricing.title">Individuálny prístup</h2>
+            <p class="section-subtitle" data-i18n="pricing.subtitle">Každé riešenie je unikátne. Ku každému klientovi pristupujeme individuálne a výsledná cena závisí od rozsahu a komplexnosti navrhnutej automatizácie.</p>
           </div>
-
-          <div class="tiers animate-on-scroll">
-            <div class="tier" data-glow>
-              <span class="tier-name" data-i18n="calc.tiers.t1Name">Menšie automatizácie</span>
-              <span class="tier-price" data-i18n="calc.tiers.t1Price">od 200 € <small data-i18n="calc.tiers.t1Unit">mesačne</small></span>
-              <p class="tier-desc" data-i18n="calc.tiers.t1Desc">Chatbot na web, email asistent, správa sociálnych sietí.</p>
-            </div>
-            <div class="tier" data-glow>
-              <span class="tier-name" data-i18n="calc.tiers.t2Name">Procesné riešenia</span>
-              <span class="tier-price" data-i18n="calc.tiers.t2Price">od 1 500 € <small data-i18n="calc.tiers.t2Unit">jednorazovo</small></span>
-              <p class="tier-desc" data-i18n="calc.tiers.t2Desc">Spracovanie faktúr, prepojenie CRM, telefonický asistent.</p>
-            </div>
-            <div class="tier" data-glow>
-              <span class="tier-name" data-i18n="calc.tiers.t3Name">Komplexný ekosystém</span>
-              <span class="tier-price" data-i18n="calc.tiers.t3Price">od 6 000 € <small data-i18n="calc.tiers.t3Unit">jednorazovo</small></span>
-              <p class="tier-desc" data-i18n="calc.tiers.t3Desc">Viac systémov naraz, riešenie na mieru pre celú firmu.</p>
+          <div class="pricing-wrapper animate-on-scroll">
+            <div class="pricing-card" data-tilt data-tilt-scale="1.08" data-glow>
+              <h3 data-i18n="pricing.cardTitle">Tvorba cenovej ponuky</h3>
+              <p data-i18n="pricing.cardText">Nepracujeme s fixnými balíčkami. Po bezplatnej konzultácii presne pochopíme, čo potrebujete, a pripravíme cenovú ponuku na mieru.</p>
+              <ul class="pricing-features">
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span data-i18n="pricing.feature1">Bezplatná úvodná konzultácia</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span data-i18n="pricing.feature2">Cenová ponuka do 48 hodín</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span data-i18n="pricing.feature3">Žiadne skryté poplatky</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span data-i18n="pricing.feature4">Platíte len za to, čo využívate</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span data-i18n="pricing.feature5">Priebežná podpora a údržba</span>
+                </li>
+              </ul>
+              <button type="button" class="btn btn-primary btn-lg" data-calendly="https://calendly.com/barbenikadam/30min" data-i18n="pricing.cta">
+                Nezáväzná konzultácia zadarmo
+                <svg class="btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
           </div>
-
-          <div class="calc-shell animate-on-scroll">
-            <div id="calc"></div>
-            <noscript>
-              <p class="calc-noscript" data-i18n="calc.noscript">Kalkulačka potrebuje zapnutý JavaScript. Menšie automatizácie štartujú na 200 € mesačne, procesné riešenia od 1 500 € a komplexné ekosystémy od 6 000 €. Napíšte nám a pripravíme presnú ponuku do 48 hodín.</p>
-            </noscript>
-          </div>
-
-          <ul class="calc-assurance animate-on-scroll">
-            <li>
-              <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span data-i18n="calc.assurance.a1">Bezplatná úvodná konzultácia</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span data-i18n="calc.assurance.a2">Presná ponuka do 48 hodín</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span data-i18n="calc.assurance.a3">Žiadne skryté poplatky</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 20 20"><path d="M16 5l-9 9-4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span data-i18n="calc.assurance.a4">Platíte len za to, čo využívate</span>
-            </li>
-          </ul>
         </div>
       </section>
+
 
       <!-- ===== ABOUT ===== -->
       <section class="section" id="onas">
@@ -882,7 +870,7 @@
               </button>
               <div class="faq-answer" role="region">
                 <div class="faq-answer-inner">
-                  <p data-i18n="faq.a7">Menšie automatizácie ako chatbot na web alebo email asistent štartujú na 200 € mesačne. Procesné riešenia typu spracovanie faktúr alebo prepojenie CRM začínajú na 1 500 € jednorazovo, komplexné firemné ekosystémy na 6 000 €. Orientačné rozpätie pre Vašu situáciu Vám za minútu vypočíta cenová kalkulačka na tejto stránke. Presnú ponuku pripravíme do 48 hodín po bezplatnej konzultácii.</p>
+                  <p data-i18n="faq.a7">Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná.</p>
                 </div>
               </div>
             </div>
@@ -976,7 +964,6 @@
             <li><a href="#sluzby" data-i18n="footer.services">Služby</a></li>
             <li><a href="#proces" data-i18n="footer.process">Proces</a></li>
             <li><a href="#preco" data-i18n="footer.why">Prečo my</a></li>
-            <li><a href="cena-ai-automatizacie.html" data-i18n="footer.pricing">Cenník a kalkulačka</a></li>
             <li><a href="#onas" data-i18n="footer.about">O nás</a></li>
             <li><a href="#faq" data-i18n="footer.faq">FAQ</a></li>
             <li><a href="#kontakt" data-i18n="footer.contact">Kontakt</a></li>
@@ -1024,7 +1011,6 @@
   <script src="js/i18n.js?v=20260730g"></script>
   <script src="js/stars.js?v=20260730g"></script>
   <script src="js/main.js?v=20260730g"></script>
-  <script src="js/calculator.js?v=20260730g"></script>
   <script src="js/animations.js?v=20260730g"></script>
 
   <!-- Calendly -->

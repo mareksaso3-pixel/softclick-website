@@ -20,7 +20,6 @@ var TRANSLATIONS = {
       services: "Služby",
       process: "Ako prebieha spolupráca",
       why: "Prečo my",
-      pricing: "Cenník",
       about: "O nás",
       faq: "FAQ",
       contact: "Kontakt",
@@ -108,108 +107,6 @@ var TRANSLATIONS = {
       feature5: "Priebežná podpora a údržba",
       cta: "Nezáväzná konzultácia zadarmo"
     },
-    calc: {
-      label: "Cenník",
-      title: "Koľko to bude stáť u vás?",
-      subtitle: "Nepracujeme s fixnými balíčkami, ale nechceme, aby ste odchádzali bez predstavy. Za minútu dostanete orientačné rozpätie aj odhad, kedy sa vám investícia vráti.",
-      tiers: {
-        t1Name: "Menšie automatizácie",
-        t1Price: "od 200 €",
-        t1Unit: "mesačne",
-        t1Desc: "Chatbot na web, email asistent, správa sociálnych sietí.",
-        t2Name: "Procesné riešenia",
-        t2Price: "od 1 500 €",
-        t2Unit: "jednorazovo",
-        t2Desc: "Spracovanie faktúr, prepojenie CRM, telefonický asistent.",
-        t3Name: "Komplexný ekosystém",
-        t3Price: "od 6 000 €",
-        t3Unit: "jednorazovo",
-        t3Desc: "Viac systémov naraz, riešenie na mieru pre celú firmu."
-      },
-      stepOf: "Krok {n} z {total}",
-      back: "Späť",
-      next: "Ďalej",
-      showResult: "Zobraziť odhad",
-      restart: "Prepočítať znova",
-      multiHint: "Môžete vybrať aj viac možností.",
-      steps: {
-        modules: { q: "Čo chcete automatizovať?", hint: "Vyberte, čo vás najviac ťaží." },
-        hours: { q: "Koľko hodín denne tomu venuje váš tím dokopy?", hint: "Stačí odhad." },
-        volume: { q: "Aký objem spracujete mesačne?", hint: "Emaily, dopyty, faktúry alebo objednávky spolu." },
-        systems: { q: "Aké systémy dnes používate?", hint: "Napojíme sa na ne, meniť ich nemusíte." },
-        company: { q: "Koľko ľudí vo firme pracuje?", hint: "Ovplyvňuje rozsah nastavenia a zaškolenia." }
-      },
-      opt: {
-        modules: {
-          chatbot:  { l: "Chatbot na web", d: "Odpovedá návštevníkom 24/7 a zbiera dopyty." },
-          email:    { l: "Emaily a dopyty", d: "Triedi poštu, navrhuje odpovede, nič nezapadne." },
-          invoices: { l: "Faktúry a doklady", d: "Vyčíta dáta, páruje platby, archivuje." },
-          phone:    { l: "Telefonický asistent", d: "Dvíha hovory, objednáva termíny, pripomína." },
-          crm:      { l: "CRM a interné procesy", d: "Zapisuje kontakty a obchody bez ručnej práce." },
-          social:   { l: "Sociálne siete", d: "Pripravuje a publikuje príspevky podľa plánu." }
-        },
-        hours: {
-          h1: { l: "Do 2 hodín" },
-          h2: { l: "2 až 5 hodín" },
-          h3: { l: "5 až 10 hodín" },
-          h4: { l: "Viac ako 10 hodín" }
-        },
-        volume: {
-          v1: { l: "Do 100 položiek" },
-          v2: { l: "100 až 500" },
-          v3: { l: "500 až 2 000" },
-          v4: { l: "Viac ako 2 000" }
-        },
-        systems: {
-          mail:       { l: "Gmail alebo Outlook" },
-          crm:        { l: "CRM" },
-          accounting: { l: "Účtovný softvér" },
-          sheets:     { l: "Tabuľky a dokumenty" },
-          eshop:      { l: "E-shop alebo rezervačný systém" },
-          none:       { l: "Nič z toho" }
-        },
-        company: {
-          c1: { l: "1 až 5 ľudí" },
-          c2: { l: "6 až 20 ľudí" },
-          c3: { l: "21 až 50 ľudí" },
-          c4: { l: "Viac ako 50 ľudí" }
-        }
-      },
-      result: {
-        title: "Váš orientačný odhad",
-        to: "až",
-        implLabel: "Implementácia",
-        implNote: "Jednorazovo, platí sa v etapách.",
-        monthlyLabel: "Mesačná prevádzka",
-        monthlyNote: "Podpora, údržba a úpravy podľa potreby.",
-        savingLabel: "Vaša úspora",
-        savingNote: "Približne {h} hodín mesačne, ktoré dnes minie tím na rutinu.",
-        paybackLabel: "Návratnosť",
-        paybackNote: "Odvtedy už riešenie zarába.",
-        paybackUnknown: "Prejdeme si to spolu",
-        paybackUnknownNote: "Pri tomto objeme sa oplatí začať menším riešením a rozširovať ho postupne.",
-        months: "mesiacov",
-        disclaimer: "Orientačný odhad na základe vašich odpovedí. Počítame s nákladom 14 € na hodinu administratívnej práce vrátane odvodov. Presnú cenu pripravíme po bezplatnej konzultácii, keď poznáme detaily vašich procesov.",
-        formTitle: "Chcete presnú ponuku?",
-        formText: "Pošleme vám rozpis do 48 hodín. Vaše odpovede už máme, takže sa nebudeme pýtať dvakrát.",
-        name: "Vaše meno",
-        email: "vas@email.sk",
-        company: "Firma (nepovinné)",
-        submit: "Chcem presnú ponuku",
-        sending: "Odosielam...",
-        success: "Ďakujeme, ozveme sa vám do 48 hodín.",
-        error: "Nepodarilo sa odoslať. Skúste to prosím znova alebo napíšte na info@softclick.ai.",
-        mailSubject: "Cenová kalkulačka: nový dopyt z webu",
-        calendly: "Radšej rovno hovor? Vyberte si termín"
-      },
-      assurance: {
-        a1: "Bezplatná úvodná konzultácia",
-        a2: "Presná ponuka do 48 hodín",
-        a3: "Žiadne skryté poplatky",
-        a4: "Platíte len za to, čo využívate"
-      },
-      noscript: "Kalkulačka potrebuje zapnutý JavaScript. Menšie automatizácie štartujú na 200 € mesačne, procesné riešenia od 1 500 € a komplexné ekosystémy od 6 000 €. Napíšte nám a pripravíme presnú ponuku do 48 hodín."
-    },
     about: {
       label: "O nás",
       title: "Kto za tým stojí",
@@ -238,7 +135,7 @@ var TRANSLATIONS = {
       q6: "Musím niečo meniť vo svojich existujúcich systémoch?",
       a6: "Nie. Naše riešenia sa napájajú na Vaše existujúce nástroje (email, CRM, kalendár, Slack a pod.) bez potreby čokoľvek meniť. Pracujeme s tým, čo už používate.",
       q7: "Koľko to stojí?",
-      a7: "Menšie automatizácie ako chatbot na web alebo email asistent štartujú na 200 € mesačne. Procesné riešenia typu spracovanie faktúr alebo prepojenie CRM začínajú na 1 500 € jednorazovo, komplexné firemné ekosystémy na 6 000 €. Orientačné rozpätie pre Vašu situáciu Vám za minútu vypočíta cenová kalkulačka na tejto stránke. Presnú ponuku pripravíme do 48 hodín po bezplatnej konzultácii."
+      a7: "Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná."
     },
     cta: {
       heading: "Ste pripravení nasadiť nový AI systém do vášho biznisu?",
@@ -263,7 +160,6 @@ var TRANSLATIONS = {
       services: "Služby",
       process: "Proces",
       why: "Prečo my",
-      pricing: "Cenník a kalkulačka",
       about: "O nás",
       faq: "FAQ",
       contact: "Kontakt",
@@ -298,7 +194,6 @@ var TRANSLATIONS = {
       services: "Services",
       process: "How It Works",
       why: "Why Us",
-      pricing: "Pricing",
       about: "About",
       faq: "FAQ",
       contact: "Contact",
@@ -386,108 +281,6 @@ var TRANSLATIONS = {
       feature5: "Ongoing support and maintenance",
       cta: "Free No-Obligation Consultation"
     },
-    calc: {
-      label: "Pricing",
-      title: "What would it cost you?",
-      subtitle: "We don't work with fixed packages, but we don't want you leaving with no idea either. In one minute you get an indicative range and an estimate of when the investment pays for itself.",
-      tiers: {
-        t1Name: "Smaller automations",
-        t1Price: "from €200",
-        t1Unit: "per month",
-        t1Desc: "Website chatbot, email assistant, social media management.",
-        t2Name: "Process solutions",
-        t2Price: "from €1,500",
-        t2Unit: "one-off",
-        t2Desc: "Invoice processing, CRM integration, phone assistant.",
-        t3Name: "Full ecosystem",
-        t3Price: "from €6,000",
-        t3Unit: "one-off",
-        t3Desc: "Multiple systems at once, a custom solution for the whole company."
-      },
-      stepOf: "Step {n} of {total}",
-      back: "Back",
-      next: "Next",
-      showResult: "Show my estimate",
-      restart: "Start over",
-      multiHint: "You can pick more than one.",
-      steps: {
-        modules: { q: "What do you want to automate?", hint: "Pick what slows you down the most." },
-        hours: { q: "How many hours a day does your team spend on it?", hint: "A rough estimate is enough." },
-        volume: { q: "What volume do you handle monthly?", hint: "Emails, inquiries, invoices or orders combined." },
-        systems: { q: "Which systems do you use today?", hint: "We connect to them, you change nothing." },
-        company: { q: "How many people work in your company?", hint: "It affects setup and training scope." }
-      },
-      opt: {
-        modules: {
-          chatbot:  { l: "Website chatbot", d: "Answers visitors 24/7 and captures inquiries." },
-          email:    { l: "Emails and inquiries", d: "Sorts mail, drafts replies, nothing slips through." },
-          invoices: { l: "Invoices and documents", d: "Extracts data, matches payments, archives." },
-          phone:    { l: "Phone assistant", d: "Answers calls, books appointments, sends reminders." },
-          crm:      { l: "CRM and internal processes", d: "Records contacts and deals without manual work." },
-          social:   { l: "Social media", d: "Prepares and publishes posts on schedule." }
-        },
-        hours: {
-          h1: { l: "Up to 2 hours" },
-          h2: { l: "2 to 5 hours" },
-          h3: { l: "5 to 10 hours" },
-          h4: { l: "More than 10 hours" }
-        },
-        volume: {
-          v1: { l: "Up to 100 items" },
-          v2: { l: "100 to 500" },
-          v3: { l: "500 to 2,000" },
-          v4: { l: "More than 2,000" }
-        },
-        systems: {
-          mail:       { l: "Gmail or Outlook" },
-          crm:        { l: "CRM" },
-          accounting: { l: "Accounting software" },
-          sheets:     { l: "Spreadsheets and documents" },
-          eshop:      { l: "E-shop or booking system" },
-          none:       { l: "None of these" }
-        },
-        company: {
-          c1: { l: "1 to 5 people" },
-          c2: { l: "6 to 20 people" },
-          c3: { l: "21 to 50 people" },
-          c4: { l: "More than 50 people" }
-        }
-      },
-      result: {
-        title: "Your indicative estimate",
-        to: "to",
-        implLabel: "Implementation",
-        implNote: "One-off, paid in stages.",
-        monthlyLabel: "Monthly running cost",
-        monthlyNote: "Support, maintenance and adjustments as needed.",
-        savingLabel: "Your saving",
-        savingNote: "Roughly {h} hours a month your team spends on routine today.",
-        paybackLabel: "Payback",
-        paybackNote: "From then on the solution earns money.",
-        paybackUnknown: "Let's go through it",
-        paybackUnknownNote: "At this volume it pays to start with a smaller solution and expand it gradually.",
-        months: "months",
-        disclaimer: "An indicative estimate based on your answers. We assume a cost of €14 per hour of administrative work including contributions. We prepare the exact price after a free consultation, once we know the details of your processes.",
-        formTitle: "Want an exact quote?",
-        formText: "We'll send a breakdown within 48 hours. We already have your answers, so we won't ask twice.",
-        name: "Your name",
-        email: "you@email.com",
-        company: "Company (optional)",
-        submit: "Send me the exact quote",
-        sending: "Sending...",
-        success: "Thank you, we'll get back to you within 48 hours.",
-        error: "Sending failed. Please try again or write to info@softclick.ai.",
-        mailSubject: "Pricing calculator: new inquiry from the website",
-        calendly: "Prefer a call? Pick a time"
-      },
-      assurance: {
-        a1: "Free initial consultation",
-        a2: "Exact quote within 48 hours",
-        a3: "No hidden fees",
-        a4: "You only pay for what you use"
-      },
-      noscript: "The calculator needs JavaScript enabled. Smaller automations start at €200 per month, process solutions from €1,500 and full ecosystems from €6,000. Write to us and we'll prepare an exact quote within 48 hours."
-    },
     about: {
       label: "About",
       title: "Who's Behind It",
@@ -516,7 +309,7 @@ var TRANSLATIONS = {
       q6: "Do I need to change anything in my existing systems?",
       a6: "No. Our solutions integrate with your existing tools (email, CRM, calendar, Slack, etc.) without the need to change anything. We work with what you already use.",
       q7: "How much does it cost?",
-      a7: "Smaller automations such as a website chatbot or an email assistant start at €200 per month. Process solutions like invoice processing or CRM integration start at €1,500 one-off, and full company ecosystems at €6,000. The pricing calculator on this page gives you an indicative range for your situation in one minute. We prepare the exact quote within 48 hours after a free consultation."
+      a7: "The price depends on the scope and complexity of the solution. We don't work with fixed packages – after a free consultation, we'll prepare a custom quote within 48 hours. The initial consultation is always free and non-binding."
     },
     cta: {
       heading: "Ready to deploy a new AI system in your business?",
@@ -541,7 +334,6 @@ var TRANSLATIONS = {
       services: "Services",
       process: "Process",
       why: "Why Us",
-      pricing: "Pricing & calculator",
       about: "About",
       faq: "FAQ",
       contact: "Contact",
@@ -612,7 +404,7 @@ var STRUCTURED_DATA = {
         {"@type": "Question", "name": "Čo ak mi riešenie nebude vyhovovať?", "acceptedAnswer": {"@type": "Answer", "text": "Každé riešenie prispôsobujeme presne Vašim potrebám. Ak niečo nefunguje podľa očakávaní, upravíme to. Na začiatku máte plnú kontrolu v schvaľovacom režime, takže vidíte presne, čo AI robí, ešte predtým než ho pustíte plne automaticky."}},
         {"@type": "Question", "name": "Ako dlho trvá implementácia?", "acceptedAnswer": {"@type": "Answer", "text": "Jednoduchšie automatizácie (napr. email asistent) vieme nasadiť do niekoľkých dní. Komplexnejšie riešenia s prepojením viacerých systémov zvyčajne trvajú 1-2 týždne. Presný harmonogram dohodneme na úvodnej konzultácii."}},
         {"@type": "Question", "name": "Musím niečo meniť vo svojich existujúcich systémoch?", "acceptedAnswer": {"@type": "Answer", "text": "Nie. Naše riešenia sa napájajú na Vaše existujúce nástroje (email, CRM, kalendár, Slack a pod.) bez potreby čokoľvek meniť. Pracujeme s tým, čo už používate."}},
-        {"@type": "Question", "name": "Koľko to stojí?", "acceptedAnswer": {"@type": "Answer", "text": "Menšie automatizácie ako chatbot na web alebo email asistent štartujú na 200 € mesačne. Procesné riešenia typu spracovanie faktúr alebo prepojenie CRM začínajú na 1 500 € jednorazovo, komplexné firemné ekosystémy na 6 000 €. Orientačné rozpätie pre Vašu situáciu Vám za minútu vypočíta cenová kalkulačka na tejto stránke. Presnú ponuku pripravíme do 48 hodín po bezplatnej konzultácii."}}
+        {"@type": "Question", "name": "Koľko to stojí?", "acceptedAnswer": {"@type": "Answer", "text": "Cena závisí od rozsahu a zložitosti riešenia. Nepracujeme s fixnými balíčkami – po bezplatnej konzultácii Vám pripravíme cenovú ponuku na mieru do 48 hodín. Úvodná konzultácia je vždy zadarmo a nezáväzná."}}
       ]
     }
   },
@@ -667,7 +459,7 @@ var STRUCTURED_DATA = {
         {"@type": "Question", "name": "What if the solution doesn't suit me?", "acceptedAnswer": {"@type": "Answer", "text": "We customize every solution to your exact needs. If something doesn't work as expected, we'll adjust it. At the beginning, you have full control in approval mode, so you see exactly what the AI does before letting it run fully automatically."}},
         {"@type": "Question", "name": "How long does implementation take?", "acceptedAnswer": {"@type": "Answer", "text": "Simpler automations (e.g., email assistant) can be deployed within a few days. More complex solutions connecting multiple systems typically take 1-2 weeks. We'll agree on the exact timeline during the initial consultation."}},
         {"@type": "Question", "name": "Do I need to change anything in my existing systems?", "acceptedAnswer": {"@type": "Answer", "text": "No. Our solutions integrate with your existing tools (email, CRM, calendar, Slack, etc.) without the need to change anything. We work with what you already use."}},
-        {"@type": "Question", "name": "How much does it cost?", "acceptedAnswer": {"@type": "Answer", "text": "Smaller automations such as a website chatbot or an email assistant start at €200 per month. Process solutions like invoice processing or CRM integration start at €1,500 one-off, and full company ecosystems at €6,000. The pricing calculator on this page gives you an indicative range for your situation in one minute. We prepare the exact quote within 48 hours after a free consultation."}}
+        {"@type": "Question", "name": "How much does it cost?", "acceptedAnswer": {"@type": "Answer", "text": "The price depends on the scope and complexity of the solution. We don't work with fixed packages – after a free consultation, we'll prepare a custom quote within 48 hours. The initial consultation is always free and non-binding."}}
       ]
     }
   }
@@ -681,16 +473,7 @@ var I18n = (function () {
     return key.split('.').reduce(function (o, k) { return o && o[k]; }, obj);
   }
 
-  // Podstranky s vlastnym SEO textom si jazyk zamknu cez data-i18n-lock="sk"
-  // na <html>. Prekladame im len dynamicky obsah, meta tagy nechavame tak.
-  function locked() {
-    var l = document.documentElement.getAttribute('data-i18n-lock');
-    return (l === 'sk' || l === 'en') ? l : null;
-  }
-
   function getLang() {
-    var lock = locked();
-    if (lock) return lock;
     var saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'sk' || saved === 'en') return saved;
     var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
@@ -698,10 +481,8 @@ var I18n = (function () {
   }
 
   function setLang(lang) {
-    var lock = locked();
-    if (lock) lang = lock;
     if (lang !== 'sk' && lang !== 'en') lang = 'sk';
-    if (!lock) localStorage.setItem(STORAGE_KEY, lang);
+    localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
     document.documentElement.dataset.lang = lang;
 
@@ -752,12 +533,7 @@ var I18n = (function () {
       if (val) el.value = val;
     });
 
-    // Meta tags (na zamknutych podstrankach ich necháme nedotknuté)
-    if (lock) {
-      document.body.classList.add('i18n-ready');
-      return;
-    }
-
+    // Meta tags
     document.title = t.meta.title;
     var metaMap = {
       'meta[name="description"]': t.meta.description,
