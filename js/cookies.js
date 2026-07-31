@@ -106,9 +106,24 @@
 
   // Aby sa dalo rozhodnutie zmenit (odkaz v paticke / na stranke o cookies)
   window.SoftClickCookies = {
+    // Znovu otvori listu bez obnovovania stranky
+    open: function () {
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      var old = document.querySelector('.cookie-bar');
+      if (old) old.remove();
+      build();
+    },
     reset: function () {
       try { localStorage.removeItem(KEY); } catch (e) {}
       location.reload();
     }
   };
+
+  // Odkazy s data-cookie-settings otvoria nastavenia
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-cookie-settings]');
+    if (!t) return;
+    e.preventDefault();
+    window.SoftClickCookies.open();
+  });
 })();
